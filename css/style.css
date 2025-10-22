@@ -936,6 +936,7 @@ article.sticky .featured-post {
 .entry-summary p,
 .comment-content p,
 .mu_register p {
+	font-size: 16px;
 	margin: 0 0 24px;
 	margin: 0 0 1.714285714rem;
 	line-height: 1.714285714;
@@ -1006,7 +1007,7 @@ article.sticky .featured-post {
     font-family: Consolas, Monaco, Lucida Console, monospace;
     padding: 0 5px;
     margin: 0 2px;
-    font-size: 0.9em;
+    font-size: 1em;
     border: 1px solid rgba(0, 0, 0, 0.24);
     -webkit-border-radius: 3px;
     border-radius: 3px;
