@@ -4,6 +4,9 @@
   <meta charset="utf-8">
   
   
+  <meta name="description" content="题目伪代码结构体定义
+1234567891011121314151617181920struct list_content&amp;#123;  unsigned __int64 out_idx;// 牌的花色和数字  unsigned __int64 in_idx;&amp;#125;;struct list&amp;#" />
+  
 
   
   
@@ -11,13 +14,17 @@
   
   
   
-  <title>shanza&#39;s hideout</title>
+  <title>2024网鼎杯半决赛 cardmaster | shanza&#39;s hideout</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="shanza&#39;s hideout">
-<meta property="og:url" content="https://shanzade.github.io/index.html">
+  <meta name="description" content="题目伪代码结构体定义 1234567891011121314151617181920struct list_content&#123;  unsigned __int64 out_idx;&#x2F;&#x2F; 牌的花色和数字  unsigned __int64 in_idx;&#125;;struct list&#123;  struct list_content *content[13];&#125;;stru">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2024网鼎杯半决赛 cardmaster">
+<meta property="og:url" content="https://shanzade.github.io/2025/10/28/2024%E7%BD%91%E9%BC%8E%E6%9D%AF%E5%8D%8A%E5%86%B3%E8%B5%9B-cardmaster/index.html">
 <meta property="og:site_name" content="shanza&#39;s hideout">
+<meta property="og:description" content="题目伪代码结构体定义 1234567891011121314151617181920struct list_content&#123;  unsigned __int64 out_idx;&#x2F;&#x2F; 牌的花色和数字  unsigned __int64 in_idx;&#125;;struct list&#123;  struct list_content *content[13];&#125;;stru">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-28T11:50:43.000Z">
+<meta property="article:modified_time" content="2025-10-28T11:54:47.210Z">
 <meta property="article:author" content="shanza">
 <meta name="twitter:card" content="summary">
   
@@ -62,17 +69,15 @@
 </header>
 
       <div id="main" class="wrapper">
-        <div id="primary" class="site-content"><div id="content" role="main">
-  
-    <article id="post-2024网鼎杯半决赛-cardmaster" class="post-2024网鼎杯半决赛-cardmaster post type-post status-publish format-standard hentry">
+        <div id="primary" class="site-content"><div id="content" role="main"><article id="post-2024网鼎杯半决赛-cardmaster" class="post-2024网鼎杯半决赛-cardmaster post type-post status-publish format-standard hentry">
     <!---->
 
       <header class="entry-header">
         
         
   
-    <h1 class="entry-title">
-      <a class="article-title" href="/2025/10/28/2024%E7%BD%91%E9%BC%8E%E6%9D%AF%E5%8D%8A%E5%86%B3%E8%B5%9B-cardmaster/">2024网鼎杯半决赛 cardmaster</a>
+    <h1 class="entry-title article-title">
+      2024网鼎杯半决赛 cardmaster
     </h1>
   
 
@@ -162,215 +167,20 @@
 </article>
 
 
-
-
-
-
-  
-    <article id="post-windows-重定位简单学习" class="post-windows-重定位简单学习 post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/2025/10/20/windows-%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/">windows 重定位简单学习</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="https://shanzade.github.io/2025/10/20/windows-%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/" data-id="cmhaiewre0007b0vg85745syu" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><blockquote>
-<p>这篇博客是《逆向工程核心原理》第 16 章的读后笔记，可能存在较多内容上的不准确或缺失。</p>
-</blockquote>
-<p>pe 文件中的 pe 头指定了映像的加载地址位置（<code>ImageBase</code>）。当 pe 装载器检测到 <code>ImageBase</code> 位置已经加载了一个 pe 或 dll 时，就会将该 pe 重定位加载到其他内存位置，并修改程序中涉及到的有关地址。</p>
-<p>Windows 的 ASLR &#x2F; 地址随机化似乎是在 Windows Vista 引入，且默认开启。<br>如果需要关闭 ASLR（小于 windows 10 的版本），则可以在注册表中查找：<code>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Memory Management\MoveImages</code>（注意 images 复数），创建或修改其值为 0，即可关闭。</p>
-<p><img src="/2025/10/20/windows-%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/1.png"></p>
-<p>（另外，有文章提到，设置注册表项为 -1 &#x2F; 2 是强制开启 ASLR，无论是否设置<code>IMAGE_DLL_CHARACTERISTICS_DYNAMIC_BASE</code> 标识。windows 10 及以上版本可能需要其他位置设置才能关闭。Windows 平台上还有其他保护功能，例如 DEP。）</p>
-<h1 id="PE-重定位原理"><a href="#PE-重定位原理" class="headerlink" title="PE 重定位原理"></a>PE 重定位原理</h1><ol>
-<li>查找硬编码的地址位置；</li>
-<li>读取地址存放值，减去 NT 头中的 <code>ImageBase</code> 得到偏移地址 RVA；</li>
-<li>偏移地址 RVA + 重定位后的基址得到新的地址，放回原位完成重定位。</li>
-</ol>
-<h1 id="IMAGE-BASE-RELOCATION-结构体"><a href="#IMAGE-BASE-RELOCATION-结构体" class="headerlink" title="IMAGE_BASE_RELOCATION 结构体"></a><code>IMAGE_BASE_RELOCATION</code> 结构体</h1><p>PE 头中的 <code>_IMAGE_OPTIONAL_HEADER</code> 结构体有 <code>DataDirectory</code> 这个数组成员，其中包含了当前 PE 文件中的各个信息表，例如 EAT、IAT、资源表等等。<br><code>DataDirectory</code> 结构体定义如下。其中的 <code>VirtualAddress</code> 是映像（内存中）的 VA，<code>SIZE</code> 指示了某块内容所占内存大小。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_DATA_DIRECTORY</span> &#123;</span></span><br><span class="line">  DWORD VirtualAddress;</span><br><span class="line">  DWORD Size;</span><br><span class="line">&#125; IMAGE_DATA_DIRECTORY, *PIMAGE_DATA_DIRECTORY;</span><br></pre></td></tr></table></figure>
-<p><code>DataDirectory</code> 的第 6 项（数组索引第 5 项）是重定位表，其地址指向了重定位表。<br>重定位表涉及的结构体如下：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_BASE_RELOCATION</span> &#123;</span></span><br><span class="line">    DWORD VirtualAddress;</span><br><span class="line">    DWORD SizeOfBlock;</span><br><span class="line"><span class="comment">// WORD TypeOffset[1];</span></span><br><span class="line">&#125; IMAGE_BASE_RELOCATION;</span><br></pre></td></tr></table></figure>
-<p>一个程序中可能定义了多个重定位结构体，这些结构体在同一个地址段内且相邻（<code>.reloc</code>？）。<br>结构体的第一项是该重定位结构体中的所有项偏移，后续计算该结构体下所有的重定位地址都需要加上这个偏移；第二项是该重定位结构体的大小。<br>第三项是被注释的，表示一个重定位结构体中可能会存在多个重定位地址。</p>
-<h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><p>此处以 Windows 7 x64 下的 <code>MineSweeper.exe</code> 为例。<br>使用 CFF EXPLORER 可以很容易地看到重定位表的信息。<br><img src="/2025/10/20/windows-%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/2.png"><br><img src="/2025/10/20/windows-%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/3.png"></p>
-<p>当然，也可以不借助任何工具，纯手算。<br>首先，根据 MAGIC NUMBER：0x50 0x45 0x0 0x0（”PE\x00\x00”），找到 PE 头 <code>IMAGE_NT_HEADER</code> 的位置。此处地址是 0xF0。<br>然后再从该地址开始，加上 <code>IMAGE_FILE_HEADER</code> 结构体的大小，就可以找到 <code>OptionalHeader</code> 的位置。</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> _<span class="title">IMAGE_NT_HEADERS</span> &#123;</span></span><br><span class="line">  DWORD                   Signature;</span><br><span class="line">  IMAGE_FILE_HEADER       FileHeader;</span><br><span class="line">  IMAGE_OPTIONAL_HEADER32 OptionalHeader;</span><br><span class="line">&#125; IMAGE_NT_HEADERS32, *PIMAGE_NT_HEADERS32;</span><br></pre></td></tr></table></figure>
-<p><code>IMAGE_FILE_HEADER</code> 的<a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-image_file_header">定义</a>，此处不展开细讲。其大小为 20 字节。<br>所以 <code>OptionalHeader</code> 位置为 0xF0 + 20 + 4（magic） &#x3D; 0x108。<br>然后查看微软官网的解释：<br><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-image_data_directory">https://learn.microsoft.com/en-us/windows/win32/api/winnt/ns-winnt-image_data_directory</a><br>重定位表在距离 <code>OptionalHeader</code> 的 +136&#x2F;+152 位置。<br>由于是 64 位，所以是 +152。<br>所以 0x108 + 152 &#x3D; 0x1A0，即重定位表的 RVA 位置。<br><img src="/2025/10/20/windows-%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/4.png"></p>
-<p>运行程序至入口点，观察基址为 0xFFE30000。<br><img src="/2025/10/20/windows-%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/5.png"></p>
-<p>所以重定位表的位置为 0xFFE30000 + 0xD8000 &#x3D; 0xFFF08000。<br>跳转到内存转储窗口中查看。<br><img src="/2025/10/20/windows-%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/6.png"><br>可以发现与 <code>IMAGE_BASE_RELOCATION</code> 的结构一致。</p>
-<p>这里先解释一下 <code>TypeOffset</code> 的意思。这个字段由两个字节组成，其中的高 4 位为 <code>Type</code>，剩余 12 位为 <code>Offset</code>，即偏移。<br>其中的 <code>Type</code> 有多个类型，最常见的是 <code>IMAGE_REL_BASED_ABSOLUTE</code>（0）、<code>IMAGE_REL_BASED_HIGHLOW</code>（3）、<code>IMAGE_REL_BASED_DIR64</code>（10）。<br>64 位下 pe 的 <code>Type</code> 通常是 <code>IMAGE_REL_BASED_DIR64</code>，即 0xA。<br>（这部分似乎没有在官网在线文档中出现，但理论上来说可以在 winnt.h 中找到。）</p>
-<p>此处挑选其中一个 <code>0xAE50</code> 进行计算。根据上述解释，其偏移是 <code>0xE50</code>，加上前面的 0x1000，即 <code>0x1E50</code>。<br>加上重定位后的基址，即 0xFFE30000，得 <code>0xFFE31E50</code>。dump 这块内存：<br><img src="/2025/10/20/windows-%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/7.png"></p>
-<p>这么一看好像还看不出什么，但是回到文件中就能看出端倪。<br>此处需要利用到 RVA 转 FOA 的公式。具体可以参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/iBinary/p/9733703.html">这篇博客</a>。<br>根据工具显示节表 Section Headers 的信息（或手动计算），可以得知 <code>0x1E50</code> 在 <code>.text</code> 段中。<br><img src="/2025/10/20/windows-%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/8.png"><br>减去这一节的内存 VA 偏移，即得到差值 <code>0xE50</code>，随后再加上 0x600 的文件偏移，就可以得到其在文件中的位置 <code>0x1450</code>。<br>在文件中查看这块内容。<br><img src="/2025/10/20/windows-%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/9.png"><br>可以发现，这块内容所有地址都被减去了 <code>ImageBase</code> 的 0x1 0000 0000，然后再加上重定位后的基址 0xFFE30000，完成重定位。</p>
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>吾爱大佬的<a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-1128322-1-1.html">这篇帖子</a>写得非常好，很多细节都总结了。<br>这篇也可以。<a target="_blank" rel="noopener" href="https://www.cnblogs.com/LyShark/p/17684114.html">https://www.cnblogs.com/LyShark/p/17684114.html</a><br>现在的动调工具可以根据 pe 头的内容自动查找到重定位表的位置（标记为 <code>.reloc</code>）。但在某些特殊条件下还是需要手动分析（例如病毒程序会魔改 pe 头）。<br><img src="/2025/10/20/windows-%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/10.png"></p>
-
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/2025/10/20/windows-%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/">
-    <time datetime="2025-10-20T15:08:11.000Z" class="entry-date">
-        2025-10-20
-    </time>
-</a>
     
-  <span class="article-delim">&#8226;</span>
-  <div class="article-category">
-  <a class="article-category-link" href="/categories/windows-%E7%9B%B8%E5%85%B3/">windows 相关</a>
-  </div>
-
+<nav class="nav-single">
+    <h3 class="assistive-text">文章导航</h3>
     
-    </footer>
-</article>
-
-
-
-
-
-
-  
-    <article id="post-cve-2025-6218-winrar目录遍历漏洞复现与简单分析" class="post-cve-2025-6218-winrar目录遍历漏洞复现与简单分析 post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/2025/07/29/cve-2025-6218-winrar%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E4%B8%8E%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90/">cve-2025-6218 winrar目录遍历漏洞复现与简单分析</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="https://shanzade.github.io/2025/07/29/cve-2025-6218-winrar%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E4%B8%8E%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90/" data-id="cmhaiewr90001b0vg11wx2i4r" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>CVSS3 评分 7.8。<a target="_blank" rel="noopener" href="https://nvd.nist.gov/vuln/detail/CVE-2025-6218">https://nvd.nist.gov/vuln/detail/CVE-2025-6218</a></p>
-<p>在 WinRAR &lt;7.12 版本中，存在目录遍历漏洞，简单来说就是可以控制压缩包内文件的目标解压位置。</p>
-<h1 id="复现"><a href="#复现" class="headerlink" title="复现"></a>复现</h1><p>此处我使用 <code>7.0.0</code> 版本进行复现。</p>
-<p>创建如下目录结构：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/</span><br><span class="line">├─不应该出现的地方</span><br><span class="line">└─初始文件夹</span><br><span class="line">    └─generator.bat</span><br></pre></td></tr></table></figure>
-
-<p>其中，<code>generator.bat</code> 的内容如下（来自网络，参考 <a target="_blank" rel="noopener" href="https://github.com/skimask1690/CVE-2025-6218-POC%EF%BC%89%EF%BC%9A">https://github.com/skimask1690/CVE-2025-6218-POC）：</a></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">echo 123 &gt; 123.txt</span><br><span class="line"></span><br><span class="line">&quot;C:\Program Files\WinRAR\WinRar.exe&quot; a -ap&quot; \.. \不应该出现的地方\ &quot; exp.zip 123.txt</span><br><span class="line"></span><br><span class="line">del 123.txt</span><br><span class="line">echo &quot;[+]FINISHED&quot;</span><br></pre></td></tr></table></figure>
-
-<p>运行该脚本可创建一个 <code>exp.zip</code>，对其右键使用 WinRAR <code>解压到此处</code>：<br><img src="/2025/07/29/cve-2025-6218-winrar%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E4%B8%8E%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90/1.png"></p>
-<p>执行之后，本来应该出现在当前目录下的文件，出现在了另一个文件夹中。<br><img src="/2025/07/29/cve-2025-6218-winrar%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E4%B8%8E%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90/2.png"></p>
-<p>同样地，如果用户习惯将压缩包放在桌面上解压，可以构造一个将文件解压到当前用户 <code>Startup</code> 目录的压缩包，这样当用户下次登录时会自动运行特定文件。<em>网络上复现该 cve 的 poc 思路大致如此。</em></p>
-<h1 id="简单分析"><a href="#简单分析" class="headerlink" title="简单分析"></a>简单分析</h1><p>对 <code>7.0.0</code> 版本进行分析，找到对应的创建文件的函数（步骤略）：<br><img src="/2025/07/29/cve-2025-6218-winrar%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E4%B8%8E%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90/3.png"></p>
-<p>可以发现，在调用 <code>CreateFileW</code> 时，直接将压缩包内文件的解压路径拼接在了原有的目标路径之后。</p>
-<p>更换为 <code>7.1.2</code> 版本，分析发现其会在每个可能的目录遍历点添加 <code>_</code> 防止漏洞产生。<br>对路径处理前：<br><img src="/2025/07/29/cve-2025-6218-winrar%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E4%B8%8E%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90/4.png"><br>对路径处理后：<br><img src="/2025/07/29/cve-2025-6218-winrar%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E4%B8%8E%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90/5.png"></p>
-<p><img src="/2025/07/29/cve-2025-6218-winrar%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E4%B8%8E%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90/6.png"></p>
-<p>最终效果如下：<br><img src="/2025/07/29/cve-2025-6218-winrar%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E4%B8%8E%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90/7.png"></p>
-<h1 id="修复方案"><a href="#修复方案" class="headerlink" title="修复方案"></a>修复方案</h1><ul>
-<li>前往 <a target="_blank" rel="noopener" href="https://www.win-rar.com/download.html">https://www.win-rar.com/download.html</a> 下载 <code>7.12</code> 及以上版本。</li>
-<li>（更新杀毒软件。大部分杀软都能拦截对启动项的写入。）</li>
-</ul>
-<h1 id="后话"><a href="#后话" class="headerlink" title="后话"></a>后话</h1><h2 id="6-2-3-版本复现失败"><a href="#6-2-3-版本复现失败" class="headerlink" title="6.2.3 版本复现失败"></a>6.2.3 版本复现失败</h2><p>看了很多份报告都说版本号 <code>&lt; 7.1.2</code> 都有这个漏洞，但是我在自己电脑上找到了 <code>6.2.3 (x86)</code> 这个版本，尝试多次发现并没有复现成功。</p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>大部分的压缩软件都考虑到了这点，都会自动添加 <code>_</code> 避免路径遍历。</p>
-<p>（其实还有某个压缩软件的老版本也有这个漏洞。）</p>
-<h1 id="叠甲声明"><a href="#叠甲声明" class="headerlink" title="叠甲声明"></a>叠甲声明</h1><p><strong>本文仅用于教育目的，所有技术信息均来自公开资料。读者应在法律授权范围内测试自身系统安全，禁止用于非法渗透。作者不承担因滥用信息导致的任何责任。</strong></p>
-
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/2025/07/29/cve-2025-6218-winrar%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E4%B8%8E%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90/">
-    <time datetime="2025-07-29T09:14:19.000Z" class="entry-date">
-        2025-07-29
-    </time>
-</a>
     
-  <span class="article-delim">&#8226;</span>
-  <div class="article-category">
-  <a class="article-category-link" href="/categories/cve%E5%A4%8D%E7%8E%B0/">cve复现</a>
-  </div>
-
+        <span class="nav-next"><a href="/2025/10/20/windows-%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/" rel="next">windows 重定位简单学习 <span class="meta-nav">→</span></a></span>
     
-    </footer>
-</article>
+</nav><!-- .nav-single -->
 
 
 
 
 
 
-  
-    <article id="post-gdbserver-远程调试小总结" class="post-gdbserver-远程调试小总结 post type-post status-publish format-standard hentry">
-    <!---->
-
-      <header class="entry-header">
-        
-        
-  
-    <h1 class="entry-title">
-      <a class="article-title" href="/2024/11/27/gdbserver-%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95%E5%B0%8F%E6%80%BB%E7%BB%93/">gdbserver 远程调试小总结</a>
-    </h1>
-  
-
-        
-        <div class="comments-link">
-            
-            <a href="javascript:void(0);" data-url="https://shanzade.github.io/2024/11/27/gdbserver-%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95%E5%B0%8F%E6%80%BB%E7%BB%93/" data-id="cmhaiewrb0002b0vg2bp41nus" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
-        </div><!-- .comments-link -->
-      </header><!-- .entry-header -->
-
-    <div class="entry-content">
-      
-        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><ul>
-<li>懒得装 &#x2F; 多开 ubuntu 不同版本的虚拟机。</li>
-<li>学习更深一层的 gdb 使用。</li>
-</ul>
-<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h2 id="启动程序"><a href="#启动程序" class="headerlink" title="启动程序"></a>启动程序</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdbserver IPADDR:PORT ./ELF_OR_EXECUTABLE</span><br></pre></td></tr></table></figure>
-<h2 id="远程调试"><a href="#远程调试" class="headerlink" title="远程调试"></a>远程调试</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">gdb</span><br><span class="line">...</span><br><span class="line">(gdb) target remote IPADDR:PORT</span><br><span class="line">...</span><br><span class="line">c #run program</span><br></pre></td></tr></table></figure>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdbserver &lt;comm&gt; &lt;program&gt; [&lt;args&gt; ...]</span><br></pre></td></tr></table></figure>
-<p>其中，comm 可以是 usb tcp 等方式。</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gdbserver --attach &lt;comm&gt; &lt;pid&gt;</span><br></pre></td></tr></table></figure>
-<p>附加至进程。</p>
-
-      
-    </div><!-- .entry-content -->
-
-    <footer class="entry-meta">
-    <a href="/2024/11/27/gdbserver-%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95%E5%B0%8F%E6%80%BB%E7%BB%93/">
-    <time datetime="2024-11-27T10:10:33.000Z" class="entry-date">
-        2024-11-27
-    </time>
-</a>
-    
-  <span class="article-delim">&#8226;</span>
-  <div class="article-category">
-  <a class="article-category-link" href="/categories/ctf%E6%99%AE%E9%80%9A/">ctf普通</a>
-  </div>
-
-    
-    </footer>
-</article>
-
-
-
-
-
-
-  
-  
 
 </div></div>
         <div id="secondary" class="widget-area" role="complementary">
