@@ -64,6 +64,117 @@
       <div id="main" class="wrapper">
         <div id="primary" class="site-content"><div id="content" role="main">
   
+    <article id="post-si1verf0x-2-对一份样本的浅分析（有待完善）" class="post-si1verf0x-2-对一份样本的浅分析（有待完善） post type-post status-publish format-standard hentry">
+    <!---->
+
+      <header class="entry-header">
+        
+        
+  
+    <h1 class="entry-title">
+      <a class="article-title" href="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/">si1verf0x #2: 对一份样本的浅分析（有待完善）</a>
+    </h1>
+  
+
+        
+        <div class="comments-link">
+            
+            <a href="javascript:void(0);" data-url="https://shanzade.github.io/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/" data-id="cmjjqvfjn0005ekvghyb6hm5a" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+        </div><!-- .comments-link -->
+      </header><!-- .entry-header -->
+
+    <div class="entry-content">
+      
+        <h1 id="来源"><a href="#来源" class="headerlink" title="来源"></a>来源</h1><blockquote>
+<p>样本<br><a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-2066929-1-1.html">https://www.52pojie.cn/thread-2066929-1-1.html</a><br>沙箱（其一，提示银狐）<br><a target="_blank" rel="noopener" href="https://sandbox.ti.qianxin.com/sandbox/page/detail?type=file&id=AZoAiMSUONZSmF3-H7sC">https://sandbox.ti.qianxin.com/sandbox/page/detail?type=file&amp;id=AZoAiMSUONZSmF3-H7sC</a></p>
+</blockquote>
+<h1 id="初步分析"><a href="#初步分析" class="headerlink" title="初步分析"></a>初步分析</h1><p>64 位，无壳，5 个段。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/1.png"></p>
+<h2 id="dll-导入情况"><a href="#dll-导入情况" class="headerlink" title="dll 导入情况"></a>dll 导入情况</h2><p><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/2.png"></p>
+<p><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/3.png"></p>
+<p><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/4.png"></p>
+<p><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/5.png"></p>
+<p><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/6.png"></p>
+<p><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/7.png"></p>
+<p><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/8.png"></p>
+<h1 id="直接运行"><a href="#直接运行" class="headerlink" title="直接运行"></a>直接运行</h1><p>（似乎是检测到虚拟机直接自毁了。）</p>
+<h1 id="检测分辨率-反在线运行沙箱"><a href="#检测分辨率-反在线运行沙箱" class="headerlink" title="检测分辨率 &#x2F; 反在线运行沙箱"></a>检测分辨率 &#x2F; 反在线运行沙箱</h1><p>似乎是利用了在线沙箱的 <code>1024*768</code> 分辨率的特点，这个木马运行之前首先会检测分辨率。<br>为什么这么说？第一次在虚拟机运行时，它会访问一个不存在的位置。</p>
+<p><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/9.png"></p>
+<p>查看堆栈，发现返回指针为 <code>140010ea1</code>。跟踪，会看到一个 <code>memset</code>。</p>
+<p><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/10.png"></p>
+<p><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/11.png"></p>
+<p>这个 <code>memset</code> 的目的地址指向了 0（<code>140010e8f</code> 断点动调可知），很显然是不可能的。<br>往上追查，发现这里是 <code>sub_14000fc80</code> 函数，正好是 <code>main</code> 函数调用的第一个函数。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/12.png"></p>
+<p>虽说没有加壳，但是整个样本全是混淆加密（控制流平坦化？），用 api monitor 甚至截取不到上面 <code>memset</code> 的记录。<br>所以还是一步步动调了。先下断点。</p>
+<p><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/13.png"></p>
+<p>首先调用了 <code>GetDC()</code> 获取窗口句柄。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/14.png"></p>
+<p>然后调用 <code>GetDeviceCaps()</code> 获取窗口信息。这里是获取了屏幕的宽度 <code>DESKTOPHORZRES</code> 0x76&#x3D;118。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/15.png"><br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/16.png"></p>
+<p>再往下走，获取屏幕高度 0x75&#x3D;117。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/17.png"></p>
+<p>最后释放句柄。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/18.png"></p>
+<p>问题来了，<code>140010a63</code> 这里，把刚才获取的屏幕宽度拿了出来，然后减去 0x780 即 1920。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/19.png"><br>如果屏幕宽度小于这个数的话，不出意外就要跑到刚才 <code>memset</code> 的位置，从而报错。</p>
+<p>另外还有对高度的判断 <code>140010bc3</code>。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/20.png"></p>
+<p>在线沙箱似乎没有 1080p 的，所以判断完这两个条件就直接调用 <code>memset(0, 0, x)</code> 报错退出了，也就无法自助分析后面发生了什么。</p>
+<p>另外，在 <code>sub_140012850</code> 这个函数中也检测了分辨率，跟上面的不太一样。<br>给 <code>14004402c</code> 下断点可以断到 <code>GetDeviceCaps</code>，往上追查会发现两次调用，也是获取了分辨率信息。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/21.png"><br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/22.png"></p>
+<p>分别给两个内存位置下断点，继续运行，会跳转到一个减法运算。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/23.png"><br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/24.png"><br>把这块 patch 为 <code>sub ecx ecx</code>，会发现还有第二个判断（高度）。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/25.png"><br>同样，patch 为 <code>sub eax, eax</code>。<br>后面还有两次判断，都 patch 就可以绕过分辨率检测了。</p>
+<h1 id="sub-140010ed0-检查虚拟机"><a href="#sub-140010ed0-检查虚拟机" class="headerlink" title="sub_140010ed0 检查虚拟机"></a><code>sub_140010ed0</code> 检查虚拟机</h1><p><code>main</code> 函数调用的第二个函数。</p>
+<p>这里会遍历三次进程，但是看不懂是在做什么（加密还是太难受了）。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/26.png"></p>
+<p>接下来会调用 <code>RegOpenKey()</code> 查询系统信息 <code>HKLM\HARDWARE\DESCRIPTION\SYSTEM\BIOS</code>。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/27.png"></p>
+<p><code>RegQueryValueExA</code> 获取 <code>SystemManufacturer</code> 这个键。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/28.png"></p>
+<p>根据注册表键来看，就是在检测虚拟机。<br>这里继续运行的话还会发现检测 <code>SystemProductName</code> 这个键。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/29.png"></p>
+<p>所以这里改掉先了，让样本再跑一会。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/30.png"></p>
+<p>（根据 api monitor 的调用结果来看的话，这里是会把所有虚拟机类型都检测一遍。（截图在文章最后））</p>
+<h1 id="sub-1400040a0-反调试和解密加载库函数"><a href="#sub-1400040a0-反调试和解密加载库函数" class="headerlink" title="sub_1400040a0 反调试和解密加载库函数"></a><code>sub_1400040a0</code> 反调试和解密加载库函数</h1><p>控制流平坦化确实不会解（没想到随机找个样本都能找到这么复杂的）。<br>这个函数也包含了很多混淆和加密了的内容，但是基本上都是跟着 <code>call / jmp</code> 走就能理解个八九成。</p>
+<p>首先这个函数在栈上开辟一块空间用来存了一些数据。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/31.png"></p>
+<p>接下来调用 <code>sub_140005700</code> 这个函数，这里没有识别出来。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/32.png"></p>
+<p>看汇编，发现是故意设计了一个异常处理，反调试用的。<br>动调的时候会发现 <code>rax</code> 无论如何都是 0，也就是说 <code>[rax]</code> 会触发异常。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/33.png"><br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/34.png"></p>
+<p>这时候要在 x64dbg 中设置对这个异常的绕过，让病毒继续运行。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/35.png"></p>
+<p>根据汇编分析，捕获异常后就会跳转到 <code>sub_140005750</code> 继续运行。<br>这里是另外一个反调试的位置。分别用了三种方式进行反调试。<br>一是 <code>IsDebuggerPresent()</code>，二是检查 peb 中的 <code>BeingDebugged</code> 这个成员，三是通过计时器计算检测是否存在运行停顿，因为一般来讲系统调度进程不会超过太长时间。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/36.png"></p>
+<p>这里需要修补一下，把 <code>mov al, 1</code> 改为 0 就行。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/37.png"></p>
+<p>如果不修补的话，动调就会跳转到 <code>memset 0</code> 的函数，样本崩溃退出。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/38.png"><br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/39.png"></p>
+<p>接下来的 <code>sub_140005840</code> 是初始化函数。大致执行流程如下。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/40.png"></p>
+<p>前四个函数和 <code>main</code> 函数是一致的，就是检测系统各项属性然后判断运行环境是否正常。<br>但是第 5 个函数 <code>sub_1400226e0</code>，应该是全部函数里面加密最多的地方。但是基本都有固定的模式，跟着 <code>call / jmp</code> 走就可以了。（这里 ida 分析比较冗余所以就不放出来了，毕竟看了也看不懂）<br>以下动调分析过程可忽略。<br>首先，动调进入 <code>sub_1400226e0</code> 这个函数，<code>f4</code> 跳到第一个 <code>call</code> 的位置。此时再 <code>f8</code> 走一步，就会发现栈上自动解析出了 dll 字符串。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/41.png"></p>
+<p>很神奇。继续 <code>f4</code> 到下一个 <code>call</code>，会发现果不其然加载了库 <code>advapi32.dll</code> 。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/42.png"></p>
+<p>此时略过一堆解密内容到下一个 <code>call</code>，会发现加载了 <code>shell32.dll</code>。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/43.png"></p>
+<p>接下来的 4 个 <code>call</code> 与 <code>main</code> 函数的前 4 个函数调用一致，就不讲了。<br>下一个 <code>call</code>，执行完成之后似乎什么都没有发生。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/44.png"></p>
+<p>但是如果再跳到下一个，执行，就会发现栈上突然多出来了一个函数名称 <code>OpenSCManagerW</code>。这个函数恰好是 <code>advapi32</code> 里的函数。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/45.png"></p>
+<p>同样的汇编指令，下一个 <code>call</code> 解析出了 <code>OpenServiceA</code>。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/46.png"></p>
+<p>实际上，整个函数的工作就是在解密，然后获取 dll 句柄和库函数地址。<br>这里查找库函数似乎没有调用 <code>GetProcAddress</code>（下了断点但是没有断到），而是调用了一个手动实现查找的函数 <code>sub_140032be0</code>，估计是用来防止杀毒软件检测的。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/47.png"></p>
+<p>将所有 <code>call</code> 跑一遍，可以得到最终获取的库函数。（其实把分辨率检测那块代码 patch 之后扔给在线沙箱，似乎也能分析出来。）<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/48.png"></p>
+<h1 id="消息"><a href="#消息" class="headerlink" title="消息"></a>消息</h1><p>异常处理完之后就会返回到 <code>main</code> 函数中继续执行。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/49.png"></p>
+<p>如果单步执行完 <code>GetMessageW</code>，会发现返回的消息类型是 0x113，即 <code>WM_TIMER</code>。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/50.png"><br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/51.png"></p>
+<p>这里估计也是一种反检测的方式，通过消息机制绕过了静态分析。<br>执行到 <code>DispatchMessageW</code>，会发现回调函数（似乎）是 <code>sub_1400059e0</code>。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/52.png"></p>
+<p>这里我猜测是通过每次接收到一个消息就递增一次计数器，然后解密执行流并调用先前获取到的各个库函数。<br><del>这里硬着头皮动调分析了一小部分内容。</del><br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/53.png"></p>
+<h1 id="接下来"><a href="#接下来" class="headerlink" title="接下来"></a>接下来</h1><p>为什么到这里就结束了呢？因为绕不过它的虚拟机检测了，手上也没有可以用来直接分析的实机。。<br>除了前面注册表信息之外，还有显卡型号的检测。但是个人水平有限，即使尝试着把显卡检测绕过了（patch 了调用 <code>strstr</code> 的函数），也还是不知道哪里还有检测导致自毁。<br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/54.png"><br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/55.png"><br><img src="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/56.png"></p>
+<p>然后还尝试了把分辨率检测给 patch，再上传沙箱，但是依旧运行不成功。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li>还是要从最基础的做起，这种难度还是有点大（<del>以后再回来看看</del>）</li>
+<li>了解了两种反调试方法：<code>IsDebuggerPresent()</code> 和 <code>PEB-&gt;BeingDebugged</code></li>
+<li>了解了样本分析中一些常见的 win32 api。</li>
+</ul>
+
+      
+    </div><!-- .entry-content -->
+
+    <footer class="entry-meta">
+    <a href="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/">
+    <time datetime="2025-12-20T13:10:11.000Z" class="entry-date">
+        2025-12-20
+    </time>
+</a>
+    
+  <span class="article-delim">&#8226;</span>
+  <div class="article-category">
+  <a class="article-category-link" href="/categories/%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%88windows%EF%BC%89/">恶意代码分析（windows）</a>
+  </div>
+
+    
+    </footer>
+</article>
+
+
+
+
+
+
+  
     <article id="post-跟着52pojie大佬分析一份木马样本" class="post-跟着52pojie大佬分析一份木马样本 post type-post status-publish format-standard hentry">
     <!---->
 
@@ -79,7 +190,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://shanzade.github.io/2025/12/07/%E8%B7%9F%E7%9D%8052pojie%E5%A4%A7%E4%BD%AC%E5%88%86%E6%9E%90%E4%B8%80%E4%BB%BD%E6%9C%A8%E9%A9%AC%E6%A0%B7%E6%9C%AC/" data-id="cmj2ejn230005lsvggt0o4uve" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://shanzade.github.io/2025/12/07/%E8%B7%9F%E7%9D%8052pojie%E5%A4%A7%E4%BD%AC%E5%88%86%E6%9E%90%E4%B8%80%E4%BB%BD%E6%9C%A8%E9%A9%AC%E6%A0%B7%E6%9C%AC/" data-id="cmjjqvfjn0007ekvgalrm76ss" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -193,7 +304,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://shanzade.github.io/2025/10/28/2024%E7%BD%91%E9%BC%8E%E6%9D%AF%E5%8D%8A%E5%86%B3%E8%B5%9B-cardmaster/" data-id="cmj2ejn1g0000lsvghohc7wgx" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://shanzade.github.io/2025/10/28/2024%E7%BD%91%E9%BC%8E%E6%9D%AF%E5%8D%8A%E5%86%B3%E8%B5%9B-cardmaster/" data-id="cmjjqvfje0000ekvgdahjfis7" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -301,7 +412,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://shanzade.github.io/2025/10/20/windows-%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/" data-id="cmj2ejn210004lsvg5ybo0uk4" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://shanzade.github.io/2025/10/20/windows-%E9%87%8D%E5%AE%9A%E4%BD%8D%E7%AE%80%E5%8D%95%E5%AD%A6%E4%B9%A0/" data-id="cmjjqvfjm0004ekvg1l1z912l" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -375,7 +486,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://shanzade.github.io/2025/07/29/cve-2025-6218-winrar%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E4%B8%8E%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90/" data-id="cmj2ejn1r0001lsvg0v70a9h6" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://shanzade.github.io/2025/07/29/cve-2025-6218-winrar%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E4%B8%8E%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90/" data-id="cmjjqvfjj0001ekvgbi1ih1tp" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -447,7 +558,7 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://shanzade.github.io/2024/11/27/gdbserver-%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95%E5%B0%8F%E6%80%BB%E7%BB%93/" data-id="cmj2ejn1z0003lsvgexu123iu" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://shanzade.github.io/2024/11/27/gdbserver-%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95%E5%B0%8F%E6%80%BB%E7%BB%93/" data-id="cmjjqvfjl0003ekvgamg04ckk" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
@@ -507,7 +618,7 @@
   <aside class="widget">
     <h3 class="widget-title">Categories</h3>
     <div class="widget-content">
-      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ctf%E6%99%AE%E9%80%9A/">ctf普通</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/cve%E5%A4%8D%E7%8E%B0/">cve复现</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/pwn/">pwn</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows-%E7%9B%B8%E5%85%B3/">windows 相关</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%88windows%EF%BC%89/">恶意代码分析（windows）</a><span class="category-list-count">1</span></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/ctf%E6%99%AE%E9%80%9A/">ctf普通</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/cve%E5%A4%8D%E7%8E%B0/">cve复现</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/pwn/">pwn</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/windows-%E7%9B%B8%E5%85%B3/">windows 相关</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%88windows%EF%BC%89/">恶意代码分析（windows）</a><span class="category-list-count">2</span></li></ul>
     </div>
   </aside>
 
@@ -517,6 +628,10 @@
     <h3 class="widget-title">Recents</h3>
     <div class="widget-content">
       <ul>
+        
+          <li>
+            <a href="/2025/12/20/si1verf0x-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/">si1verf0x #2: 对一份样本的浅分析（有待完善）</a>
+          </li>
         
           <li>
             <a href="/2025/12/07/%E8%B7%9F%E7%9D%8052pojie%E5%A4%A7%E4%BD%AC%E5%88%86%E6%9E%90%E4%B8%80%E4%BB%BD%E6%9C%A8%E9%A9%AC%E6%A0%B7%E6%9C%AC/">跟着52pojie大佬分析一份木马样本</a>
@@ -534,10 +649,6 @@
             <a href="/2025/07/29/cve-2025-6218-winrar%E7%9B%AE%E5%BD%95%E9%81%8D%E5%8E%86%E6%BC%8F%E6%B4%9E%E5%A4%8D%E7%8E%B0%E4%B8%8E%E7%AE%80%E5%8D%95%E5%88%86%E6%9E%90/">cve-2025-6218 winrar目录遍历漏洞复现与简单分析</a>
           </li>
         
-          <li>
-            <a href="/2024/11/27/gdbserver-%E8%BF%9C%E7%A8%8B%E8%B0%83%E8%AF%95%E5%B0%8F%E6%80%BB%E7%BB%93/">gdbserver 远程调试小总结</a>
-          </li>
-        
       </ul>
     </div>
   </aside>
@@ -552,8 +663,8 @@
       <footer id="colophon" role="contentinfo">
     <!-- <p>&copy; 2025 shanza
     All rights reserved.</p> -->
-    <p>&copy; 2025 shanza
-    ❤️ Hor1zon</p>
+    <p>&copy; 2025 shanza </p>
+    <!-- ❤️ Hor1zon</p> -->
     <p>Powered by <a href="http://hexo.io/" target="_blank">Hexo</a></p>
 </footer>
     <script>window._bd_share_config={"common":{"bdSnsKey":{},"bdText":"","bdMini":"1","bdMiniList":false,"bdPic":"","bdStyle":"2","bdSize":"16"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='/js/share.js'];</script>
