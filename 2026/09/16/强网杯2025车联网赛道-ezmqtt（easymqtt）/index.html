@@ -37,7 +37,7 @@
 <meta property="og:image" content="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/11.png">
 <meta property="og:image" content="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/12.png">
 <meta property="article:published_time" content="2026-09-16T13:34:01.000Z">
-<meta property="article:modified_time" content="2026-09-18T13:05:57.024Z">
+<meta property="article:modified_time" content="2026-09-18T13:17:09.916Z">
 <meta property="article:author" content="shanza">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/1.png">
@@ -98,13 +98,13 @@
         
         <div class="comments-link">
             
-            <a href="javascript:void(0);" data-url="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/" data-id="cmu6z56aq000di4vg4hisg9lp" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
+            <a href="javascript:void(0);" data-url="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/" data-id="cmu6zgjn7000b4ovg4das4juq" class="leave-reply bdsharebuttonbox" data-cmd="more">Share</a>
         </div><!-- .comments-link -->
       </header><!-- .entry-header -->
 
     <div class="entry-content">
       
-        <p><a href="./ezmqtt.zip">题目附件</a></p>
+        <p><a target="_blank" rel="noopener" href="https://github.com/shanzade/ctf_attachments/blob/main/ezmqtt.zip">题目附件</a></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Arch:     amd64-64-little</span><br><span class="line">RELRO:    Full RELRO</span><br><span class="line">Stack:    Canary found</span><br><span class="line">NX:       NX enabled</span><br><span class="line">PIE:      PIE enabled</span><br><span class="line">RUNPATH:  b&#x27;$ORIGIN&#x27;</span><br></pre></td></tr></table></figure>
 
 <p>题目提供了四份文件，<code>ld-linux-x86-64.so.2</code> 和 <code>libc.so.6</code> 库文件，<code>pwn</code> 主程序和 <code>libpaho-mqtt3c.so.1</code> mqtt 库。<br>mqtt 库是 github 上开源的一个项目；该赛道的另一道题 <code>babymqtt</code> 放入 ida9 中会自动识别 go 导入的库。<br><img src="/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/1.png"></p>
