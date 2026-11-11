@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
+<!DOCTYPE html><html lang="zh-cn"><head>
   <meta charset="utf-8">
-  <title>silverfox #2: 对一份样本的浅分析（有待完善） | shanza's hideout</title>
+  <title>silverfox #2: 对一份样本的浅分析（有待完善） | shanza's blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="keywords" content="">
@@ -12,12 +10,12 @@
 
   
 
-  <meta name="description" content="来源 样本https:&#x2F;&#x2F;www.52pojie.cn&#x2F;thread-2066929-1-1.html沙箱（其一，提示银狐）https:&#x2F;&#x2F;sandbox.ti.qianxin.com&#x2F;sandbox&#x2F;page&#x2F;detail?type&#x3D;file&amp;id&#x3D;AZoAiMSUONZSmF3-H7sC  初步分析64 位，无壳，5 个段。 dll 导入情况       直接运行（似乎是检测到虚拟机直">
+  <meta name="description" content="来源 样本https://www.52pojie.cn/thread-2066929-1-1.html沙箱（其一，提示银狐）https://sandbox.ti.qianxin.com/sandbox/page/detail?type=file&amp;id=AZoAiMSUONZSmF3-H7sC  初步分析64 位，无壳，5 个段。 dll 导入情况       直接运行（似乎是检测到虚拟机直">
 <meta property="og:type" content="article">
 <meta property="og:title" content="silverfox #2: 对一份样本的浅分析（有待完善）">
 <meta property="og:url" content="https://shanzade.github.io/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/index.html">
-<meta property="og:site_name" content="shanza&#39;s hideout">
-<meta property="og:description" content="来源 样本https:&#x2F;&#x2F;www.52pojie.cn&#x2F;thread-2066929-1-1.html沙箱（其一，提示银狐）https:&#x2F;&#x2F;sandbox.ti.qianxin.com&#x2F;sandbox&#x2F;page&#x2F;detail?type&#x3D;file&amp;id&#x3D;AZoAiMSUONZSmF3-H7sC  初步分析64 位，无壳，5 个段。 dll 导入情况       直接运行（似乎是检测到虚拟机直">
+<meta property="og:site_name" content="shanza's blog">
+<meta property="og:description" content="来源 样本https://www.52pojie.cn/thread-2066929-1-1.html沙箱（其一，提示银狐）https://sandbox.ti.qianxin.com/sandbox/page/detail?type=file&amp;id=AZoAiMSUONZSmF3-H7sC  初步分析64 位，无壳，5 个段。 dll 导入情况       直接运行（似乎是检测到虚拟机直">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://shanzade.github.io/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/1.png">
 <meta property="og:image" content="https://shanzade.github.io/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/2.png">
@@ -82,7 +80,7 @@
 <meta name="twitter:image" content="https://shanzade.github.io/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/1.png">
   <meta name="generator" content="Hexo 7.3.0">
   <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanzade.github.io/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/"},"headline":"silverfox #2: 对一份样本的浅分析（有待完善）","description":"来源 样本https://www.52pojie.cn/thread-2066929-1-1.html沙箱（其一，提示银狐）https://sandbox.ti.qianxin.com/sandbox/page/detail?type=file&amp;id=AZoAiMSUONZSmF3-H7sC 初步分析64 位，","datePublished":"2025-12-20T13:10:11.000Z","dateModified":"2026-10-27T14:01:44.723Z","author":{"@type":"Person","name":"shanza"},"publisher":{"@type":"Organization","name":"shanza's hideout","logo":{"@type":"ImageObject","url":"https://shanzade.github.io/favicon.ico"}}}
+{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanzade.github.io/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/"},"headline":"silverfox #2: 对一份样本的浅分析（有待完善）","description":"来源 样本https://www.52pojie.cn/thread-2066929-1-1.html沙箱（其一，提示银狐）https://sandbox.ti.qianxin.com/sandbox/page/detail?type=file&amp;id=AZoAiMSUONZSmF3-H7sC 初步分析64 位，","datePublished":"2025-12-20T13:10:11.000Z","dateModified":"2026-10-27T14:01:44.723Z","author":{"@type":"Person","name":"shanza"},"publisher":{"@type":"Organization","name":"shanza's blog","logo":{"@type":"ImageObject","url":"https://shanzade.github.io/favicon.ico"}}}
 </script>
 
   
@@ -99,7 +97,116 @@
   
 <script src="/js/theme_mode.js"></script>
 
-<!-- hexo injector head_end start --><style id="custom-font">
+<!-- hexo injector head_end start -->
+<style>
+#toc-list a{
+  text-decoration: none;
+  color:#333 !important;
+}
+#toc-desktop ul{
+  list-style: none;
+  padding-left: 3px;
+}
+
+/* 展开状态 */
+#toc-desktop {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 260px;
+
+  padding: 10px;
+
+  background: #fff;
+  border-left: 1px solid #ddd;
+
+  /* 关键：动画 */
+  transition: transform 0.25s ease;
+  will-change: transform;
+
+  color:#333;
+  font-size:1rem;
+  z-index: 9999;
+
+  display: flex;
+  flex-direction: column;
+  transform: translateX(0);
+}
+
+/* 收起状态：只露出 toggle */
+#toc-desktop.collapsed {
+  transform: translateX(calc(100%));
+}
+
+/* toggle 固定在可见边缘 */
+#toc-toggle {
+  position: absolute;
+  left: -30px;
+  top: 50%;
+  width: 80px;
+  height: 80px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  background: #fff;
+  border-left: 2px solid #ddd;
+  color: #333;
+  border-radius: 20%;
+  z-index:-1;
+  font-size: 25px;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  
+  padding:5px;
+}
+
+#toc-list {
+  flex: 1;
+  overflow-y: auto;/* 关键：滚动 */
+  overflow-x: hidden;
+  margin-left:5%;
+}
+#toc-mobile {
+  display: none;
+}
+
+/* indentation */
+.toc-lv-2 { margin-left: 12px; }
+.toc-lv-3 { margin-left: 24px; }
+.toc-lv-4 { margin-left: 36px; }
+
+#toc-title{
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin:10px auto;
+}
+@media (max-width: 1024px) {
+  #toc-desktop {
+    display: none;
+  }
+
+  #toc-mobile {
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 5%;
+    border-bottom: 1px solid #eee;
+    background: #fafafa;
+  }
+  #toc-mobile li{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+</style>
+
+
+  <style id="custom-font">
   @font-face {
     font-family: "Montserrat";
     src: url("/fonts/Montserrat-Regular.woff2") format("woff2");
@@ -174,7 +281,7 @@
   <header class="sea-header">
     <nav class="sea-nav-wrap">
   <div class="sea-nav-logo" title="">
-    <a href="/">shanza's hideout</a>
+    <a href="/">shanza's blog</a>
   </div>
   <div class="sea-nav-menus">
     <div id="sea-nav-toggle">
@@ -184,35 +291,19 @@
     <div id="sea-nav-dimmer"></div>
 <div class="sea-menu-wrap">
   
-    <a
-      class="sea-menu-link "
-      
-      href="/posts/"
-    >
+    <a class="sea-menu-link " href="/posts/">
       所有文章
     </a>
   
-    <a
-      class="sea-menu-link "
-      
-      href="/categories/"
-    >
+    <a class="sea-menu-link " href="/categories/">
       分类
     </a>
   
-    <a
-      class="sea-menu-link "
-      
-      href="/tags/"
-    >
+    <a class="sea-menu-link " href="/tags/">
       标签
     </a>
   
-    <a
-      class="sea-menu-link "
-      
-      href="/archives/"
-    >
+    <a class="sea-menu-link " href="/archives/">
       归档
     </a>
   
@@ -235,10 +326,113 @@
   </div>
 </nav>
   </header>
-  <main id="sea-main-wrapper" data-pagefind-body>
+  <div id="toc-mobile">
+    <div id="toc-title">Contents</div>
+    <ul id="toc-list-mobile">
+      
+        <li class="toc-lv-1">
+          <a href="#heading-0">silverfox #2: 对一份样本的浅分析（有待完善）</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#来源">来源</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#初步分析">初步分析</a>
+        </li>
+      
+        <li class="toc-lv-2">
+          <a href="#dll-导入情况">dll 导入情况</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#直接运行">直接运行</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#检测分辨率-反在线运行沙箱">检测分辨率 / 反在线运行沙箱</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#sub-140010ed0-检查虚拟机">sub_140010ed0 检查虚拟机</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#sub-1400040a0-反调试和解密加载库函数">sub_1400040a0 反调试和解密加载库函数</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#消息">消息</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#接下来">接下来</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#总结">总结</a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    <div id="toc-desktop" class="collapsed">
+      <div id="toc-toggle">&gt;</div>
+      <div id="toc-title">Contents</div>
+      <ul id="toc-list">
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#heading-0">silverfox #2: 对一份样本的浅分析（有待完善）</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#来源">来源</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#初步分析">初步分析</a>
+          </li>
+        
+          <li class="toc-item toc-lv-2">
+            <a href="#dll-导入情况">dll 导入情况</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#直接运行">直接运行</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#检测分辨率-反在线运行沙箱">检测分辨率 / 反在线运行沙箱</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#sub-140010ed0-检查虚拟机">sub_140010ed0 检查虚拟机</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#sub-1400040a0-反调试和解密加载库函数">sub_1400040a0 反调试和解密加载库函数</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#消息">消息</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#接下来">接下来</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#总结">总结</a>
+          </li>
+        
+      </ul>
+    </div>
+  
+  <main id="sea-main-wrapper" data-pagefind-body="">
     <article class="sea-page-card-wrapper">
   <header class="sea-article-header">
-    <h1 class="sea-article-title">silverfox #2: 对一份样本的浅分析（有待完善）</h1>
+    <h1 class="sea-article-title" id="heading-0">silverfox #2: 对一份样本的浅分析（有待完善）</h1>
     
       <div class="sea-post-meta sea-post-meta__center">
         <div class="sea-post-time">
@@ -260,7 +454,7 @@
     
     <div class="sea-article-content">
       <h1 id="来源"><a href="#来源" class="headerlink" title="来源"></a>来源</h1><blockquote>
-<p>样本<br><a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-2066929-1-1.html">https://www.52pojie.cn/thread-2066929-1-1.html</a><br>沙箱（其一，提示银狐）<br><a target="_blank" rel="noopener" href="https://sandbox.ti.qianxin.com/sandbox/page/detail?type=file&id=AZoAiMSUONZSmF3-H7sC">https://sandbox.ti.qianxin.com/sandbox/page/detail?type=file&amp;id=AZoAiMSUONZSmF3-H7sC</a></p>
+<p>样本<br><a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-2066929-1-1.html">https://www.52pojie.cn/thread-2066929-1-1.html</a><br>沙箱（其一，提示银狐）<br><a target="_blank" rel="noopener" href="https://sandbox.ti.qianxin.com/sandbox/page/detail?type=file&amp;id=AZoAiMSUONZSmF3-H7sC">https://sandbox.ti.qianxin.com/sandbox/page/detail?type=file&amp;id=AZoAiMSUONZSmF3-H7sC</a></p>
 </blockquote>
 <h1 id="初步分析"><a href="#初步分析" class="headerlink" title="初步分析"></a>初步分析</h1><p>64 位，无壳，5 个段。<br><img src="/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/1.png"></p>
 <h2 id="dll-导入情况"><a href="#dll-导入情况" class="headerlink" title="dll 导入情况"></a>dll 导入情况</h2><p><img src="/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/2.png"></p>
@@ -271,7 +465,7 @@
 <p><img src="/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/7.png"></p>
 <p><img src="/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/8.png"></p>
 <h1 id="直接运行"><a href="#直接运行" class="headerlink" title="直接运行"></a>直接运行</h1><p>（似乎是检测到虚拟机直接自毁了。）</p>
-<h1 id="检测分辨率-反在线运行沙箱"><a href="#检测分辨率-反在线运行沙箱" class="headerlink" title="检测分辨率 &#x2F; 反在线运行沙箱"></a>检测分辨率 &#x2F; 反在线运行沙箱</h1><p>似乎是利用了在线沙箱的 <code>1024*768</code> 分辨率的特点，这个木马运行之前首先会检测分辨率。<br>为什么这么说？第一次在虚拟机运行时，它会访问一个不存在的位置。</p>
+<h1 id="检测分辨率-反在线运行沙箱"><a href="#检测分辨率-反在线运行沙箱" class="headerlink" title="检测分辨率 / 反在线运行沙箱"></a>检测分辨率 / 反在线运行沙箱</h1><p>似乎是利用了在线沙箱的 <code>1024*768</code> 分辨率的特点，这个木马运行之前首先会检测分辨率。<br>为什么这么说？第一次在虚拟机运行时，它会访问一个不存在的位置。</p>
 <p><img src="/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/9.png"></p>
 <p>查看堆栈，发现返回指针为 <code>140010ea1</code>。跟踪，会看到一个 <code>memset</code>。</p>
 <p><img src="/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/10.png"></p>
@@ -280,8 +474,8 @@
 <p>虽说没有加壳，但是整个样本全是混淆加密（控制流平坦化？），用 api monitor 甚至截取不到上面 <code>memset</code> 的记录。<br>所以还是一步步动调了。先下断点。</p>
 <p><img src="/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/13.png"></p>
 <p>首先调用了 <code>GetDC()</code> 获取窗口句柄。<br><img src="/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/14.png"></p>
-<p>然后调用 <code>GetDeviceCaps()</code> 获取窗口信息。这里是获取了屏幕的宽度 <code>DESKTOPHORZRES</code> 0x76&#x3D;118。<br><img src="/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/15.png"><br><img src="/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/16.png"></p>
-<p>再往下走，获取屏幕高度 0x75&#x3D;117。<br><img src="/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/17.png"></p>
+<p>然后调用 <code>GetDeviceCaps()</code> 获取窗口信息。这里是获取了屏幕的宽度 <code>DESKTOPHORZRES</code> 0x76=118。<br><img src="/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/15.png"><br><img src="/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/16.png"></p>
+<p>再往下走，获取屏幕高度 0x75=117。<br><img src="/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/17.png"></p>
 <p>最后释放句柄。<br><img src="/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/18.png"></p>
 <p>问题来了，<code>140010a63</code> 这里，把刚才获取的屏幕宽度拿了出来，然后减去 0x780 即 1920。<br><img src="/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/19.png"><br>如果屏幕宽度小于这个数的话，不出意外就要跑到刚才 <code>memset</code> 的位置，从而报错。</p>
 <p>另外还有对高度的判断 <code>140010bc3</code>。<br><img src="/2025/12/20/silverfox-2-%E5%AF%B9%E4%B8%80%E4%BB%BD%E6%A0%B7%E6%9C%AC%E7%9A%84%E6%B5%85%E5%88%86%E6%9E%90%EF%BC%88%E6%9C%89%E5%BE%85%E5%AE%8C%E5%96%84%EF%BC%89/20.png"></p>
@@ -353,7 +547,7 @@
 
 
 
-<script defer>
+<script defer="">
   document.addEventListener('DOMContentLoaded', function () {
     const toggleIcon = document.querySelector('.sea-article-catalog-title .sea-svg-icon');
     const tocContent = document.querySelector('.sea-article-catalog > .toc');
@@ -370,13 +564,7 @@
   <div class="sea-footer-row">
     <div class="sea-footer-menu-link">
       
-        <a
-          class="sea-footer-link"
-          
-            target="_blank"
-          
-          href="https://github.com/shanzade"
-        >
+        <a class="sea-footer-link" target="_blank" href="https://github.com/shanzade">
           GitHub
         </a>
         <span class="sea-footer-link__dot">·</span>
@@ -405,10 +593,23 @@
   
 
 
-<script src="/js/main.js" defer></script>
+<script src="/js/main.js" defer=""></script>
 
 
-<script src="/js/theme.js" defer></script>
+<script src="/js/theme.js" defer=""></script>
 
-</body>
-</html>
+
+
+    <script>
+    (function () {
+      const tocDesktop = document.getElementById('toc-desktop');
+      const tocMobile = document.getElementById('toc-mobile');
+      const toc = tocDesktop || tocMobile;
+      if (!toc) return;
+      const toggle = document.getElementById('toc-toggle');
+      toggle.addEventListener('click', function () {
+        tocDesktop.classList.toggle('collapsed');//有则删 无则加
+      });
+    })();
+    </script>
+      </body></html>

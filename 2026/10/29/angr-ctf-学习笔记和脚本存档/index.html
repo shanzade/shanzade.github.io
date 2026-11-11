@@ -1,8 +1,6 @@
-<!DOCTYPE html>
-<html lang="zh-cn">
-<head>
+<!DOCTYPE html><html lang="zh-cn"><head>
   <meta charset="utf-8">
-  <title>angr-ctf 学习笔记和脚本存档 | shanza's hideout</title>
+  <title>angr-ctf 学习笔记和脚本存档 | shanza's blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="keywords" content="">
@@ -12,12 +10,12 @@
 
   
 
-  <meta name="description" content="参考https:&#x2F;&#x2F;www.cnblogs.com&#x2F;Node-Sans-Blog&#x2F;p&#x2F;14403013.htmlhttps:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV167411o7WK?t&#x3D;1043 00_angr_findimport angr project &#x3D; angr.Project(path_to_elf)# 指定程序，绝对或相对路径均可 init_state &#x3D; proj">
+  <meta name="description" content="参考https://www.cnblogs.com/Node-Sans-Blog/p/14403013.htmlhttps://www.bilibili.com/video/BV167411o7WK?t=1043 00_angr_findimport angr project = angr.Project(path_to_elf)# 指定程序，绝对或相对路径均可 init_state = proj">
 <meta property="og:type" content="article">
 <meta property="og:title" content="angr-ctf 学习笔记和脚本存档">
 <meta property="og:url" content="https://shanzade.github.io/2026/10/29/angr-ctf-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E5%92%8C%E8%84%9A%E6%9C%AC%E5%AD%98%E6%A1%A3/index.html">
-<meta property="og:site_name" content="shanza&#39;s hideout">
-<meta property="og:description" content="参考https:&#x2F;&#x2F;www.cnblogs.com&#x2F;Node-Sans-Blog&#x2F;p&#x2F;14403013.htmlhttps:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV167411o7WK?t&#x3D;1043 00_angr_findimport angr project &#x3D; angr.Project(path_to_elf)# 指定程序，绝对或相对路径均可 init_state &#x3D; proj">
+<meta property="og:site_name" content="shanza's blog">
+<meta property="og:description" content="参考https://www.cnblogs.com/Node-Sans-Blog/p/14403013.htmlhttps://www.bilibili.com/video/BV167411o7WK?t=1043 00_angr_findimport angr project = angr.Project(path_to_elf)# 指定程序，绝对或相对路径均可 init_state = proj">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-10-29T08:00:01.000Z">
 <meta property="article:modified_time" content="2026-10-29T08:01:25.807Z">
@@ -25,7 +23,7 @@
 <meta name="twitter:card" content="summary">
   <meta name="generator" content="Hexo 7.3.0">
   <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanzade.github.io/2026/10/29/angr-ctf-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E5%92%8C%E8%84%9A%E6%9C%AC%E5%AD%98%E6%A1%A3/"},"headline":"angr-ctf 学习笔记和脚本存档","description":"参考https://www.cnblogs.com/Node-Sans-Blog/p/14403013.htmlhttps://www.bilibili.com/video/BV167411o7WK?t=1043 00_angr_findimport angr project = angr.Project(path_t","datePublished":"2026-10-29T08:00:01.000Z","dateModified":"2026-10-29T08:01:25.807Z","author":{"@type":"Person","name":"shanza"},"publisher":{"@type":"Organization","name":"shanza's hideout","logo":{"@type":"ImageObject","url":"https://shanzade.github.io/favicon.ico"}}}
+{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanzade.github.io/2026/10/29/angr-ctf-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E5%92%8C%E8%84%9A%E6%9C%AC%E5%AD%98%E6%A1%A3/"},"headline":"angr-ctf 学习笔记和脚本存档","description":"参考https://www.cnblogs.com/Node-Sans-Blog/p/14403013.htmlhttps://www.bilibili.com/video/BV167411o7WK?t=1043 00_angr_findimport angr project = angr.Project(path_t","datePublished":"2026-10-29T08:00:01.000Z","dateModified":"2026-10-29T08:01:25.807Z","author":{"@type":"Person","name":"shanza"},"publisher":{"@type":"Organization","name":"shanza's blog","logo":{"@type":"ImageObject","url":"https://shanzade.github.io/favicon.ico"}}}
 </script>
 
   
@@ -42,7 +40,116 @@
   
 <script src="/js/theme_mode.js"></script>
 
-<!-- hexo injector head_end start --><style id="custom-font">
+<!-- hexo injector head_end start -->
+<style>
+#toc-list a{
+  text-decoration: none;
+  color:#333 !important;
+}
+#toc-desktop ul{
+  list-style: none;
+  padding-left: 3px;
+}
+
+/* 展开状态 */
+#toc-desktop {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 260px;
+
+  padding: 10px;
+
+  background: #fff;
+  border-left: 1px solid #ddd;
+
+  /* 关键：动画 */
+  transition: transform 0.25s ease;
+  will-change: transform;
+
+  color:#333;
+  font-size:1rem;
+  z-index: 9999;
+
+  display: flex;
+  flex-direction: column;
+  transform: translateX(0);
+}
+
+/* 收起状态：只露出 toggle */
+#toc-desktop.collapsed {
+  transform: translateX(calc(100%));
+}
+
+/* toggle 固定在可见边缘 */
+#toc-toggle {
+  position: absolute;
+  left: -30px;
+  top: 50%;
+  width: 80px;
+  height: 80px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  background: #fff;
+  border-left: 2px solid #ddd;
+  color: #333;
+  border-radius: 20%;
+  z-index:-1;
+  font-size: 25px;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  
+  padding:5px;
+}
+
+#toc-list {
+  flex: 1;
+  overflow-y: auto;/* 关键：滚动 */
+  overflow-x: hidden;
+  margin-left:5%;
+}
+#toc-mobile {
+  display: none;
+}
+
+/* indentation */
+.toc-lv-2 { margin-left: 12px; }
+.toc-lv-3 { margin-left: 24px; }
+.toc-lv-4 { margin-left: 36px; }
+
+#toc-title{
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin:10px auto;
+}
+@media (max-width: 1024px) {
+  #toc-desktop {
+    display: none;
+  }
+
+  #toc-mobile {
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 5%;
+    border-bottom: 1px solid #eee;
+    background: #fafafa;
+  }
+  #toc-mobile li{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+</style>
+
+
+  <style id="custom-font">
   @font-face {
     font-family: "Montserrat";
     src: url("/fonts/Montserrat-Regular.woff2") format("woff2");
@@ -117,7 +224,7 @@
   <header class="sea-header">
     <nav class="sea-nav-wrap">
   <div class="sea-nav-logo" title="">
-    <a href="/">shanza's hideout</a>
+    <a href="/">shanza's blog</a>
   </div>
   <div class="sea-nav-menus">
     <div id="sea-nav-toggle">
@@ -127,35 +234,19 @@
     <div id="sea-nav-dimmer"></div>
 <div class="sea-menu-wrap">
   
-    <a
-      class="sea-menu-link "
-      
-      href="/posts/"
-    >
+    <a class="sea-menu-link " href="/posts/">
       所有文章
     </a>
   
-    <a
-      class="sea-menu-link "
-      
-      href="/categories/"
-    >
+    <a class="sea-menu-link " href="/categories/">
       分类
     </a>
   
-    <a
-      class="sea-menu-link "
-      
-      href="/tags/"
-    >
+    <a class="sea-menu-link " href="/tags/">
       标签
     </a>
   
-    <a
-      class="sea-menu-link "
-      
-      href="/archives/"
-    >
+    <a class="sea-menu-link " href="/archives/">
       归档
     </a>
   
@@ -178,10 +269,241 @@
   </div>
 </nav>
   </header>
-  <main id="sea-main-wrapper" data-pagefind-body>
+  <div id="toc-mobile">
+    <div id="toc-title">Contents</div>
+    <ul id="toc-list-mobile">
+      
+        <li class="toc-lv-1">
+          <a href="#heading-0">angr-ctf 学习笔记和脚本存档</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#参考">参考</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#00-angr-find">00_angr_find</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#01-angr-avoid">01_angr_avoid</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#02-angr-find-condition">02_angr_find_condition</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#03-angr-symbolic-registers">03_angr_symbolic_registers</a>
+        </li>
+      
+        <li class="toc-lv-2">
+          <a href="#补充">补充</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#04-angr-symbolic-stack">04_angr_symbolic_stack</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#05-angr-symbolic-memory">05_angr_symbolic_memory</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#06-angr-symbolic-dynamic-memory">06_angr_symbolic_dynamic_memory</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#07-angr-symbolic-file">07_angr_symbolic_file</a>
+        </li>
+      
+        <li class="toc-lv-2">
+          <a href="#法-1-伪造文件法">法 1 伪造文件法</a>
+        </li>
+      
+        <li class="toc-lv-2">
+          <a href="#法-2-改全局变量（bss）">法 2 改全局变量（bss）</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#08-angr-constraints">08_angr_constraints</a>
+        </li>
+      
+        <li class="toc-lv-2">
+          <a href="#补充-1">补充</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#09-angr-hooks">09_angr_hooks</a>
+        </li>
+      
+        <li class="toc-lv-2">
+          <a href="#补充-2">补充</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#10-angr-simprocedures">10_angr_simprocedures</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#11-angr-sim-scanf">11_angr_sim_scanf</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#12-angr-veritesting">12_angr_veritesting</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#13-angr-static-binary">13_angr_static_binary</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#14-angr-shared-library">14_angr_shared_library</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#15-arbitrary-read">15_arbitrary_read</a>
+        </li>
+      
+        <li class="toc-lv-2">
+          <a href="#补充-3">补充</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#16-angr-arbitrary-write（hard）">16_angr_arbitrary_write（hard）</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#17-angr-arbitrary-jump">17_angr_arbitrary_jump</a>
+        </li>
+      
+        <li class="toc-lv-1">
+          <a href="#其他">其他</a>
+        </li>
+      
+    </ul>
+  </div>
+  
+    <div id="toc-desktop" class="collapsed">
+      <div id="toc-toggle">&gt;</div>
+      <div id="toc-title">Contents</div>
+      <ul id="toc-list">
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#heading-0">angr-ctf 学习笔记和脚本存档</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#参考">参考</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#00-angr-find">00_angr_find</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#01-angr-avoid">01_angr_avoid</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#02-angr-find-condition">02_angr_find_condition</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#03-angr-symbolic-registers">03_angr_symbolic_registers</a>
+          </li>
+        
+          <li class="toc-item toc-lv-2">
+            <a href="#补充">补充</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#04-angr-symbolic-stack">04_angr_symbolic_stack</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#05-angr-symbolic-memory">05_angr_symbolic_memory</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#06-angr-symbolic-dynamic-memory">06_angr_symbolic_dynamic_memory</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#07-angr-symbolic-file">07_angr_symbolic_file</a>
+          </li>
+        
+          <li class="toc-item toc-lv-2">
+            <a href="#法-1-伪造文件法">法 1 伪造文件法</a>
+          </li>
+        
+          <li class="toc-item toc-lv-2">
+            <a href="#法-2-改全局变量（bss）">法 2 改全局变量（bss）</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#08-angr-constraints">08_angr_constraints</a>
+          </li>
+        
+          <li class="toc-item toc-lv-2">
+            <a href="#补充-1">补充</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#09-angr-hooks">09_angr_hooks</a>
+          </li>
+        
+          <li class="toc-item toc-lv-2">
+            <a href="#补充-2">补充</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#10-angr-simprocedures">10_angr_simprocedures</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#11-angr-sim-scanf">11_angr_sim_scanf</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#12-angr-veritesting">12_angr_veritesting</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#13-angr-static-binary">13_angr_static_binary</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#14-angr-shared-library">14_angr_shared_library</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#15-arbitrary-read">15_arbitrary_read</a>
+          </li>
+        
+          <li class="toc-item toc-lv-2">
+            <a href="#补充-3">补充</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#16-angr-arbitrary-write（hard）">16_angr_arbitrary_write（hard）</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#17-angr-arbitrary-jump">17_angr_arbitrary_jump</a>
+          </li>
+        
+          <li class="toc-item toc-lv-1">
+            <a href="#其他">其他</a>
+          </li>
+        
+      </ul>
+    </div>
+  
+  <main id="sea-main-wrapper" data-pagefind-body="">
     <article class="sea-page-card-wrapper">
   <header class="sea-article-header">
-    <h1 class="sea-article-title">angr-ctf 学习笔记和脚本存档</h1>
+    <h1 class="sea-article-title" id="heading-0">angr-ctf 学习笔记和脚本存档</h1>
     
       <div class="sea-post-meta sea-post-meta__center">
         <div class="sea-post-time">
@@ -207,7 +529,7 @@
 project <span class="token operator">=</span> angr<span class="token punctuation">.</span>Project<span class="token punctuation">(</span>path_to_elf<span class="token punctuation">)</span><span class="token comment"># 指定程序，绝对或相对路径均可</span>
 init_state <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>entry_state<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token comment"># 设置入口状态（unicorn）</span>
 sm <span class="token operator">=</span> proj<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>simulation_manager<span class="token punctuation">(</span>init_state<span class="token punctuation">)</span><span class="token comment"># 执行。使用 simgr 同理</span>
-sm <span class="token operator">=</span> sm<span class="token punctuation">.</span>explore<span class="token punctuation">(</span>find<span class="token operator">=</span><span class="token operator">&lt;</span>0xaddr<span class="token operator">></span><span class="token punctuation">)</span><span class="token comment"># 探索到达某个地址的路径</span>
+sm <span class="token operator">=</span> sm<span class="token punctuation">.</span>explore<span class="token punctuation">(</span>find<span class="token operator">=</span><span class="token operator">&lt;</span>0xaddr<span class="token operator">&gt;</span><span class="token punctuation">)</span><span class="token comment"># 探索到达某个地址的路径</span>
 final_state <span class="token operator">=</span> sm<span class="token punctuation">.</span>found<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span> <span class="token comment"># 0 代表找到的第一个结果</span>
 final_state<span class="token punctuation">.</span>posix<span class="token punctuation">.</span>dumps<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span> <span class="token comment"># 导出结果，0 代表 stdin，1 代表 stdout</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p><code>factory.entry_state()</code> 可省。</p>
@@ -248,7 +570,7 @@ simulation<span class="token punctuation">.</span>explore<span class="token punc
 simulation<span class="token punctuation">.</span>explore<span class="token punctuation">(</span>find<span class="token operator">=</span>is_successful<span class="token punctuation">,</span> avoid<span class="token operator">=</span>should_abort<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
-<h1 id="03-angr-symbolic-registers"><a href="#03-angr-symbolic-registers" class="headerlink" title="03_angr_symbolic_registers"></a>03_angr_symbolic_registers</h1><p>因为 angr 不支持 <code>scanf(&quot;%x %x&quot;)</code> 的这种形式，所以在某些情况下可能需要手动直接设置寄存器的值。</p>
+<h1 id="03-angr-symbolic-registers"><a href="#03-angr-symbolic-registers" class="headerlink" title="03_angr_symbolic_registers"></a>03_angr_symbolic_registers</h1><p>因为 angr 不支持 <code>scanf("%x %x")</code> 的这种形式，所以在某些情况下可能需要手动直接设置寄存器的值。</p>
 <p>首先，需要指定从哪里开始（跳过 <code>scanf</code> 之类的输入）</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># Sometimes, you want to specify where the program should start. The variable</span>
 <span class="token comment"># start_address will specify where the symbolic execution engine should begin.</span>
@@ -257,8 +579,8 @@ simulation<span class="token punctuation">.</span>explore<span class="token punc
 start_address <span class="token operator">=</span> argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>  <span class="token comment"># :integer (probably hexadecimal)</span>
 initial_state <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>blank_state<span class="token punctuation">(</span>
   addr<span class="token operator">=</span>start_address<span class="token punctuation">,</span>
-  add_options <span class="token operator">=</span> <span class="token punctuation">&#123;</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
-                  angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">&#125;</span>
+  add_options <span class="token operator">=</span> <span class="token punctuation">{</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
+                  angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">}</span>
 <span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>随后使用 bitvectors 设置可自定义的值</p>
@@ -316,7 +638,7 @@ simulation <span class="token operator">=</span> project<span class="token punct
   <span class="token comment"># Aggregate and format the solutions you computed above, and then print</span>
   <span class="token comment"># the full string. Pay attention to the order of the integers, and the</span>
   <span class="token comment"># expected base (decimal, octal, hexadecimal, etc).</span>
-  solution <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f'</span><span class="token interpolation"><span class="token punctuation">&#123;</span><span class="token builtin">hex</span><span class="token punctuation">(</span>solution0<span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string"> </span><span class="token interpolation"><span class="token punctuation">&#123;</span><span class="token builtin">hex</span><span class="token punctuation">(</span>solution1<span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string"> </span><span class="token interpolation"><span class="token punctuation">&#123;</span><span class="token builtin">hex</span><span class="token punctuation">(</span>solution2<span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string">'</span></span>  <span class="token comment"># :string </span>
+  solution <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f'</span><span class="token interpolation"><span class="token punctuation">{</span><span class="token builtin">hex</span><span class="token punctuation">(</span>solution0<span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string"> </span><span class="token interpolation"><span class="token punctuation">{</span><span class="token builtin">hex</span><span class="token punctuation">(</span>solution1<span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string"> </span><span class="token interpolation"><span class="token punctuation">{</span><span class="token builtin">hex</span><span class="token punctuation">(</span>solution2<span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string">'</span></span>  <span class="token comment"># :string </span>
   <span class="token keyword">print</span><span class="token punctuation">(</span>solution<span class="token punctuation">)</span>
 <span class="token keyword">else</span><span class="token punctuation">:</span>
   <span class="token keyword">raise</span> Exception<span class="token punctuation">(</span><span class="token string">'Could not find the solution'</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
@@ -405,7 +727,7 @@ simulation <span class="token operator">=</span> project<span class="token punct
 <span class="token comment">#   lea    -0xc(%ebp),%eax</span>
 <span class="token comment">#   push   %eax</span>
 <span class="token comment">#   push   $0x80489c3</span>
-<span class="token comment">#   call   8048370 &lt;__isoc99_scanf@plt></span>
+<span class="token comment">#   call   8048370 &lt;__isoc99_scanf@plt&gt;</span>
 <span class="token comment">#   add    $0x10,%esp</span>
 <span class="token comment"># Now, the question is: do we start on the instruction immediately following</span>
 <span class="token comment"># scanf (add $0x10,%esp), or the instruction following that (not shown)?</span>
@@ -417,11 +739,11 @@ simulation <span class="token operator">=</span> project<span class="token punct
 start_address <span class="token operator">=</span> <span class="token builtin">int</span><span class="token punctuation">(</span>argv<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span> <span class="token number">16</span><span class="token punctuation">)</span><span class="token comment"># remember to int()</span>
 initial_state <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>blank_state<span class="token punctuation">(</span>
   addr<span class="token operator">=</span>start_address<span class="token punctuation">,</span>
-  add_options <span class="token operator">=</span> <span class="token punctuation">&#123;</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
-                  angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">&#125;</span>
+  add_options <span class="token operator">=</span> <span class="token punctuation">{</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
+                  angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">}</span>
 <span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>然后就是计算，当 main 函数调用 handle_user 时，该函数的栈大小应该是什么情况？<br>按照初始情况 <code> 8049385:	89 e5 mov ebp,esp</code> 来看，应该先让 ebp &#x3D; esp。<br><code>initial_state.regs.ebp = initial_state.regs.esp</code></p>
+<p>然后就是计算，当 main 函数调用 handle_user 时，该函数的栈大小应该是什么情况？<br>按照初始情况 <code> 8049385:	89 e5 mov ebp,esp</code> 来看，应该先让 ebp = esp。<br><code>initial_state.regs.ebp = initial_state.regs.esp</code></p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># We are jumping into the middle of a function! Therefore, we need to account</span>
 <span class="token comment"># for how the function constructs the stack. The second instruction of the</span>
 <span class="token comment"># function is:</span>
@@ -432,7 +754,7 @@ initial_state <span class="token operator">=</span> project<span class="token pu
 <span class="token comment"># the stack space. Since esp was decreased by 0x18</span>
 <span class="token comment">#</span>
 <span class="token comment">#        /-------- The stack --------\</span>
-<span class="token comment"># ebp -> |                           |</span>
+<span class="token comment"># ebp -&gt; |                           |</span>
 <span class="token comment">#        |---------------------------|</span>
 <span class="token comment">#        |                           |</span>
 <span class="token comment">#        |---------------------------|</span>
@@ -440,7 +762,7 @@ initial_state <span class="token operator">=</span> project<span class="token pu
 <span class="token comment">#         . . . Somewhere in here is</span>
 <span class="token comment">#         . . . the data that stores</span>
 <span class="token comment">#         . . . the result of scanf.</span>
-<span class="token comment"># esp -> |                           |</span>
+<span class="token comment"># esp -&gt; |                           |</span>
 <span class="token comment">#        \---------------------------/</span>
 <span class="token comment">#</span>
 <span class="token comment"># Since we are starting after scanf, we are skipping this stack construction</span>
@@ -460,7 +782,7 @@ password0 <span class="token operator">=</span> claripy<span class="token punctu
 password1 <span class="token operator">=</span> claripy<span class="token punctuation">.</span>BVS<span class="token punctuation">(</span><span class="token string">'password1'</span><span class="token punctuation">,</span> size_of_password<span class="token punctuation">)</span>
 <span class="token comment"># ...</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>接下来就要计算 padding 了，因为这两个变量都不是紧挨着 ebp 的，从传参的指令就可以得知。<br>为什么是 8 呢？因为 8 + 4 &#x3D; 0xc，正好就是 password0 的起始位置。<br>一开始算出来是 10 纯属算成十进制了。<br><code>initial_state.regs.esp -= padding_length_in_bytes</code></p>
+<p>接下来就要计算 padding 了，因为这两个变量都不是紧挨着 ebp 的，从传参的指令就可以得知。<br>为什么是 8 呢？因为 8 + 4 = 0xc，正好就是 password0 的起始位置。<br>一开始算出来是 10 纯属算成十进制了。<br><code>initial_state.regs.esp -= padding_length_in_bytes</code></p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># Here is the hard part. We need to figure out what the stack looks like, at</span>
 <span class="token comment"># least well enough to inject our symbols where we want them. In order to do</span>
 <span class="token comment"># that, let's figure out what the parameters of scanf are:</span>
@@ -470,7 +792,7 @@ password1 <span class="token operator">=</span> claripy<span class="token punctu
 <span class="token comment">#   lea    -0xc(%ebp),%eax</span>
 <span class="token comment">#   push   %eax</span>
 <span class="token comment">#   push   $0x80489c3</span>
-<span class="token comment">#   call   8048370 &lt;__isoc99_scanf@plt></span>
+<span class="token comment">#   call   8048370 &lt;__isoc99_scanf@plt&gt;</span>
 <span class="token comment">#   add    $0x10,%esp </span>
 <span class="token comment"># As you can see, the call to scanf looks like this:</span>
 <span class="token comment"># scanf(  0x80489c3,   ebp - 0xc,   ebp - 0x10  )</span>
@@ -478,7 +800,7 @@ password1 <span class="token operator">=</span> claripy<span class="token punctu
 <span class="token comment">#  From this, we can construct our new, more accurate stack diagram:</span>
 <span class="token comment">#</span>
 <span class="token comment">#            /-------- The stack --------\</span>
-<span class="token comment"># ebp ->     |          padding          |</span>
+<span class="token comment"># ebp -&gt;     |          padding          |</span>
 <span class="token comment">#            |---------------------------|</span>
 <span class="token comment"># ebp - 0x01 |       more padding        |</span>
 <span class="token comment">#            |---------------------------|</span>
@@ -498,7 +820,7 @@ password1 <span class="token operator">=</span> claripy<span class="token punctu
 <span class="token comment">#            |---------------------------|</span>
 <span class="token comment">#                        . . .</span>
 <span class="token comment">#            |---------------------------|</span>
-<span class="token comment"># esp ->     |                           |</span>
+<span class="token comment"># esp -&gt;     |                           |</span>
 <span class="token comment">#            \---------------------------/</span>
 <span class="token comment">#</span>
 <span class="token comment"># Figure out how much space there is and allocate the necessary padding to</span>
@@ -635,8 +957,8 @@ initial_state<span class="token punctuation">.</span>stack_push<span class="toke
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">start_address <span class="token operator">=</span> <span class="token number">0x804929c</span>
 initial_state <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>blank_state<span class="token punctuation">(</span>
   addr<span class="token operator">=</span>start_address<span class="token punctuation">,</span>
-  add_options <span class="token operator">=</span> <span class="token punctuation">&#123;</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
-                  angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">&#125;</span>
+  add_options <span class="token operator">=</span> <span class="token punctuation">{</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
+                  angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">}</span>
 <span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>接下来是设置各个参数，根据提示，分别是 4 个 8 字节字符串，从汇编也可以看到。</p>
@@ -847,8 +1169,8 @@ initial_state<span class="token punctuation">.</span>memory<span class="token pu
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">start_address <span class="token operator">=</span> <span class="token number">0x80492f3</span>
 initial_state <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>blank_state<span class="token punctuation">(</span>
   addr<span class="token operator">=</span>start_address<span class="token punctuation">,</span>
-  add_options <span class="token operator">=</span> <span class="token punctuation">&#123;</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
-                  angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">&#125;</span>
+  add_options <span class="token operator">=</span> <span class="token punctuation">{</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
+                  angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">}</span>
 <span class="token punctuation">)</span>
 
 <span class="token comment"># The binary is calling scanf("%8s %8s").</span>
@@ -878,7 +1200,7 @@ pointer_to_malloc_memory_address1 <span class="token operator">=</span> <span cl
 initial_state<span class="token punctuation">.</span>memory<span class="token punctuation">.</span>store<span class="token punctuation">(</span>pointer_to_malloc_memory_address1<span class="token punctuation">,</span> fake_heap_address1<span class="token punctuation">,</span> endness<span class="token operator">=</span>project<span class="token punctuation">.</span>arch<span class="token punctuation">.</span>memory_endness<span class="token punctuation">)</span>
 <span class="token comment"># ...</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>依旧指定前面设置好的符号进行枚举 &#x2F; 爆破。</p>
+<p>依旧指定前面设置好的符号进行枚举 / 爆破。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># Store our symbolic values at our fake_heap_address. Look at the binary to</span>
 <span class="token comment"># determine the offsets from the fake_heap_address where scanf writes.</span>
 <span class="token comment"># (!)</span>
@@ -893,7 +1215,7 @@ initial_state<span class="token punctuation">.</span>memory<span class="token pu
   solution0 <span class="token operator">=</span> solution_state<span class="token punctuation">.</span>solver<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span>password0<span class="token punctuation">,</span>cast_to<span class="token operator">=</span><span class="token builtin">bytes</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span>
   solution1 <span class="token operator">=</span> solution_state<span class="token punctuation">.</span>solver<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span>password1<span class="token punctuation">,</span>cast_to<span class="token operator">=</span><span class="token builtin">bytes</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span>
   <span class="token comment"># ...</span>
-  solution <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f'</span><span class="token interpolation"><span class="token punctuation">&#123;</span>solution0<span class="token punctuation">&#125;</span></span><span class="token string"> </span><span class="token interpolation"><span class="token punctuation">&#123;</span>solution1<span class="token punctuation">&#125;</span></span><span class="token string">'</span></span><span class="token comment">#???</span>
+  solution <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f'</span><span class="token interpolation"><span class="token punctuation">{</span>solution0<span class="token punctuation">}</span></span><span class="token string"> </span><span class="token interpolation"><span class="token punctuation">{</span>solution1<span class="token punctuation">}</span></span><span class="token string">'</span></span><span class="token comment">#???</span>
 
   <span class="token keyword">print</span><span class="token punctuation">(</span>solution<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
@@ -956,8 +1278,8 @@ initial_state<span class="token punctuation">.</span>memory<span class="token pu
  804936a:	e8 31 fd ff ff       	call   80490a0 &lt;unlink@plt&gt;
  804936f:	83 c4 10             	add    esp,0x10
  8049372:	83 ec 08             	sub    esp,0x8
- 8049375:	68 23 a0 04 08       	push   0x804a023 ; &quot;a+b&quot;
- 804937a:	68 16 a0 04 08       	push   0x804a016 ; &quot;FYIVHXYF.txt&quot;
+ 8049375:	68 23 a0 04 08       	push   0x804a023 ; "a+b"
+ 804937a:	68 16 a0 04 08       	push   0x804a016 ; "FYIVHXYF.txt"
  804937f:	e8 7c fd ff ff       	call   8049100 &lt;fopen@plt&gt;
  8049384:	83 c4 10             	add    esp,0x10
  8049387:	89 45 f0             	mov    DWORD PTR [ebp-0x10],eax
@@ -1162,8 +1484,8 @@ initial_state<span class="token punctuation">.</span>memory<span class="token pu
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">start_address <span class="token operator">=</span> <span class="token number">0x804946f</span>
 initial_state <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>blank_state<span class="token punctuation">(</span>
   addr<span class="token operator">=</span>start_address<span class="token punctuation">,</span>
-  add_options <span class="token operator">=</span> <span class="token punctuation">&#123;</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
-                  angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">&#125;</span>
+  add_options <span class="token operator">=</span> <span class="token punctuation">{</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
+                  angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">}</span>
 <span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>指定文件名和文件大小，文件名上面分析出来了，文件大小注释给出了。</p>
@@ -1213,15 +1535,15 @@ password <span class="token operator">=</span> claripy<span class="token punctua
 <span class="token comment"># (!)</span>
 password_file <span class="token operator">=</span> angr<span class="token punctuation">.</span>storage<span class="token punctuation">.</span>SimFile<span class="token punctuation">(</span>filename<span class="token punctuation">,</span> content<span class="token operator">=</span>password<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>插入对应文件名的文件 &#96;state.fs.insert(filename, SimFileObject)。</p>
+<p>插入对应文件名的文件 `state.fs.insert(filename, SimFileObject)。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># Add the symbolic file we created to the symbolic filesystem.</span>
 initial_state<span class="token punctuation">.</span>fs<span class="token punctuation">.</span>insert<span class="token punctuation">(</span>filename<span class="token punctuation">,</span> password_file<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 
 <p>看 scaffold 的话似乎到这里就全部写完了，但是没有，此时直接执行会提示：</p>
-<pre class="line-numbers language-none"><code class="language-none">    solution &#x3D; solution_state.solver.eval(password,cast_to&#x3D;bytes).decode()
-UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0x80 in position 16: invalid start byte<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
+<pre class="line-numbers language-none"><code class="language-none">    solution = solution_state.solver.eval(password,cast_to=bytes).decode()
+UnicodeDecodeError: 'utf-8' codec can't decode byte 0x80 in position 16: invalid start byte<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre>
 <p>明显不对啊，题目要求肯定是可见字符的，怎么可能有不可见字符呢？<br>看看不解码的输出。</p>
-<pre class="line-numbers language-none"><code class="language-none">b&#39;PQLEVKCJ\x00\x01\x00\x00\x00\x00\x01\x01\x80\x00\x00\x00\x01\x80 \x00\x00\x04\x80\x00\x04\x00\x00\x01\x00\x01\x04\x04\x08\x00\x02\x08\x00\x02\x00\x00\x02\x01\x00\x00\x01\x08\x04\x02\x00\x02\x00\x08\x02\x01@\x00\x00\x00\x00\x00&#39;<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
+<pre class="line-numbers language-none"><code class="language-none">b'PQLEVKCJ\x00\x01\x00\x00\x00\x00\x01\x01\x80\x00\x00\x00\x01\x80 \x00\x00\x04\x80\x00\x04\x00\x00\x01\x00\x01\x04\x04\x08\x00\x02\x08\x00\x02\x00\x00\x02\x01\x00\x00\x01\x08\x04\x02\x00\x02\x00\x08\x02\x01@\x00\x00\x00\x00\x00'<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre>
 <p>发现只有前 8 个字符是有效的，后面全是垃圾内容。<br>也就是说，其实不应该是读取 64 个字符，而是读取前 8 个字符是有效的。<br>其实看汇编好像也能看出来：</p>
 <pre class="line-numbers language-none"><code class="language-none">80494d5:	c7 45 f4 00 00 00 00 	mov    DWORD PTR [ebp-0xc],0x0 ; 计数器 for 第1块
 80494dc:	eb 2d                	jmp    804950b &lt;main+0xf8&gt; ; 跳转到比较条件 for 第2块
@@ -1229,11 +1551,11 @@ UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0x80 in position
 80494e1:	05 a0 c0 04 08       	add    eax,0x804c0a0 ; buffer 内容指针
 80494e6:	0f b6 00             	movzx  eax,BYTE PTR [eax] ; 提取内容
 80494e9:	0f be c0             	movsx  eax,al ; 保留 char 1字节
-80494ec:	83 ec 08             	sub    esp,0x8 ; &#x3D;&#x3D;&#x3D;&#x3D; complex_function start
+80494ec:	83 ec 08             	sub    esp,0x8 ; ==== complex_function start
 80494ef:	ff 75 f4             	push   DWORD PTR [ebp-0xc]
 80494f2:	50                   	push   eax
 80494f3:	e8 6c fd ff ff       	call   8049264 &lt;complex_function&gt; ; 对文件内容变换
-80494f8:	83 c4 10             	add    esp,0x10 ;  &#x3D;&#x3D;&#x3D;&#x3D; complex_function end
+80494f8:	83 c4 10             	add    esp,0x10 ;  ==== complex_function end
 80494fb:	89 c2                	mov    edx,eax
 80494fd:	8b 45 f4             	mov    eax,DWORD PTR [ebp-0xc] ; i
 8049500:	05 a0 c0 04 08       	add    eax,0x804c0a0 ; buffer + i 移动指针
@@ -1264,10 +1586,10 @@ UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0x80 in position
     start_addr <span class="token operator">=</span> <span class="token number">0x80494d5</span><span class="token comment"># 执行完 unlink 之后就开始变换了</span>
     init_state <span class="token operator">=</span> proj<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>blank_state<span class="token punctuation">(</span>
         addr<span class="token operator">=</span>start_addr<span class="token punctuation">,</span> 
-        add_options <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+        add_options <span class="token operator">=</span> <span class="token punctuation">{</span>
             angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span> 
             angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">,</span> 
-        <span class="token punctuation">&#125;</span>
+        <span class="token punctuation">}</span>
     <span class="token punctuation">)</span>
     
     <span class="token comment"># 定义符号</span>
@@ -1403,28 +1725,28 @@ UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0x80 in position
  8049375:	8d 61 fc             	lea    esp,[ecx-0x4]
  8049378:	c3                   	ret    <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<pre class="line-numbers language-none"><code class="language-none"># #define REFERENCE_PASSWORD &#x3D; &quot;AABBCCDDEEFFGGHH&quot;;
-# int check_equals_AABBCCDDEEFFGGHH(char* to_check, size_t length) &#123;
-#   uint32_t num_correct &#x3D; 0;
-#   for (int i&#x3D;0; i&lt;length; ++i) &#123;
-#     if (to_check[i] &#x3D;&#x3D; REFERENCE_PASSWORD[i]) &#123;
-#       num_correct +&#x3D; 1;
-#     &#125;
-#   &#125;
-#   return num_correct &#x3D;&#x3D; length;
-# &#125;
+<pre class="line-numbers language-none"><code class="language-none"># #define REFERENCE_PASSWORD = "AABBCCDDEEFFGGHH";
+# int check_equals_AABBCCDDEEFFGGHH(char* to_check, size_t length) {
+#   uint32_t num_correct = 0;
+#   for (int i=0; i&lt;length; ++i) {
+#     if (to_check[i] == REFERENCE_PASSWORD[i]) {
+#       num_correct += 1;
+#     }
+#   }
+#   return num_correct == length;
+# }
 #
 # ...
 # 
-# char* input &#x3D; user_input();
-# char* encrypted_input &#x3D; complex_function(input);
-# if (check_equals_AABBCCDDEEFFGGHH(encrypted_input, 16)) &#123;
-#   puts(&quot;Good Job.&quot;);
-# &#125; else &#123;
-#   puts(&quot;Try again.&quot;);
-# &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+# char* input = user_input();
+# char* encrypted_input = complex_function(input);
+# if (check_equals_AABBCCDDEEFFGGHH(encrypted_input, 16)) {
+#   puts("Good Job.");
+# } else {
+#   puts("Try again.");
+# }<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>因为每一轮都有两种情况，总共有 16 个字符，就会产生 $2^{16}&#x3D;65536$ 个分支，这样下来要求解的话就会非常缓慢。<br>所以：</p>
+<p>因为每一轮都有两种情况，总共有 16 个字符，就会产生 $2^{16}=65536$ 个分支，这样下来要求解的话就会非常缓慢。<br>所以：</p>
 <pre class="line-numbers language-none"><code class="language-none"># We do not know how the complex_function works, but we want to find an input
 # that, when modified by complex_function, will produce the string:
 # AABBCCDDEEFFGGHH.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
@@ -1432,7 +1754,7 @@ UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0x80 in position
 <pre class="line-numbers language-none"><code class="language-none"># In this puzzle, your goal will be to stop the program before this function is
 # called and manually constrain the to_check variable to be equal to the
 # password you identify by decompiling the binary. Since, you, as a human, know
-# that if the strings are equal, the program will print &quot;Good Job.&quot;, you can
+# that if the strings are equal, the program will print "Good Job.", you can
 # be assured that if the program can solve for an input that makes them equal,
 # the input will be the correct password.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
@@ -1444,25 +1766,25 @@ UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0x80 in position
 <span class="token comment"># 会与 AABBCCDDEEFFGGHH 不同：</span>
 <span class="token comment">#</span>
 <span class="token comment"># #define REFERENCE_PASSWORD = "AABBCCDDEEFFGGHH";</span>
-<span class="token comment"># int check_equals_AABBCCDDEEFFGGHH(char* to_check, size_t length) &#123;</span>
+<span class="token comment"># int check_equals_AABBCCDDEEFFGGHH(char* to_check, size_t length) {</span>
 <span class="token comment">#   uint32_t num_correct = 0;</span>
-<span class="token comment">#   for (int i=0; i&lt;length; ++i) &#123;</span>
-<span class="token comment">#     if (to_check[i] == REFERENCE_PASSWORD[i]) &#123;</span>
+<span class="token comment">#   for (int i=0; i&lt;length; ++i) {</span>
+<span class="token comment">#     if (to_check[i] == REFERENCE_PASSWORD[i]) {</span>
 <span class="token comment">#       num_correct += 1;</span>
-<span class="token comment">#     &#125;</span>
-<span class="token comment">#   &#125;</span>
+<span class="token comment">#     }</span>
+<span class="token comment">#   }</span>
 <span class="token comment">#   return num_correct == length;</span>
-<span class="token comment"># &#125;</span>
+<span class="token comment"># }</span>
 <span class="token comment">#</span>
 <span class="token comment"># ...</span>
 <span class="token comment"># </span>
 <span class="token comment"># char* input = user_input();</span>
 <span class="token comment"># char* encrypted_input = complex_function(input);</span>
-<span class="token comment"># if (check_equals_AABBCCDDEEFFGGHH(encrypted_input, 16)) &#123;</span>
+<span class="token comment"># if (check_equals_AABBCCDDEEFFGGHH(encrypted_input, 16)) {</span>
 <span class="token comment">#   puts("Good Job.");</span>
-<span class="token comment"># &#125; else &#123;</span>
+<span class="token comment"># } else {</span>
 <span class="token comment">#   puts("Try again.");</span>
-<span class="token comment"># &#125;</span>
+<span class="token comment"># }</span>
 <span class="token comment">#</span>
 <span class="token comment"># 该函数检查 *to_check 是否等于 "AABBCCDDEEFFGGHH"。你可以自行验证这一点。</span>
 <span class="token comment"># 虽然作为人类，你可以很容易地判断这个函数等价于直接比较字符串，</span>
@@ -1491,8 +1813,8 @@ UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0x80 in position
   start_address <span class="token operator">=</span> <span class="token number">0x80492f0</span><span class="token comment"># ???</span>
   initial_state <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>blank_state<span class="token punctuation">(</span>
     addr<span class="token operator">=</span>start_address<span class="token punctuation">,</span>
-    add_options <span class="token operator">=</span> <span class="token punctuation">&#123;</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
-                    angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">&#125;</span>
+    add_options <span class="token operator">=</span> <span class="token punctuation">{</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
+                    angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">}</span>
   <span class="token punctuation">)</span>
   size_of_password_in_bits <span class="token operator">=</span> <span class="token number">16</span> <span class="token operator">*</span> <span class="token number">8</span>
   password <span class="token operator">=</span> claripy<span class="token punctuation">.</span>BVS<span class="token punctuation">(</span><span class="token string">'password'</span><span class="token punctuation">,</span> size_of_password_in_bits<span class="token punctuation">)</span><span class="token comment"># ???</span>
@@ -1555,7 +1877,7 @@ UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0x80 in position
     ↓
 检查加密结果是否正确
     ↓
-打印 Good Job. &#x2F; Try again.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+打印 Good Job. / Try again.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>而 <code>simulation.found</code> 本身就是 SimulationManager 中的一个 stash（17_angr_arbitrary_jump 中会提到这个 stashes 设置）。<br><code>explore()</code> 不只是返回一个布尔值，它会把到达目标地址的执行状态放到 <code>found</code> 这个 stash 中。状态里面保存了当前的寄存器、内存、符号表达式以及已经积累的约束。<a target="_blank" rel="noopener" href="https://github.com/angr/angr-doc/blob/master/docs/pathgroups.md">文档</a>也提到，可以取出 <code>found</code> 中的状态，继续分析它或从中提取输入。</p>
 <p>可以把 <code>solution_state</code> 想成一张程序的快照：</p>
@@ -1565,7 +1887,7 @@ UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0x80 in position
 约束：此前执行路径已经积累的条件<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>注意，此时 <code>password</code> 通常还没有被求解成一个确定的字符串。它依旧是符号变量。</p>
-<p>假设原始密码是 $x$，加密函数是 $F$，那么执行到这里时，缓冲区保存的实际上是 $F(x)$。<br>而 <code>add_constraints</code>，本质上是在给这个快照添加一个新的数学条件 $F(x)&#x3D;\texttt{AQMKNVLWBGUVQTAG}$</p>
+<p>假设原始密码是 $x$，加密函数是 $F$，那么执行到这里时，缓冲区保存的实际上是 $F(x)$。<br>而 <code>add_constraints</code>，本质上是在给这个快照添加一个新的数学条件 $F(x)=\texttt{AQMKNVLWBGUVQTAG}$</p>
 <table>
 <thead>
 <tr>
@@ -1770,8 +2092,8 @@ UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0x80 in position
 
   <span class="token comment"># 由于 Angr 能够处理最初对 scanf 的调用，我们可以从程序开头开始。</span>
   initial_state <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>entry_state<span class="token punctuation">(</span>
-    add_options <span class="token operator">=</span> <span class="token punctuation">&#123;</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
-                    angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">&#125;</span>
+    add_options <span class="token operator">=</span> <span class="token punctuation">{</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
+                    angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">}</span>
   <span class="token punctuation">)</span>
 
   <span class="token comment"># Hook 住调用 check_equals_ 的那个地址。</span>
@@ -1788,7 +2110,7 @@ UnicodeDecodeError: &#39;utf-8&#39; codec can&#39;t decode byte 0x80 in position
   <span class="token keyword">def</span> <span class="token function">skip_check_equals_</span><span class="token punctuation">(</span>state<span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token comment"># 确定用户输入存储的地址。该地址会作为参数传给</span>
     <span class="token comment"># check_equals_ 函数。然后加载该字符串。提醒：</span>
-    <span class="token comment"># int check_equals_(char* to_check, int length) &#123; ...</span>
+    <span class="token comment"># int check_equals_(char* to_check, int length) { ...</span>
     user_input_buffer_address <span class="token operator">=</span> <span class="token number">0x804c038</span> <span class="token comment"># :integer，通常是十六进制</span>
     user_input_buffer_length <span class="token operator">=</span> <span class="token number">0x10</span><span class="token comment"># ???</span>
 
@@ -1871,7 +2193,7 @@ esp + 0x04    参数 2<span aria-hidden="true" class="line-numbers-rows"><span><
 #   函数本身的地址（而不是调用它的那些地址），我就能在所有地方
 #   替换它的行为。此外，我可以通过从栈上读取参数
 #   （用 memory.load(regs.esp + xx)）来获取参数，并且只需设置
-#   eax 就能返回值！既然我知道函数的字节长度，我就可以在 &#39;ret&#39;
+#   eax 就能返回值！既然我知道函数的字节长度，我就可以在 'ret'
 #   指令被调用之前从 hook 返回，这将允许程序跳回到它调用我的
 #   hook 之前的位置。
 # 如果你这么想了，那么恭喜你！你刚刚发明了 SimProcedures 的
@@ -1948,8 +2270,8 @@ project<span class="token punctuation">.</span>hook_symbol<span class="token pun
   project <span class="token operator">=</span> angr<span class="token punctuation">.</span>Project<span class="token punctuation">(</span>path_to_binary<span class="token punctuation">)</span>
 
   initial_state <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>entry_state<span class="token punctuation">(</span>
-    add_options <span class="token operator">=</span> <span class="token punctuation">&#123;</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
-                    angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">&#125;</span>
+    add_options <span class="token operator">=</span> <span class="token punctuation">{</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
+                    angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">}</span>
   <span class="token punctuation">)</span>
 
   <span class="token comment"># 定义一个继承 angr.SimProcedure 的类，以便利用 Angr 的</span>
@@ -1962,22 +2284,22 @@ project<span class="token punctuation">.</span>hook_symbol<span class="token pun
     <span class="token comment"># 此外，Python 代码可以按通常的 Python 风格直接 return；Angr 会像处理</span>
     <span class="token comment"># 二进制程序中原生函数返回一样来处理这个返回值。例如：</span>
     <span class="token comment">#</span>
-    <span class="token comment"># int add_if_positive(int a, int b) &#123;</span>
-    <span class="token comment">#   if (a >= 0 &amp;&amp; b >= 0) return a + b;</span>
+    <span class="token comment"># int add_if_positive(int a, int b) {</span>
+    <span class="token comment">#   if (a &gt;= 0 &amp;&amp; b &gt;= 0) return a + b;</span>
     <span class="token comment">#   else return 0;</span>
-    <span class="token comment"># &#125;</span>
+    <span class="token comment"># }</span>
     <span class="token comment">#</span>
     <span class="token comment"># 可以用下面的方式模拟……</span>
     <span class="token comment">#</span>
     <span class="token comment"># class ReplacementAddIfPositive(angr.SimProcedure):</span>
     <span class="token comment">#   def run(self, a, b):</span>
-    <span class="token comment">#     if a >= 0 and b >=0:</span>
+    <span class="token comment">#     if a &gt;= 0 and b &gt;=0:</span>
     <span class="token comment">#       return a + b</span>
     <span class="token comment">#     else:</span>
     <span class="token comment">#       return 0</span>
     <span class="token comment">#</span>
     <span class="token comment"># 补全 check_equals_ 函数的参数。提醒：</span>
-    <span class="token comment"># int check_equals_AABBCCDDEEFFGGHH(char* to_check, int length) &#123; ...</span>
+    <span class="token comment"># int check_equals_AABBCCDDEEFFGGHH(char* to_check, int length) { ...</span>
     <span class="token comment"># (!)</span>
     <span class="token keyword">def</span> <span class="token function">run</span><span class="token punctuation">(</span>self<span class="token punctuation">,</span> to_check<span class="token punctuation">,</span> length<span class="token punctuation">)</span><span class="token punctuation">:</span>
       <span class="token comment"># 我们几乎可以复制粘贴上一个挑战的解法。</span>
@@ -2050,8 +2372,8 @@ project<span class="token punctuation">.</span>hook_symbol<span class="token pun
   project <span class="token operator">=</span> angr<span class="token punctuation">.</span>Project<span class="token punctuation">(</span>path_to_binary<span class="token punctuation">)</span>
 
   initial_state <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>entry_state<span class="token punctuation">(</span>
-    add_options <span class="token operator">=</span> <span class="token punctuation">&#123;</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
-                    angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">&#125;</span>
+    add_options <span class="token operator">=</span> <span class="token punctuation">{</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
+                    angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">}</span>
   <span class="token punctuation">)</span>
 
   <span class="token keyword">class</span> <span class="token class-name">ReplacementScanf</span><span class="token punctuation">(</span>angr<span class="token punctuation">.</span>SimProcedure<span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -2119,7 +2441,7 @@ project<span class="token punctuation">.</span>hook_symbol<span class="token pun
     <span class="token comment"># Grab whatever you set aside in the globals dict.</span>
     stored_solutions0 <span class="token operator">=</span> solution_state<span class="token punctuation">.</span><span class="token builtin">globals</span><span class="token punctuation">[</span><span class="token string">'solution0'</span><span class="token punctuation">]</span>
     <span class="token comment"># ...</span>
-    solution <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f'</span><span class="token interpolation"><span class="token punctuation">&#123;</span>solution_state<span class="token punctuation">.</span>solver<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span>stored_solutions0<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string"> </span><span class="token interpolation"><span class="token punctuation">&#123;</span>solution_state<span class="token punctuation">.</span>solver<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span>stored_solutions0<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string">'</span></span>
+    solution <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f'</span><span class="token interpolation"><span class="token punctuation">{</span>solution_state<span class="token punctuation">.</span>solver<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span>stored_solutions0<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string"> </span><span class="token interpolation"><span class="token punctuation">{</span>solution_state<span class="token punctuation">.</span>solver<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span>stored_solutions0<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string">'</span></span>
 
     <span class="token keyword">print</span><span class="token punctuation">(</span>solution<span class="token punctuation">)</span>
   <span class="token keyword">else</span><span class="token punctuation">:</span>
@@ -2128,7 +2450,7 @@ project<span class="token punctuation">.</span>hook_symbol<span class="token pun
 <span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
   main<span class="token punctuation">(</span>sys<span class="token punctuation">.</span>argv<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>其中 <code>self.state.globals[&#39;solution0&#39;] = (scanf0, scanf1)</code> 为什么不能写成 <code>self.state.globals[&#39;solution0&#39;] = (self.state.solver.eval(scanf0), self.state.solver.eval(scanf1))</code>，对我来说比较难理解。<br>以下是 pua ai 得来的笔记。</p>
+<p>其中 <code>self.state.globals['solution0'] = (scanf0, scanf1)</code> 为什么不能写成 <code>self.state.globals['solution0'] = (self.state.solver.eval(scanf0), self.state.solver.eval(scanf1))</code>，对我来说比较难理解。<br>以下是 pua ai 得来的笔记。</p>
 <pre class="line-numbers language-none"><code class="language-none">【angr SimProcedure scanf 笔记】
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -2136,7 +2458,7 @@ project<span class="token punctuation">.</span>hook_symbol<span class="token pun
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 假设：
-    scanf0 &#x3D; x        # 一个未知数，就像方程里的 x
+    scanf0 = x        # 一个未知数，就像方程里的 x
 
 关键：字母 x 本身没有值。它只是一个符号。
 
@@ -2148,14 +2470,14 @@ project<span class="token punctuation">.</span>hook_symbol<span class="token pun
 【run 里 eval 时】
     条件列表是空的（因为 strncmp 还没跑，还没写条件）。
     你问：“x 等于几？”
-    solver 说：“没有任何条件，我随便给你一个，x &#x3D; 0。”
+    solver 说：“没有任何条件，我随便给你一个，x = 0。”
     这就是随机值。
 
 【found 里 eval 时】
     strncmp 跑过了，条件列表里多了一条：
-        x &#x3D;&#x3D; 密码前4字节
+        x == 密码前4字节
     你问：“x 等于几？”
-    solver 说：“根据条件 x &#x3D;&#x3D; 密码前4字节，x &#x3D; 那个密码。”
+    solver 说：“根据条件 x == 密码前4字节，x = 那个密码。”
     这就是正确答案。
 
 所以“怎么把 scanf0 拿出来”：
@@ -2172,7 +2494,7 @@ project<span class="token punctuation">.</span>hook_symbol<span class="token pun
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 1. 核心概念
-   - scanf0 &#x3D; claripy.BVS(&#39;scanf0&#39;, 32) 是一个“未知数”，本身没有值。
+   - scanf0 = claripy.BVS('scanf0', 32) 是一个“未知数”，本身没有值。
    - 它类似数学方程里的 x，只是一个符号。
    - 它没有“值”可以取出来，只能让 solver 根据当前约束解出一个候选值。
 
@@ -2185,7 +2507,7 @@ project<span class="token punctuation">.</span>hook_symbol<span class="token pun
 3. 程序执行顺序（一条路径）
    scanf(...)        ← run 在这里执行
    strncmp(...)      ← 约束在这里才被 add 进去
-   if (...)          ← 这里才判断成功&#x2F;失败并分叉
+   if (...)          ← 这里才判断成功/失败并分叉
 
    关键：
    - run 是 scanf 的替身，执行位置就在 scanf 那一行。
@@ -2194,7 +2516,7 @@ project<span class="token punctuation">.</span>hook_symbol<span class="token pun
 
 4. 为什么不能在 run 里先 eval 再存 globals
    错误写法：
-     self.state.globals[&#39;solution0&#39;] &#x3D; (
+     self.state.globals['solution0'] = (
          self.state.solver.eval(scanf0),
          self.state.solver.eval(scanf1)
      )
@@ -2206,12 +2528,12 @@ project<span class="token punctuation">.</span>hook_symbol<span class="token pun
 
 5. 正确写法
    run 里：存 BVS 本身，不要 eval
-     self.state.globals[&#39;solution0&#39;] &#x3D; (scanf0, scanf1)
+     self.state.globals['solution0'] = (scanf0, scanf1)
 
    found 里：用 found state 的完整约束再 eval
-     stored &#x3D; solution_state.globals[&#39;solution0&#39;]
-     solution0 &#x3D; solution_state.solver.eval(stored[0])
-     solution1 &#x3D; solution_state.solver.eval(stored[1])
+     stored = solution_state.globals['solution0']
+     solution0 = solution_state.solver.eval(stored[0])
+     solution1 = solution_state.solver.eval(stored[1])
 
 6. 为什么 globals 能带出 run 的局部变量
    - scanf0 是 run 的局部变量，run 返回后就没了。
@@ -2230,8 +2552,8 @@ project<span class="token punctuation">.</span>hook_symbol<span class="token pun
    - BVS 是未知数，不是值。
    - eval 是用“当前约束”解未知数。
    - 约束在 strncmp 时才加，run 在 strncmp 之前执行。
-   - 所以 run 里 eval &#x3D; 约束没加就交卷 &#x3D; 随机值。
-   - 存 BVS 到 globals，等 found 时再 eval &#x3D; 约束齐全再交卷 &#x3D; 正确答案。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+   - 所以 run 里 eval = 约束没加就交卷 = 随机值。
+   - 存 BVS 到 globals，等 found 时再 eval = 约束齐全再交卷 = 正确答案。<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <h1 id="12-angr-veritesting"><a href="#12-angr-veritesting" class="headerlink" title="12_angr_veritesting"></a>12_angr_veritesting</h1><p><code>0x804a02b</code>：<code>%32s</code></p>
 <pre class="line-numbers language-none"><code class="language-none">80492f1:	84 c0                	test   al,al
@@ -2262,14 +2584,14 @@ project<span class="token punctuation">.</span>hook_symbol<span class="token pun
     project <span class="token operator">=</span> angr<span class="token punctuation">.</span>Project<span class="token punctuation">(</span>binary_path<span class="token punctuation">)</span>
     
     <span class="token comment"># ent_state = project.factory.entry_state(</span>
-    <span class="token comment"># add_options = &#123; angr.options.SYMBOL_FILL_UNCONSTRAINED_MEMORY,</span>
-                    <span class="token comment"># angr.options.SYMBOL_FILL_UNCONSTRAINED_REGISTERS&#125;</span>
+    <span class="token comment"># add_options = { angr.options.SYMBOL_FILL_UNCONSTRAINED_MEMORY,</span>
+                    <span class="token comment"># angr.options.SYMBOL_FILL_UNCONSTRAINED_REGISTERS}</span>
     <span class="token comment"># )</span>
     
     init_state <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>blank_state<span class="token punctuation">(</span>
         address <span class="token operator">=</span> <span class="token number">0x804929c</span><span class="token punctuation">,</span> 
-        add_options <span class="token operator">=</span> <span class="token punctuation">&#123;</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
-                    angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">&#125;</span>
+        add_options <span class="token operator">=</span> <span class="token punctuation">{</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
+                    angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">}</span>
     <span class="token punctuation">)</span>
     user_input <span class="token operator">=</span> claripy<span class="token punctuation">.</span>BVS<span class="token punctuation">(</span><span class="token string">'password'</span><span class="token punctuation">,</span> <span class="token number">32</span> <span class="token operator">*</span> <span class="token number">8</span><span class="token punctuation">)</span>
     init_state<span class="token punctuation">.</span>memory<span class="token punctuation">.</span>store<span class="token punctuation">(</span>init_state<span class="token punctuation">.</span>regs<span class="token punctuation">.</span>ebp <span class="token operator">-</span> <span class="token number">0x2d</span><span class="token punctuation">,</span> user_input<span class="token punctuation">)</span>
@@ -2353,8 +2675,8 @@ angr<span class="token punctuation">.</span>SIM_PROCEDURES<span class="token pun
   initial_state <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>blank_state<span class="token punctuation">(</span>
     addr <span class="token operator">=</span> <span class="token number">0x8049827</span><span class="token punctuation">,</span>
     <span class="token comment"># addr = 0x804989d,</span>
-    add_options <span class="token operator">=</span> <span class="token punctuation">&#123;</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
-                    angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">&#125;</span>
+    add_options <span class="token operator">=</span> <span class="token punctuation">{</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
+                    angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">}</span>
   <span class="token punctuation">)</span>
   
   project<span class="token punctuation">.</span>hook<span class="token punctuation">(</span>addr__IO_printf<span class="token punctuation">,</span> angr<span class="token punctuation">.</span>SIM_PROCEDURES<span class="token punctuation">[</span><span class="token string">'libc'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token string">'printf'</span><span class="token punctuation">]</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> 
@@ -2386,11 +2708,11 @@ angr<span class="token punctuation">.</span>SIM_PROCEDURES<span class="token pun
 
 <p>使用如下语法设置基址：</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">base <span class="token operator">=</span> <span class="token number">0x10000000</span>
-project <span class="token operator">=</span> angr<span class="token punctuation">.</span>Project<span class="token punctuation">(</span>path_to_binary<span class="token punctuation">,</span> load_options<span class="token operator">=</span><span class="token punctuation">&#123;</span>
-  <span class="token string">'main_opts'</span> <span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+project <span class="token operator">=</span> angr<span class="token punctuation">.</span>Project<span class="token punctuation">(</span>path_to_binary<span class="token punctuation">,</span> load_options<span class="token operator">=</span><span class="token punctuation">{</span>
+  <span class="token string">'main_opts'</span> <span class="token punctuation">:</span> <span class="token punctuation">{</span>
     <span class="token string">'base_addr'</span> <span class="token punctuation">:</span> base
-  <span class="token punctuation">&#125;</span>
-<span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
+  <span class="token punctuation">}</span>
+<span class="token punctuation">}</span><span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>so 文件里的 <code>validate</code>：</p>
 <pre class="line-numbers language-none"><code class="language-none">00001244 &lt;validate&gt;:
@@ -2402,7 +2724,7 @@ project <span class="token operator">=</span> angr<span class="token punctuation
     1250:	81 c3 b0 2d 00 00    	add    ebx,0x2db0
     1256:	83 7d 0c 07          	cmp    DWORD PTR [ebp+0xc],0x7
     125a:	7f 0a                	jg     1266 &lt;validate+0x22&gt;
-    125c:	b8 00 00 00 00       	mov    eax,0x0 ; &lt;&#x3D; 7 字节的直接退出
+    125c:	b8 00 00 00 00       	mov    eax,0x0 ; &lt;= 7 字节的直接退出
     1261:	e9 84 00 00 00       	jmp    12ea &lt;validate+0xa6&gt;
     1266:	c7 45 f4 00 00 00 00 	mov    DWORD PTR [ebp-0xc],0x0
     126d:	eb 0f                	jmp    127e &lt;validate+0x3a&gt;
@@ -2521,11 +2843,11 @@ project <span class="token operator">=</span> angr<span class="token punctuation
   <span class="token comment"># base + offset, where offset is their address in the file.</span>
   <span class="token comment"># (!)</span>
   base <span class="token operator">=</span> <span class="token number">0x10000000</span><span class="token comment"># 随便给一个？</span>
-  project <span class="token operator">=</span> angr<span class="token punctuation">.</span>Project<span class="token punctuation">(</span>path_to_binary<span class="token punctuation">,</span> load_options<span class="token operator">=</span><span class="token punctuation">&#123;</span>
-    <span class="token string">'main_opts'</span> <span class="token punctuation">:</span> <span class="token punctuation">&#123;</span>
+  project <span class="token operator">=</span> angr<span class="token punctuation">.</span>Project<span class="token punctuation">(</span>path_to_binary<span class="token punctuation">,</span> load_options<span class="token operator">=</span><span class="token punctuation">{</span>
+    <span class="token string">'main_opts'</span> <span class="token punctuation">:</span> <span class="token punctuation">{</span>
       <span class="token string">'base_addr'</span> <span class="token punctuation">:</span> base
-    <span class="token punctuation">&#125;</span>
-  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
 
   <span class="token comment"># Initialize any symbolic values here; you will need at least one to pass to</span>
   <span class="token comment"># the validate function.</span>
@@ -2541,7 +2863,7 @@ project <span class="token operator">=</span> angr<span class="token punctuation
   <span class="token comment"># initialized to a single value.</span>
   <span class="token comment"># Remember to add the base value you specified at the beginning to the</span>
   <span class="token comment"># function address!</span>
-  <span class="token comment"># Hint: int validate(char* buffer, int length) &#123; ...</span>
+  <span class="token comment"># Hint: int validate(char* buffer, int length) { ...</span>
   <span class="token comment"># (!)</span>
   validate_function_address <span class="token operator">=</span> base <span class="token operator">+</span> <span class="token number">0x0001244</span>
   initial_state <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>call_state<span class="token punctuation">(</span>
@@ -2582,7 +2904,7 @@ project <span class="token operator">=</span> angr<span class="token punctuation
 <span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
   main<span class="token punctuation">(</span>sys<span class="token punctuation">.</span>argv<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<p>在脚本中随便给了一个基址。<br>写到后面有点迷糊，有些地方应该规范写。<br>例如 <code>call_state</code> 传参给 <code>validate</code> 的时候，第二个参数应该使用 <code>claripy.BVV</code> 设置初值。<br>以及，<code>password = claripy.BVS( &#39;password&#39;, 0x10 * 8 )</code> 一定要记得乘以 8，因为是位数而不是字节数。</p>
+<p>在脚本中随便给了一个基址。<br>写到后面有点迷糊，有些地方应该规范写。<br>例如 <code>call_state</code> 传参给 <code>validate</code> 的时候，第二个参数应该使用 <code>claripy.BVV</code> 设置初值。<br>以及，<code>password = claripy.BVS( 'password', 0x10 * 8 )</code> 一定要记得乘以 8，因为是位数而不是字节数。</p>
 <h1 id="15-arbitrary-read"><a href="#15-arbitrary-read" class="headerlink" title="15_arbitrary_read"></a>15_arbitrary_read</h1><pre class="line-numbers language-none"><code class="language-none">080491b4 &lt;main&gt;:
  80491b4:	8d 4c 24 04          	lea    ecx,[esp+0x4]
  80491b8:	83 e4 f0             	and    esp,0xfffffff0
@@ -2654,31 +2976,31 @@ project <span class="token operator">=</span> angr<span class="token punctuation
 
 <span class="token comment"># 本挑战的部分源代码：</span>
 <span class="token comment">#</span>
-<span class="token comment"># #include &lt;stdio.h></span>
-<span class="token comment"># #include &lt;stdlib.h></span>
-<span class="token comment"># #include &lt;string.h></span>
-<span class="token comment"># #include &lt;stdint.h></span>
+<span class="token comment"># #include &lt;stdio.h&gt;</span>
+<span class="token comment"># #include &lt;stdlib.h&gt;</span>
+<span class="token comment"># #include &lt;string.h&gt;</span>
+<span class="token comment"># #include &lt;stdint.h&gt;</span>
 <span class="token comment"># </span>
 <span class="token comment"># // 这些都会位于 .rodata 段</span>
-<span class="token comment"># char msg[] = "$&#123; description &#125;$";</span>
+<span class="token comment"># char msg[] = "${ description }$";</span>
 <span class="token comment"># char* try_again = "Try again.";</span>
 <span class="token comment"># char* good_job = "Good Job.";</span>
 <span class="token comment"># uint32_t key;</span>
 <span class="token comment"># </span>
-<span class="token comment"># void print_msg() &#123;</span>
+<span class="token comment"># void print_msg() {</span>
 <span class="token comment">#   printf("%s", msg);</span>
-<span class="token comment"># &#125;</span>
+<span class="token comment"># }</span>
 <span class="token comment">#</span>
-<span class="token comment"># uint32_t complex_function(uint32_t input) &#123;</span>
+<span class="token comment"># uint32_t complex_function(uint32_t input) {</span>
 <span class="token comment">#   ...</span>
-<span class="token comment"># &#125;</span>
+<span class="token comment"># }</span>
 <span class="token comment"># </span>
-<span class="token comment"># struct overflow_me &#123;</span>
+<span class="token comment"># struct overflow_me {</span>
 <span class="token comment">#   char buffer[16];</span>
 <span class="token comment">#   char* to_print;</span>
-<span class="token comment"># &#125;; </span>
+<span class="token comment"># }; </span>
 <span class="token comment"># </span>
-<span class="token comment"># int main(int argc, char* argv[]) &#123;</span>
+<span class="token comment"># int main(int argc, char* argv[]) {</span>
 <span class="token comment">#   struct overflow_me locals;</span>
 <span class="token comment">#   locals.to_print = try_again;</span>
 <span class="token comment"># </span>
@@ -2689,7 +3011,7 @@ project <span class="token operator">=</span> angr<span class="token punctuation
 <span class="token comment">#</span>
 <span class="token comment">#   key = complex_function(key);</span>
 <span class="token comment"># </span>
-<span class="token comment">#   switch (key) &#123;</span>
+<span class="token comment">#   switch (key) {</span>
 <span class="token comment">#     case ?:</span>
 <span class="token comment">#       puts(try_again);</span>
 <span class="token comment">#       break;</span>
@@ -2703,10 +3025,10 @@ project <span class="token operator">=</span> angr<span class="token punctuation
 <span class="token comment">#       break;</span>
 <span class="token comment">#     </span>
 <span class="token comment">#     ...</span>
-<span class="token comment">#   &#125;</span>
+<span class="token comment">#   }</span>
 <span class="token comment"># </span>
 <span class="token comment">#   return 0;</span>
-<span class="token comment"># &#125;</span>
+<span class="token comment"># }</span>
 
 <span class="token keyword">import</span> angr
 <span class="token keyword">import</span> claripy
@@ -2720,8 +3042,8 @@ project <span class="token operator">=</span> angr<span class="token punctuation
   <span class="token comment"># 只需确保从程序开头开始即可。</span>
   <span class="token comment"># (!)</span>
   initial_state <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>entry_state<span class="token punctuation">(</span>
-  add_options <span class="token operator">=</span> <span class="token punctuation">&#123;</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
-                angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">&#125;</span>
+  add_options <span class="token operator">=</span> <span class="token punctuation">{</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
+                angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">}</span>
   <span class="token punctuation">)</span>
 
   <span class="token comment"># 同样，需要替换 scanf。</span>
@@ -2747,9 +3069,9 @@ project <span class="token operator">=</span> angr<span class="token punctuation
         <span class="token comment"># 使用字符时会提示：BVV value is being coerced from a unicode string, encoding as utf-8</span>
         <span class="token comment"># 所以推荐使用数字比较</span>
         <span class="token comment"># 以下是一些可行的做法以及可能的结果</span>
-        self<span class="token punctuation">.</span>state<span class="token punctuation">.</span>add_constraints<span class="token punctuation">(</span>char <span class="token operator">>=</span> <span class="token number">0x31</span><span class="token punctuation">,</span> char <span class="token operator">&lt;=</span> <span class="token number">0x7e</span><span class="token punctuation">)</span><span class="token comment"># 65394877 @@@@@@@@@@@@@@@@OKUU</span>
-        <span class="token comment"># self.state.add_constraints(char >= 0x20, char &lt;= 0x7e)# 65394877 ???'????????????OKUU</span>
-        <span class="token comment"># self.state.add_constraints(char >= 'A', char &lt;= 'z')# 65394877 [[[\[[[[[[[[[[[[OKUU</span>
+        self<span class="token punctuation">.</span>state<span class="token punctuation">.</span>add_constraints<span class="token punctuation">(</span>char <span class="token operator">&gt;=</span> <span class="token number">0x31</span><span class="token punctuation">,</span> char <span class="token operator">&lt;=</span> <span class="token number">0x7e</span><span class="token punctuation">)</span><span class="token comment"># 65394877 @@@@@@@@@@@@@@@@OKUU</span>
+        <span class="token comment"># self.state.add_constraints(char &gt;= 0x20, char &lt;= 0x7e)# 65394877 ???'????????????OKUU</span>
+        <span class="token comment"># self.state.add_constraints(char &gt;= 'A', char &lt;= 'z')# 65394877 [[[\[[[[[[[[[[[[OKUU</span>
 
       <span class="token comment"># 警告：字节序只适用于整数。如果你把一个字符串存入内存，</span>
       <span class="token comment"># 并把它当作小端整数处理，它就会是反的。</span>
@@ -2778,14 +3100,14 @@ project <span class="token operator">=</span> angr<span class="token punctuation
     <span class="token comment">#（当然，函数还没有复制缓冲区。）</span>
     <span class="token comment"># 栈会如下所示：</span>
     <span class="token comment"># ...</span>
-    <span class="token comment"># esp + 7 -> /----------------\</span>
-    <span class="token comment"># esp + 6 -> |      puts      |</span>
-    <span class="token comment"># esp + 5 -> |    parameter   |</span>
-    <span class="token comment"># esp + 4 -> \----------------/</span>
-    <span class="token comment"># esp + 3 -> /----------------\</span>
-    <span class="token comment"># esp + 2 -> |     return     |</span>
-    <span class="token comment"># esp + 1 -> |     address    |</span>
-    <span class="token comment">#     esp -> \----------------/</span>
+    <span class="token comment"># esp + 7 -&gt; /----------------\</span>
+    <span class="token comment"># esp + 6 -&gt; |      puts      |</span>
+    <span class="token comment"># esp + 5 -&gt; |    parameter   |</span>
+    <span class="token comment"># esp + 4 -&gt; \----------------/</span>
+    <span class="token comment"># esp + 3 -&gt; /----------------\</span>
+    <span class="token comment"># esp + 2 -&gt; |     return     |</span>
+    <span class="token comment"># esp + 1 -&gt; |     address    |</span>
+    <span class="token comment">#     esp -&gt; \----------------/</span>
     <span class="token comment">#</span>
     <span class="token comment"># 提示：查看 level 08、09 或 10，复习如何从内存地址加载值。</span>
     <span class="token comment"># 以后加载整数时记得使用正确的字节序；这里已经为你包含了。</span>
@@ -2800,7 +3122,7 @@ project <span class="token operator">=</span> angr<span class="token punctuation
     <span class="token keyword">if</span> state<span class="token punctuation">.</span>solver<span class="token punctuation">.</span>symbolic<span class="token punctuation">(</span>puts_parameter<span class="token punctuation">)</span><span class="token punctuation">:</span><span class="token comment"># ？这是什么？</span>
       <span class="token comment"># 确定 "Good Job." 字符串的位置。我们想打印它，并会通过尝试</span>
       <span class="token comment"># 约束 puts 参数等于该地址来实现。提示：使用</span>
-      <span class="token comment"># 'objdump -s &lt;binary>' 在 .rodata 中查找该字符串的地址。</span>
+      <span class="token comment"># 'objdump -s &lt;binary&gt;' 在 .rodata 中查找该字符串的地址。</span>
       <span class="token comment"># (!)</span>
       good_job_string_address <span class="token operator">=</span> <span class="token number">0x55554b4f</span> <span class="token comment"># :integer，可能是十六进制</span>
 
@@ -2847,7 +3169,7 @@ project <span class="token operator">=</span> angr<span class="token punctuation
     solution_state <span class="token operator">=</span> simulation<span class="token punctuation">.</span>found<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
 
     <span class="token comment"># solution = [solution_state.solver.eval(solution_state.globals['solution0'][0]), solution_state.solver.eval(solution_state.globals['solution0'][1], cast_to=bytes).decode()]</span>
-    solution <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f"</span><span class="token interpolation"><span class="token punctuation">&#123;</span>solution_state<span class="token punctuation">.</span>solver<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span>solution_state<span class="token punctuation">.</span><span class="token builtin">globals</span><span class="token punctuation">[</span><span class="token string">'solution0'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string"> </span><span class="token interpolation"><span class="token punctuation">&#123;</span>solution_state<span class="token punctuation">.</span>solver<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span>solution_state<span class="token punctuation">.</span><span class="token builtin">globals</span><span class="token punctuation">[</span><span class="token string">'solution0'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> cast_to<span class="token operator">=</span><span class="token builtin">bytes</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span>
+    solution <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f"</span><span class="token interpolation"><span class="token punctuation">{</span>solution_state<span class="token punctuation">.</span>solver<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span>solution_state<span class="token punctuation">.</span><span class="token builtin">globals</span><span class="token punctuation">[</span><span class="token string">'solution0'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string"> </span><span class="token interpolation"><span class="token punctuation">{</span>solution_state<span class="token punctuation">.</span>solver<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span>solution_state<span class="token punctuation">.</span><span class="token builtin">globals</span><span class="token punctuation">[</span><span class="token string">'solution0'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> cast_to<span class="token operator">=</span><span class="token builtin">bytes</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string">"</span></span>
     <span class="token keyword">print</span><span class="token punctuation">(</span>solution<span class="token punctuation">)</span>
   <span class="token keyword">else</span><span class="token punctuation">:</span>
     <span class="token keyword">raise</span> Exception<span class="token punctuation">(</span><span class="token string">'Could not find the solution'</span><span class="token punctuation">)</span>
@@ -2861,17 +3183,17 @@ project <span class="token operator">=</span> angr<span class="token punctuation
 <p><code>state.satisfiable(extra_constraints=(xx_expression,))</code>：用来<strong>检查当前状态的所有约束加上你额外提供的约束之后，是否还存在至少一组解</strong>，能让所有约束同时成立。<code>https://docs.angr.io/_/downloads/en/v9.2.123/pdf/#5#181#5</code><br><code>state.satisfiable(extra_constraints=(is_vulnerable_expression,))</code> <strong>试探性地问一句</strong>：“如果我加上这个条件，还有解吗？”只有返回 <code>True</code>，才说明这条路可行，再用 <code>state.add_constraints()</code> 把它永久加入，并返回 <code>True</code> 让 <code>explore</code> 在这里停下。</p>
 <p><strong>填 <code>scanf</code> 符号不要有 <code>@plt</code> 后缀。</strong></p>
 <h1 id="16-angr-arbitrary-write（hard）"><a href="#16-angr-arbitrary-write（hard）" class="headerlink" title="16_angr_arbitrary_write（hard）"></a>16_angr_arbitrary_write（hard）</h1><p><code>ltrace</code> 情况：</p>
-<pre class="line-numbers language-none"><code class="language-none">$ ltrace .&#x2F;16_angr_arbitrary_write
+<pre class="line-numbers language-none"><code class="language-none">$ ltrace ./16_angr_arbitrary_write
 __libc_start_main(0x80491e4, 1, 0xffad40b4, 0 &lt;unfinished ...&gt;
-memset(0xffad3fcc, &#39;\0&#39;, 16)                                      &#x3D; 0xffad3fcc
-strncpy(0x55554b44, &quot;PASSWORD&quot;, 12)                               &#x3D; 0x55554b44
-printf(&quot;Enter the password: &quot;)                                    &#x3D; 20
+memset(0xffad3fcc, '\0', 16)                                      = 0xffad3fcc
+strncpy(0x55554b44, "PASSWORD", 12)                               = 0x55554b44
+printf("Enter the password: ")                                    = 20
 __isoc99_scanf(0x804a029, 0x55554b54, 0xffad3fcc, 0xf7ef9054Enter the password: PASSWORD
-)     &#x3D; 0
-strncpy(0x55554b34, &quot;&quot;, 16)                                       &#x3D; 0x55554b34
-strncmp(&quot;PASSWORD&quot;, &quot;MPZSMIWO&quot;, 8)                                &#x3D; 1
-puts(&quot;Try again.&quot;Try again.
-)                                                &#x3D; 11
+)     = 0
+strncpy(0x55554b34, "", 16)                                       = 0x55554b34
+strncmp("PASSWORD", "MPZSMIWO", 8)                                = 1
+puts("Try again."Try again.
+)                                                = 11
 +++ exited (status 0) +++<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p><code>strncmp</code> 情况：</p>
@@ -2888,8 +3210,8 @@ puts(&quot;Try again.&quot;Try again.
 804a040 61696e2e 00476f6f 64204a6f 622e00    ain..Good Job.. <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>栈上、以及变量的情况</p>
-<pre class="line-numbers language-none"><code class="language-none">buf3：0x55554b34（strncpy src&#x3D;ebp-0x1c len&#x3D;0x10）
-buf1：0x55554b44（&quot;PASSWORD&quot;，strncmp w&#x2F; 0x804a031）#
+<pre class="line-numbers language-none"><code class="language-none">buf3：0x55554b34（strncpy src=ebp-0x1c len=0x10）
+buf1：0x55554b44（"PASSWORD"，strncmp w/ 0x804a031）#
 buf2：0x55554b54（scanf key %u）
 
 ebp-0x1c: %20s buffer
@@ -2905,7 +3227,7 @@ ebp-0x1c（scanf %20s overlapped）
 ebp-0x18
 ebp-0x14
 ebp-0x10
-ebp-0xc &#x3D; 0x55554b34
+ebp-0xc = 0x55554b34
 ...
 高地址<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
@@ -2917,7 +3239,7 @@ ebp-0xc &#x3D; 0x55554b34
  804925b:	3d ab 2f c4 01       	cmp    eax,0x1c42fab
  8049260:	75 2f                	jne    8049291 &lt;main+0xad&gt;
 
-key &#x3D; 0x1c42fab:
+key = 0x1c42fab:
  8049262:	8b 45 f4             	mov    eax,DWORD PTR [ebp-0xc] ; 此处可利用 %20s 覆盖 ebp-0xc 存放的指针
  8049265:	83 ec 04             	sub    esp,0x4
  8049268:	6a 10                	push   0x10
@@ -2928,7 +3250,7 @@ key &#x3D; 0x1c42fab:
  8049274:	83 c4 10             	add    esp,0x10
  8049277:	eb 2f                	jmp    80492a8 &lt;main+0xc4&gt;
 
-key &#x3D; 0x1147112:
+key = 0x1147112:
  8049279:	83 ec 04             	sub    esp,0x4
  804927c:	6a 10                	push   0x10
  804927e:	8d 45 e4             	lea    eax,[ebp-0x1c]
@@ -2938,7 +3260,7 @@ key &#x3D; 0x1147112:
  804928c:	83 c4 10             	add    esp,0x10
  804928f:	eb 17                	jmp    80492a8 &lt;main+0xc4&gt;
 
-key &#x3D; any:
+key = any:
  8049291:	83 ec 04             	sub    esp,0x4
  8049294:	6a 10                	push   0x10
  8049296:	8d 45 e4             	lea    eax,[ebp-0x1c]
@@ -2949,7 +3271,7 @@ key &#x3D; any:
  80492a7:	90                   	nop<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 <p>理解了上面这些内容之后才能开始写脚本。<br><del>总感觉这 angr 有点鸡肋了</del></p>
-<pre class="line-numbers language-none"><code class="language-none">$ .&#x2F;16_angr_arbitrary_write
+<pre class="line-numbers language-none"><code class="language-none">$ ./16_angr_arbitrary_write
 Enter the password: 29634475 MPZSMIWO????????DKUU
 Good Job.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre>
 
@@ -2960,13 +3282,13 @@ Good Job.<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
 <span class="token comment">#   // if certain unknown conditions are true...</span>
 <span class="token comment">#   strncpy(random_buffer, user_input);</span>
 <span class="token comment"># ...</span>
-<span class="token comment"># if (strncmp(secure_buffer, reference_string)) &#123;</span>
+<span class="token comment"># if (strncmp(secure_buffer, reference_string)) {</span>
 <span class="token comment">#   // The secure_buffer does not equal the reference string.</span>
 <span class="token comment">#   puts("Try again.");</span>
-<span class="token comment"># &#125; else &#123;</span>
+<span class="token comment"># } else {</span>
 <span class="token comment">#   // The two are equal.</span>
 <span class="token comment">#   puts("Good Job.");</span>
-<span class="token comment"># &#125;</span>
+<span class="token comment"># }</span>
 <span class="token comment">#</span>
 <span class="token comment"># If this program has no bugs in it, it would _always_ print "Try again." since</span>
 <span class="token comment"># user_input copies into random_buffer, not secure_buffer.</span>
@@ -2996,8 +3318,8 @@ Good Job.<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
   <span class="token comment"># You can either use a blank state or an entry state; just make sure to start</span>
   <span class="token comment"># at the beginning of the program.</span>
   initial_state <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>entry_state<span class="token punctuation">(</span>
-    add_options <span class="token operator">=</span> <span class="token punctuation">&#123;</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
-                angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">&#125;</span>
+    add_options <span class="token operator">=</span> <span class="token punctuation">{</span> angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
+                angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS<span class="token punctuation">}</span>
   <span class="token punctuation">)</span>
 
   <span class="token keyword">class</span> <span class="token class-name">ReplacementScanf</span><span class="token punctuation">(</span>angr<span class="token punctuation">.</span>SimProcedure<span class="token punctuation">)</span><span class="token punctuation">:</span>
@@ -3010,7 +3332,7 @@ Good Job.<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
       scanf1 <span class="token operator">=</span> claripy<span class="token punctuation">.</span>BVS<span class="token punctuation">(</span><span class="token string">'scanf1'</span><span class="token punctuation">,</span> <span class="token number">20</span> <span class="token operator">*</span> <span class="token number">8</span><span class="token punctuation">)</span>
 
       <span class="token keyword">for</span> char <span class="token keyword">in</span> scanf1<span class="token punctuation">.</span>chop<span class="token punctuation">(</span>bits<span class="token operator">=</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
-        self<span class="token punctuation">.</span>state<span class="token punctuation">.</span>add_constraints<span class="token punctuation">(</span>char <span class="token operator">>=</span> <span class="token number">0x20</span><span class="token punctuation">,</span> char <span class="token operator">&lt;=</span> <span class="token number">0x7e</span><span class="token punctuation">)</span>
+        self<span class="token punctuation">.</span>state<span class="token punctuation">.</span>add_constraints<span class="token punctuation">(</span>char <span class="token operator">&gt;=</span> <span class="token number">0x20</span><span class="token punctuation">,</span> char <span class="token operator">&lt;=</span> <span class="token number">0x7e</span><span class="token punctuation">)</span>
 
       scanf0_address <span class="token operator">=</span> <span class="token number">0x55554b54</span> <span class="token comment"># key 的位置，在 bss</span>
       self<span class="token punctuation">.</span>state<span class="token punctuation">.</span>memory<span class="token punctuation">.</span>store<span class="token punctuation">(</span>scanf0_address<span class="token punctuation">,</span> scanf0<span class="token punctuation">,</span> endness<span class="token operator">=</span>project<span class="token punctuation">.</span>arch<span class="token punctuation">.</span>memory_endness<span class="token punctuation">)</span>
@@ -3030,22 +3352,22 @@ Good Job.<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
   <span class="token keyword">def</span> <span class="token function">check_strncpy</span><span class="token punctuation">(</span>state<span class="token punctuation">)</span><span class="token punctuation">:</span>
     <span class="token comment"># The stack will look as follows:</span>
     <span class="token comment"># ...          ________________</span>
-    <span class="token comment"># esp + 15 -> /                \</span>
-    <span class="token comment"># esp + 14 -> |     param2     |</span>
-    <span class="token comment"># esp + 13 -> |      len       |</span>
-    <span class="token comment"># esp + 12 -> \________________/</span>
-    <span class="token comment"># esp + 11 -> /                \</span>
-    <span class="token comment"># esp + 10 -> |     param1     |</span>
-    <span class="token comment">#  esp + 9 -> |      src       |</span>
-    <span class="token comment">#  esp + 8 -> \________________/</span>
-    <span class="token comment">#  esp + 7 -> /                \</span>
-    <span class="token comment">#  esp + 6 -> |     param0     |</span>
-    <span class="token comment">#  esp + 5 -> |      dest      |</span>
-    <span class="token comment">#  esp + 4 -> \________________/</span>
-    <span class="token comment">#  esp + 3 -> /                \</span>
-    <span class="token comment">#  esp + 2 -> |     return     |</span>
-    <span class="token comment">#  esp + 1 -> |     address    |</span>
-    <span class="token comment">#      esp -> \________________/</span>
+    <span class="token comment"># esp + 15 -&gt; /                \</span>
+    <span class="token comment"># esp + 14 -&gt; |     param2     |</span>
+    <span class="token comment"># esp + 13 -&gt; |      len       |</span>
+    <span class="token comment"># esp + 12 -&gt; \________________/</span>
+    <span class="token comment"># esp + 11 -&gt; /                \</span>
+    <span class="token comment"># esp + 10 -&gt; |     param1     |</span>
+    <span class="token comment">#  esp + 9 -&gt; |      src       |</span>
+    <span class="token comment">#  esp + 8 -&gt; \________________/</span>
+    <span class="token comment">#  esp + 7 -&gt; /                \</span>
+    <span class="token comment">#  esp + 6 -&gt; |     param0     |</span>
+    <span class="token comment">#  esp + 5 -&gt; |      dest      |</span>
+    <span class="token comment">#  esp + 4 -&gt; \________________/</span>
+    <span class="token comment">#  esp + 3 -&gt; /                \</span>
+    <span class="token comment">#  esp + 2 -&gt; |     return     |</span>
+    <span class="token comment">#  esp + 1 -&gt; |     address    |</span>
+    <span class="token comment">#      esp -&gt; \________________/</span>
     <span class="token comment"># (!)</span>
     <span class="token comment"># 提取 strncpy 各个参数的位置</span>
     <span class="token comment"># ！！！！！提取值而不是提取地址！！！！！</span>
@@ -3129,7 +3451,7 @@ Good Job.<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
   <span class="token keyword">if</span> simulation<span class="token punctuation">.</span>found<span class="token punctuation">:</span>
     solution_state <span class="token operator">=</span> simulation<span class="token punctuation">.</span>found<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
 
-    solution <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f"</span><span class="token interpolation"><span class="token punctuation">&#123;</span>solution_state<span class="token punctuation">.</span>solver<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span>solution_state<span class="token punctuation">.</span><span class="token builtin">globals</span><span class="token punctuation">[</span><span class="token string">'solutions'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string"> </span><span class="token interpolation"><span class="token punctuation">&#123;</span>solution_state<span class="token punctuation">.</span>solver<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span>solution_state<span class="token punctuation">.</span><span class="token builtin">globals</span><span class="token punctuation">[</span><span class="token string">'solutions'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> cast_to<span class="token operator">=</span><span class="token builtin">bytes</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">&#125;</span></span><span class="token string">"</span></span>
+    solution <span class="token operator">=</span> <span class="token string-interpolation"><span class="token string">f"</span><span class="token interpolation"><span class="token punctuation">{</span>solution_state<span class="token punctuation">.</span>solver<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span>solution_state<span class="token punctuation">.</span><span class="token builtin">globals</span><span class="token punctuation">[</span><span class="token string">'solutions'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string"> </span><span class="token interpolation"><span class="token punctuation">{</span>solution_state<span class="token punctuation">.</span>solver<span class="token punctuation">.</span><span class="token builtin">eval</span><span class="token punctuation">(</span>solution_state<span class="token punctuation">.</span><span class="token builtin">globals</span><span class="token punctuation">[</span><span class="token string">'solutions'</span><span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">,</span> cast_to<span class="token operator">=</span><span class="token builtin">bytes</span><span class="token punctuation">)</span><span class="token punctuation">.</span>decode<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">}</span></span><span class="token string">"</span></span>
     <span class="token keyword">print</span><span class="token punctuation">(</span>solution<span class="token punctuation">)</span>
   <span class="token keyword">else</span><span class="token punctuation">:</span>
     <span class="token keyword">raise</span> Exception<span class="token punctuation">(</span><span class="token string">'Could not find the solution'</span><span class="token punctuation">)</span>
@@ -3197,12 +3519,12 @@ Good Job.<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
 <pre class="line-numbers language-python" data-language="python"><code class="language-python">simulation <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>simgr<span class="token punctuation">(</span>
   initial_state<span class="token punctuation">,</span>
   save_unconstrained<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> <span class="token comment"># ???,</span>
-  <span class="token comment"># stashes=&#123;</span>
+  <span class="token comment"># stashes={</span>
     <span class="token comment"># 'active' : [initial_state, ],# 正在运行的</span>
     <span class="token comment"># 'unconstrained' : [],# 未约束的 eip 状态？</span>
     <span class="token comment"># 'found' : [],</span>
     <span class="token comment"># 'not_needed' : []</span>
-  <span class="token comment"># &#125;</span>
+  <span class="token comment"># }</span>
 <span class="token punctuation">)</span>
 simulation<span class="token punctuation">.</span>stashes<span class="token punctuation">[</span><span class="token string">'found'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token comment"># 让 Angr 初始化默认的 active、deadended、unconstrained 等 stash</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
@@ -3211,10 +3533,10 @@ simulation<span class="token punctuation">.</span>stashes<span class="token punc
 <span class="token comment"># ...</span>
 initial_state <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>entry_state<span class="token punctuation">(</span>
           stdin<span class="token operator">=</span>symbolic_input<span class="token punctuation">,</span>
-          add_options <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+          add_options <span class="token operator">=</span> <span class="token punctuation">{</span>
               angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
               angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS
-              <span class="token punctuation">&#125;</span>
+              <span class="token punctuation">}</span>
           <span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 <p>Angr 会用普通的扁平 SimFile 来保存它，而不是适合模拟输入流的 SimPackets。<br>scanf 的 %s 处理逻辑会搜索输入中的分隔符。这个搜索过程尝试将不同位宽的地址表达式合并，最终触发了 Claripy 的位宽检查异常 “args’ length must all be equal”<br><a target="_blank" rel="noopener" href="https://github.com/angr/angr-doc/blob/master/docs/file_system.md">https://github.com/angr/angr-doc/blob/master/docs/file_system.md</a><br><a target="_blank" rel="noopener" href="https://api.angr.io/en/v9.2.112/advanced-topics/file_system.html">https://api.angr.io/en/v9.2.112/advanced-topics/file_system.html</a><br>所以需要手动创建一个 SimPackets 对象，将其传给 stdin。</p>
 <pre class="line-numbers language-python" data-language="python"><code class="language-python"><span class="token comment"># Create initial state and set stdin to the symbolic input</span>
@@ -3231,10 +3553,10 @@ scanf_stdin <span class="token operator">=</span> angr<span class="token punctua
 initial_state <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>entry_state<span class="token punctuation">(</span>
         <span class="token comment"># stdin=symbolic_input,</span>
         stdin <span class="token operator">=</span> scanf_stdin<span class="token punctuation">,</span>
-        add_options <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+        add_options <span class="token operator">=</span> <span class="token punctuation">{</span>
             angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
             angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS
-            <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">}</span>
         <span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
 
@@ -3273,10 +3595,10 @@ initial_state <span class="token operator">=</span> project<span class="token pu
 <span class="token keyword">def</span> <span class="token function">check_errors</span><span class="token punctuation">(</span>simulation<span class="token punctuation">)</span><span class="token punctuation">:</span>
   <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">'===================='</span><span class="token punctuation">)</span>
   <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Simulation:"</span><span class="token punctuation">,</span> simulation<span class="token punctuation">)</span>
-  <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Stashes:"</span><span class="token punctuation">,</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Stashes:"</span><span class="token punctuation">,</span> <span class="token punctuation">{</span>
     name<span class="token punctuation">:</span> <span class="token builtin">len</span><span class="token punctuation">(</span>states<span class="token punctuation">)</span>
     <span class="token keyword">for</span> name<span class="token punctuation">,</span> states <span class="token keyword">in</span> simulation<span class="token punctuation">.</span>stashes<span class="token punctuation">.</span>items<span class="token punctuation">(</span><span class="token punctuation">)</span>
-  <span class="token punctuation">&#125;</span><span class="token punctuation">)</span>
+  <span class="token punctuation">}</span><span class="token punctuation">)</span>
   <span class="token keyword">print</span><span class="token punctuation">(</span><span class="token string">"Errored:"</span><span class="token punctuation">,</span> <span class="token builtin">len</span><span class="token punctuation">(</span>simulation<span class="token punctuation">.</span>errored<span class="token punctuation">)</span><span class="token punctuation">)</span>
 
   <span class="token keyword">for</span> record <span class="token keyword">in</span> simulation<span class="token punctuation">.</span>errored<span class="token punctuation">:</span>
@@ -3313,10 +3635,10 @@ initial_state <span class="token operator">=</span> project<span class="token pu
   initial_state <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>entry_state<span class="token punctuation">(</span>
           <span class="token comment"># stdin=symbolic_input,</span>
           stdin <span class="token operator">=</span> scanf_stdin<span class="token punctuation">,</span>
-          add_options <span class="token operator">=</span> <span class="token punctuation">&#123;</span>
+          add_options <span class="token operator">=</span> <span class="token punctuation">{</span>
               angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_MEMORY<span class="token punctuation">,</span>
               angr<span class="token punctuation">.</span>options<span class="token punctuation">.</span>SYMBOL_FILL_UNCONSTRAINED_REGISTERS
-              <span class="token punctuation">&#125;</span>
+              <span class="token punctuation">}</span>
           <span class="token punctuation">)</span>
 
   <span class="token comment"># The save_unconstrained=True parameter specifies to Angr to not throw out</span>
@@ -3328,12 +3650,12 @@ initial_state <span class="token operator">=</span> project<span class="token pu
   simulation <span class="token operator">=</span> project<span class="token punctuation">.</span>factory<span class="token punctuation">.</span>simgr<span class="token punctuation">(</span>
     initial_state<span class="token punctuation">,</span>
     save_unconstrained<span class="token operator">=</span><span class="token boolean">True</span><span class="token punctuation">,</span> <span class="token comment"># ???,</span>
-    <span class="token comment"># stashes=&#123;</span>
+    <span class="token comment"># stashes={</span>
       <span class="token comment"># 'active' : [initial_state, ],# 正在运行的</span>
       <span class="token comment"># 'unconstrained' : [],# 未约束的 eip 状态？</span>
       <span class="token comment"># 'found' : [],</span>
       <span class="token comment"># 'not_needed' : []</span>
-    <span class="token comment"># &#125;</span>
+    <span class="token comment"># }</span>
   <span class="token punctuation">)</span>
   simulation<span class="token punctuation">.</span>stashes<span class="token punctuation">[</span><span class="token string">'found'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span><span class="token comment"># 让 Angr 初始化默认的 active、deadended、unconstrained 等 stash</span>
 
@@ -3407,7 +3729,7 @@ initial_state <span class="token operator">=</span> project<span class="token pu
     <span class="token comment"># (!)</span>
     <span class="token keyword">for</span> byte <span class="token keyword">in</span> symbolic_input<span class="token punctuation">.</span>chop<span class="token punctuation">(</span>bits<span class="token operator">=</span><span class="token number">8</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
       solution_state<span class="token punctuation">.</span>add_constraints<span class="token punctuation">(</span>
-              byte <span class="token operator">>=</span> <span class="token builtin">ord</span><span class="token punctuation">(</span><span class="token string">'A'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+              byte <span class="token operator">&gt;=</span> <span class="token builtin">ord</span><span class="token punctuation">(</span><span class="token string">'A'</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
               byte <span class="token operator">&lt;=</span> <span class="token builtin">ord</span><span class="token punctuation">(</span><span class="token string">'Z'</span><span class="token punctuation">)</span>
       <span class="token punctuation">)</span>
 
@@ -3429,16 +3751,16 @@ initial_state <span class="token operator">=</span> project<span class="token pu
 <span class="token keyword">if</span> __name__ <span class="token operator">==</span> <span class="token string">'__main__'</span><span class="token punctuation">:</span>
   main<span class="token punctuation">(</span>sys<span class="token punctuation">.</span>argv<span class="token punctuation">)</span><span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
-<pre class="line-numbers language-none"><code class="language-none">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+<pre class="line-numbers language-none"><code class="language-none">====================
 Simulation: &lt;SimulationManager with 1 found&gt;
-Stashes: &#123;&#39;active&#39;: 0, &#39;stashed&#39;: 0, &#39;pruned&#39;: 0, &#39;unsat&#39;: 0, &#39;errored&#39;: 0, &#39;deadended&#39;: 0, &#39;unconstrained&#39;: 0, &#39;found&#39;: 1&#125;
+Stashes: {'active': 0, 'stashed': 0, 'pruned': 0, 'unsat': 0, 'errored': 0, 'deadended': 0, 'unconstrained': 0, 'found': 1}
 Errored: 0
-&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;
+====================
 KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKTHQZ
 
 
 
-$ .&#x2F;17_angr_arbitrary_jump
+$ ./17_angr_arbitrary_jump
 Enter the password: KKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKKTHQZ
 Good Job.<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre>
 
@@ -3476,7 +3798,7 @@ Good Job.<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
 
 
 
-<script defer>
+<script defer="">
   document.addEventListener('DOMContentLoaded', function () {
     const toggleIcon = document.querySelector('.sea-article-catalog-title .sea-svg-icon');
     const tocContent = document.querySelector('.sea-article-catalog > .toc');
@@ -3493,13 +3815,7 @@ Good Job.<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
   <div class="sea-footer-row">
     <div class="sea-footer-menu-link">
       
-        <a
-          class="sea-footer-link"
-          
-            target="_blank"
-          
-          href="https://github.com/shanzade"
-        >
+        <a class="sea-footer-link" target="_blank" href="https://github.com/shanzade">
           GitHub
         </a>
         <span class="sea-footer-link__dot">·</span>
@@ -3528,10 +3844,23 @@ Good Job.<span aria-hidden="true" class="line-numbers-rows"><span></span><span><
   
 
 
-<script src="/js/main.js" defer></script>
+<script src="/js/main.js" defer=""></script>
 
 
-<script src="/js/theme.js" defer></script>
+<script src="/js/theme.js" defer=""></script>
 
-</body>
-</html>
+
+
+    <script>
+    (function () {
+      const tocDesktop = document.getElementById('toc-desktop');
+      const tocMobile = document.getElementById('toc-mobile');
+      const toc = tocDesktop || tocMobile;
+      if (!toc) return;
+      const toggle = document.getElementById('toc-toggle');
+      toggle.addEventListener('click', function () {
+        tocDesktop.classList.toggle('collapsed');//有则删 无则加
+      });
+    })();
+    </script>
+      </body></html>

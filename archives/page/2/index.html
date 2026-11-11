@@ -2,7 +2,7 @@
 <html lang="zh-cn">
 <head>
   <meta charset="utf-8">
-  <title>归档 | shanza's hideout</title>
+  <title>归档 | shanza's blog</title>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="keywords" content="">
@@ -13,9 +13,9 @@
   
 
   <meta property="og:type" content="website">
-<meta property="og:title" content="shanza&#39;s hideout">
+<meta property="og:title" content="shanza&#39;s blog">
 <meta property="og:url" content="https://shanzade.github.io/archives/page/2/index.html">
-<meta property="og:site_name" content="shanza&#39;s hideout">
+<meta property="og:site_name" content="shanza&#39;s blog">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="shanza">
 <meta name="twitter:card" content="summary">
@@ -38,7 +38,116 @@
   
 <script src="/js/theme_mode.js"></script>
 
-<!-- hexo injector head_end start --><style id="custom-font">
+<!-- hexo injector head_end start -->
+<style>
+#toc-list a{
+  text-decoration: none;
+  color:#333 !important;
+}
+#toc-desktop ul{
+  list-style: none;
+  padding-left: 3px;
+}
+
+/* 展开状态 */
+#toc-desktop {
+  position: fixed;
+  right: 0;
+  top: 0;
+  height: 100vh;
+  width: 260px;
+
+  padding: 10px;
+
+  background: #fff;
+  border-left: 1px solid #ddd;
+
+  /* 关键：动画 */
+  transition: transform 0.25s ease;
+  will-change: transform;
+
+  color:#333;
+  font-size:1rem;
+  z-index: 9999;
+
+  display: flex;
+  flex-direction: column;
+  transform: translateX(0);
+}
+
+/* 收起状态：只露出 toggle */
+#toc-desktop.collapsed {
+  transform: translateX(calc(100%));
+}
+
+/* toggle 固定在可见边缘 */
+#toc-toggle {
+  position: absolute;
+  left: -30px;
+  top: 50%;
+  width: 80px;
+  height: 80px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  user-select: none;
+  background: #fff;
+  border-left: 2px solid #ddd;
+  color: #333;
+  border-radius: 20%;
+  z-index:-1;
+  font-size: 25px;
+  font-weight: bold;
+
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  
+  padding:5px;
+}
+
+#toc-list {
+  flex: 1;
+  overflow-y: auto;/* 关键：滚动 */
+  overflow-x: hidden;
+  margin-left:5%;
+}
+#toc-mobile {
+  display: none;
+}
+
+/* indentation */
+.toc-lv-2 { margin-left: 12px; }
+.toc-lv-3 { margin-left: 24px; }
+.toc-lv-4 { margin-left: 36px; }
+
+#toc-title{
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin:10px auto;
+}
+@media (max-width: 1024px) {
+  #toc-desktop {
+    display: none;
+  }
+
+  #toc-mobile {
+    display: block;
+    width: 100%;
+    height: auto;
+    padding: 5%;
+    border-bottom: 1px solid #eee;
+    background: #fafafa;
+  }
+  #toc-mobile li{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+</style>
+
+
+  <style id="custom-font">
   @font-face {
     font-family: "Montserrat";
     src: url("/fonts/Montserrat-Regular.woff2") format("woff2");
@@ -113,7 +222,7 @@
   <header class="sea-header">
     <nav class="sea-nav-wrap">
   <div class="sea-nav-logo" title="">
-    <a href="/">shanza's hideout</a>
+    <a href="/">shanza's blog</a>
   </div>
   <div class="sea-nav-menus">
     <div id="sea-nav-toggle">
@@ -178,7 +287,7 @@
     <div class="sea-page-card-wrapper">
   <h1 class="sea-page-card-title">归档</h1>
   <h2 class="sea-archive-total">
-    共计 13 篇文章！
+    共计 14 篇文章！
   </h2>
 
   <div class="sea-archive-list">
@@ -190,6 +299,20 @@
         <h3 class="sea-archive-year">
           2025
         </h3>
+      
+      <a
+        class="sea-archive-list-item"
+        href="/2025/10/28/2024%E7%BD%91%E9%BC%8E%E6%9D%AF%E5%8D%8A%E5%86%B3%E8%B5%9B-cardmaster/"
+      >
+        <span class="sea-archive-list-item-title" title="2024网鼎杯半决赛 cardmaster">
+          2024网鼎杯半决赛 cardmaster
+        </span>
+        <span class="sea-archive-list-item-date">
+          2025-10-28
+        </span>
+      </a>
+    
+      
       
       <a
         class="sea-archive-list-item"
