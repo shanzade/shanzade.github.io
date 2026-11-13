@@ -30,13 +30,13 @@
 <meta property="og:image" content="https://shanzade.github.io/2026/11/12/%E4%BB%8E-salat-stealer-%E5%AE%B6%E6%97%8F%E7%9A%84%E6%A0%B7%E6%9C%AC%E4%B8%AD%E6%8F%90%E5%8F%96-c2-%E5%9C%B0%E5%9D%80/11.png">
 <meta property="og:image" content="https://shanzade.github.io/2026/11/12/%E4%BB%8E-salat-stealer-%E5%AE%B6%E6%97%8F%E7%9A%84%E6%A0%B7%E6%9C%AC%E4%B8%AD%E6%8F%90%E5%8F%96-c2-%E5%9C%B0%E5%9D%80/12.png">
 <meta property="article:published_time" content="2026-11-12T15:13:40.000Z">
-<meta property="article:modified_time" content="2026-11-12T16:54:16.393Z">
+<meta property="article:modified_time" content="2026-11-13T02:28:24.997Z">
 <meta property="article:author" content="shanza">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://shanzade.github.io/2026/11/12/%E4%BB%8E-salat-stealer-%E5%AE%B6%E6%97%8F%E7%9A%84%E6%A0%B7%E6%9C%AC%E4%B8%AD%E6%8F%90%E5%8F%96-c2-%E5%9C%B0%E5%9D%80/01.png">
   <meta name="generator" content="Hexo 7.3.0">
   <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanzade.github.io/2026/11/12/%E4%BB%8E-salat-stealer-%E5%AE%B6%E6%97%8F%E7%9A%84%E6%A0%B7%E6%9C%AC%E4%B8%AD%E6%8F%90%E5%8F%96-c2-%E5%9C%B0%E5%9D%80/"},"headline":"从 salat stealer 家族的样本中提取 c2 地址","description":"基本信息https://bazaar.abuse.ch/sample/08823e4984b327c5ceed815ee0db1f39d397c2d8ef3af01432e79591c92b9678/ sha256：08823e4984b327c5ceed815ee0db1f39d397c2d8ef3af01432e7","datePublished":"2026-11-12T15:13:40.000Z","dateModified":"2026-11-12T16:54:16.393Z","author":{"@type":"Person","name":"shanza"},"publisher":{"@type":"Organization","name":"shanza's blog","logo":{"@type":"ImageObject","url":"https://shanzade.github.io/favicon.ico"}}}
+{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://shanzade.github.io/2026/11/12/%E4%BB%8E-salat-stealer-%E5%AE%B6%E6%97%8F%E7%9A%84%E6%A0%B7%E6%9C%AC%E4%B8%AD%E6%8F%90%E5%8F%96-c2-%E5%9C%B0%E5%9D%80/"},"headline":"从 salat stealer 家族的样本中提取 c2 地址","description":"基本信息https://bazaar.abuse.ch/sample/08823e4984b327c5ceed815ee0db1f39d397c2d8ef3af01432e79591c92b9678/ sha256：08823e4984b327c5ceed815ee0db1f39d397c2d8ef3af01432e7","datePublished":"2026-11-12T15:13:40.000Z","dateModified":"2026-11-13T02:28:24.997Z","author":{"@type":"Person","name":"shanza"},"publisher":{"@type":"Organization","name":"shanza's blog","logo":{"@type":"ImageObject","url":"https://shanzade.github.io/favicon.ico"}}}
 </script>
 
   
@@ -1605,7 +1605,6 @@ data <span class="token operator">=</span> result<span class="token punctuation"
 <p>除此之外还有很多功能，例如获取 chrome 凭证、获取 discord 信息、获取 steam 信息等等，甚至还有自毁功能。<br>不过大部分功能都是面向国外的电脑就是，国内对标的话应该就是银狐了吧（<br><img src="/2026/11/12/%E4%BB%8E-salat-stealer-%E5%AE%B6%E6%97%8F%E7%9A%84%E6%A0%B7%E6%9C%AC%E4%B8%AD%E6%8F%90%E5%8F%96-c2-%E5%9C%B0%E5%9D%80/12.png"></p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
 <li>go 的数据结构还是要深入理解一下，像是 <code>concatstring</code> 这种函数，基本上都是 <code>字符串地址 + 字符串长度</code> 这种形式来传参的；以及还有部分情况下函数返回值不是像普通的 c / c++ 那样直接存到变量，而是由 callee 直接存放到对应栈位置，然后让 caller 直接读取栈。除此之外，go 的这种特性会导致 ida 总是在分析时提示某些变量未初始化或者传参数量不对，也要注意。</li>
-<li>需要尝试去了解一些 c2 平台，使用 / 分析其功能。</li>
 </ul>
 
     </div>
